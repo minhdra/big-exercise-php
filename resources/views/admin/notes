@@ -1,0 +1,45 @@
+// Add images
+<!-- <div class="col-xl-8 col-lg-6 col-md-12 mb-1">
+              <fieldset class="form-group">
+                <label for="file_img">Images</label>
+                <input type="file" accept="image/*" name="file_img" id="img_files" multiple>
+                 <div class="row d-flex">
+                  <img id="list_img_prv@{{img}}" src="/assets/img/products/@{{row}}" style="max-width: 150px;max-height: 150px" class="list-images" alt=""  ng-repeat="img in tmpArr">
+                </div> 
+              </fieldset>
+            </div> -->
+
+
+php artisan make:model admins
+php artisan make:model admin_infos
+php artisan make:model brands
+php artisan make:model carts
+php artisan make:model cart_details
+php artisan make:model customers
+php artisan make:model customer_infos
+php artisan make:model delivery_addresses
+php artisan make:model discounts
+php artisan make:model import_bills
+php artisan make:model import_bill_details
+php artisan make:model magazines
+php artisan make:model orders
+php artisan make:model order_details
+php artisan make:model slides
+php artisan make:model suppliers
+
+php artisan make:controller api/adminsController --model=admins --resource
+php artisan make:controller api/admin_infosController --model=admin_infos --resource
+php artisan make:controller api/brandsController --model=brands --resource
+php artisan make:controller api/cartsController --model=carts --resource
+php artisan make:controller api/cart_detailsController --model=cart_details --resource
+php artisan make:controller api/customersController --model=customers --resource
+php artisan make:controller api/customer_infosController --model=customer_infos --resource
+php artisan make:controller api/delivery_addressesController --model=delivery_addresses --resource
+php artisan make:controller api/discountsController --model=discounts --resource
+php artisan make:controller api/import_billsController --model=import_bills --resource
+php artisan make:controller api/import_bill_detailsController --model=import_bill_details --resource
+php artisan make:controller api/magazinesController --model=magazines --resource
+php artisan make:controller api/ordersController --model=orders --resource
+php artisan make:controller api/order_detailsController --model=order_details --resource
+php artisan make:controller api/slidesController --model=slides --resource
+php artisan make:controller api/suppliersController --model=suppliers --resource
