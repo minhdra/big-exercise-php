@@ -19,16 +19,31 @@ Route::get('/', function () {
 
 Route::get('/shop', function () {
     return view('client.shop');
-});
+})->name('shop');
 
+Route::get('/shop/{id}', function ($id) {
+    return view('client.single-shop', ['id' => $id]);
+})->name('single-shop');
+
+Route::get('/login', function () {
+    return view('client.login');
+})->name('login');
+
+Route::get('/my-account', function () {
+    return view('client.account');
+})->name('my-account');
+
+Route::get('/cart', function () {
+    return view('client.cart');
+})->name('cart');
 
 // ---------------------------- Admin ------------------------------------
 Route::get('/admin', function () {
     return view('admin.index');
 });
 
-Route::get('/admin/products2', function () {
-    return view('admin.products2');
+Route::get('/admin/products', function () {
+    return view('admin.products');
 });
 
 Route::get('/admin/product_colors', function () {

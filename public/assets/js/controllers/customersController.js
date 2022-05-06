@@ -56,6 +56,21 @@ function customersController($scope, $http) {
   };
   loadData();
 
+  // ----------------------------------------------------------------
+  $scope.checkLogin = () => {
+    if(checkCustomerLogin().username) history.back();
+  }
+  
+  $scope.login = () => {
+    connect_api('POST', apiBase + nameController + 'login', $scope.requestLogin, function (res) {
+      sessionStorage.setItem('customer', JSON.stringify(res.data));
+      history.back();
+    })
+  }
+
+
+  //----------------------------------------------------------------
+
   // open the modal in admin
   $scope.openModal = (id) => {
     $scope.id = id;

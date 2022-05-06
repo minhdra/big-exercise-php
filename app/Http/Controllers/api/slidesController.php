@@ -18,6 +18,18 @@ class slidesController extends Controller
         return slides::where('is_active', 1)->get();
     }
 
+    
+    public function uploadFile(Request $request) {
+        $type = $request->type;
+        $data = $request->file('file');
+        $filename = $request->file('file')->getClientOriginalName();
+        $path = public_path('/assets/slider/');
+        $data->move($path, $filename);
+        return response()->json([
+            'success' => 'done',
+            'valueimg'=>$data ]);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -37,6 +49,9 @@ class slidesController extends Controller
     public function store(Request $request)
     {
         $db = new slides();
+        $db->title = $request->title;
+        $db->collection = $request->collection;
+        $db->content = $request->content;
         $db->image = $request->image;
         $db->link = $request->link;
         $db->save();
@@ -77,6 +92,9 @@ class slidesController extends Controller
     public function update(Request $request, $id)
     {
         $db = slides::where('is_active', 1)->find($id);
+        $db->title = $request->title;
+        $db->collection = $request->collection;
+        $db->content = $request->content;
         $db->image = $request->image;
         $db->link = $request->link;
         $db->save();

@@ -68,7 +68,7 @@
   @include('includes.client.header')
   <!-- End header area -->
 
-  @yield('content');
+  @yield('content')
 
   <!-- Start footer section -->
   @include('includes.client.footer')
@@ -116,10 +116,13 @@
 
   <!-- All Script JS Plugins here  -->
   <script src="/assets/js/plugins/jquery.min.js"></script>
+  <script src="/assets/admin/vendors/js/core/popper.min.js"></script>
+  <script src="/assets/admin/vendors/js/core/bootstrap.min.js"></script>
   <script src="/assets/js/plugins/angular.min.js"></script>
   <script src="/assets/js/plugins/dirPagination.js"></script>
   <!-- <script src="/assets/js/vendor/popper.js" defer="defer"></script>
   <script src="/assets/js/vendor/bootstrap.min.js" defer="defer"></script> -->
+  <script src="/assets/admin/vendors/js/toastr.min.js"></script>
 
   <script src="/assets/js/plugins/swiper-bundle.min.js"></script>
   <script src="/assets/js/plugins/glightbox.min.js"></script>
@@ -129,6 +132,8 @@
 
   <!-- Controller -->
   <script src="/assets/js/controllers/InitializationController.js"></script>
+  <script src="/assets/js/controllers/headerClientController.js"></script>
+  <script src="/assets/js/controllers/cartsController.js"></script>
   @yield('js')
 
 </body>

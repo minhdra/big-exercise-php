@@ -1,6 +1,6 @@
 @extends('_layout_admin')
 @section('content')
-<div ng-controller="categoriesController">
+<div ng-controller="slidesController">
   <div class="main-panel">
     <div class="main-content">
       <div class="content-wrapper">
@@ -35,19 +35,25 @@
                         <thead>
                           <tr>
                             <th>#</th>
-                            <th>Name</th>
-                            <th>Thumbnail</th>
-                            <th style="width: 150px !important">Actions</th>
+                            <th>Title</th>
+                            <th>Collection</th>
+                            <th>Content</th>
+                            <th>Link</th>
+                            <th>Image</th>
+                            <th style="width: 100px">Actions</th>
                           </tr>
                         </thead>
                         <tbody>
-                          <tr dir-paginate="row in data|filter: {name: keyword}|itemsPerPage:10" current-page="currentPage">
+                          <tr dir-paginate="row in data|filter: {title: keyword}|itemsPerPage:10" current-page="currentPage">
                             <td>@{{$index + serial}}</td>
-                            <td>@{{row.name}}</td>
+                            <td>@{{row.title}}</td>
+                            <td>@{{row.collection}}</td>
+                            <td data-toggle="tooltip" title="@{{row.content}}">@{{row.content}}</td>
+                            <td data-toggle="tooltip" title="@{{row.link}}">@{{row.link}}</td>
                             <td>
-                              <img ng-if="row.thumbnail" ng-src="/assets/img/products/@{{row.thumbnail}}" alt="" style="width: 100px">
+                              <img ng-if="row.image" ng-src="/assets/slider/@{{row.image}}" alt="" style="width: 100px">
                             </td>
-                            <td style="width: 150px !important">
+                            <td style="width: 10px !important">
                               <a class="success p-0 mr-2" data-original-title="" title="Edit" data-toggle="tooltip" ng-click="openModal(row.id)">
                                 <i class="fa fa-pencil font-medium-3"></i>
                               </a>
@@ -90,17 +96,36 @@
             <div class="row">
               <div class="col-xl-4 col-lg-6 col-md-12 mb-1">
                 <fieldset class="form-group">
-                  <label for="item-name">Name</label>
-                  <input type="text" class="form-control" id="item-name" ng-model="item.name" require>
+                  <label for="title">Title</label>
+                  <input type="text" class="form-control" id="title" ng-model="item.title" placeholder="Title" require>
                 </fieldset>
               </div>
               <div class="col-xl-4 col-lg-6 col-md-12 mb-1">
                 <fieldset class="form-group">
-                  <label for="img_file_upid">Thumbnail</label>
+                  <label for="collection">Collection</label>
+                  <input type="text" class="form-control" id="collection" ng-model="item.collection" placeholder="Collection" require>
+                </fieldset>
+              </div>
+              
+              <div class="col-xl-4 col-lg-6 col-md-12 mb-1">
+                <fieldset class="form-group">
+                  <label for="link">Link</label>
+                  <input type="text" class="form-control" id="link" ng-model="item.link" placeholder="Link" require>
+                </fieldset>
+              </div>
+              <div class="col-xl-4 col-lg-6 col-md-12 mb-1">
+                <fieldset class="form-group">
+                  <label for="img_file_upid">Image</label>
                   <input type="file" accept="image/*" name="file_img" id="img_file_upid">
                   <div class="row">
-                    <img ng-if="item.thumbnail != '' || item.thumbnail != null" ng-src="/assets/img/products/@{{item.thumbnail}}" id="img_prv" style="max-width: 150px;max-height: 150px" class="img-thumbnail" alt="">
+                    <img ng-if="item.image != '' || item.image != null" ng-src="/assets/slider/@{{item.image}}" id="img_prv" style="max-width: 150px;max-height: 150px" class="img-image" alt="">
                   </div>
+                </fieldset>
+              </div>
+              <div class="col-12 mb-1">
+                <fieldset class="form-group">
+                  <label for="content">Content</label>
+                  <textarea type="text" class="form-control" id="content" ng-model="item.content" placeholder="Content" rows="5"></textarea>
                 </fieldset>
               </div>
             </div>
@@ -118,5 +143,5 @@
 
 @section('js')
 <!-- <script src="/assets/admin/js/wizard-step.js"></script> -->
-<script src="/assets/js/controllers/categoriesController.js"></script>
+<script src="/assets/js/controllers/slidesController.js"></script>
 @stop

@@ -7,6 +7,7 @@ use App\Models\customer_infos;
 use App\Models\customers;
 use App\Models\delivery_addresses;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class customersController extends Controller
 {
@@ -17,7 +18,13 @@ class customersController extends Controller
      */
     public function index()
     {
-        return customers::where('is_active', 1)->get();
+        return customers::with(['cart', 'cart_details'])->where('is_active', 1)->get();
+    }
+
+    public function login(Request $request) {
+        $db = customers::where('username', $request->username)->where('password', $request->password)->where('is_active', 1)->selectRaw('id, username')->first();
+        // session('customer', $db);
+        return $db;
     }
 
     /**
@@ -41,7 +48,7 @@ class customersController extends Controller
         $db = new customers();
         $db->username = $request->username;
         $db->password = $request->password;
-        $db->status = $request->status;
+        $db->status = 1;
         $db->save();
 
         return $db;
@@ -55,7 +62,7 @@ class customersController extends Controller
      */
     public function show($id)
     {
-        $db = customers::where('is_active', 1)->find($id);
+        $db = customers::with(['cart', 'cart_details'])->where('is_active', 1)->find($id);
         return $db;
     }
 

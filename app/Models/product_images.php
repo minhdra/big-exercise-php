@@ -20,8 +20,7 @@ class product_images extends Model
 
     public function updateImage($request, $id) {
         $db = product_images::find($id);
-        $db->image = $request->image;
-        $db->product_color_id = $request->product_color_id;
+        $db->image = $request['image'];
         $db->save();
         return $db;
     }

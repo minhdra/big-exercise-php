@@ -16,7 +16,7 @@ class cartsController extends Controller
      */
     public function index()
     {
-        return carts::where('is_active', 1)->get();
+        return carts::with('customer')->with('details')->where('is_active', 1)->get();
     }
 
     /**
@@ -37,11 +37,41 @@ class cartsController extends Controller
      */
     public function store(Request $request)
     {
-        $db = new carts();
-        $db->customer_id = $request->customer_id;
-        $db->save();
+        $detail = new cart_details();
+        $check = carts::where('customer_id', $request->customer_id)->first();
+        if ($check) {
+            $item = $request->detail ?? null;
+            if ($item) {
+                $details = $this->show($check->id)->details;
+                $c = false;
+                $thisDetail = '';
+                foreach ($details as $d) {
+                    if($d['product_id'] == $item['product_id'] && $d['color'] == $item['color']['color']) {
+                        $thisDetail = $d;
+                        $c = true;
+                        break;
+                    }
+                }
+                if($c) {
+                    $item['quantity'] = $thisDetail['quantity'] + $item['quantity'];
+                    $detail->updateCartDetails($item, $thisDetail['id']);
+                }
+                else {
+                    $detail->insertCartDetails($item, $check->id);
+                }
+            }
+        } else {
+            $db = new carts();
+            $db->customer_id = $request->customer_id;
+            $db->save();
 
-        return $db;
+            $item = $request->detail ?? null;
+            if ($item) {
+                $detail->insertCartDetails($item, $db->id);
+            }
+        }
+
+        return "Success";
     }
 
     /**
@@ -52,7 +82,7 @@ class cartsController extends Controller
      */
     public function show($id)
     {
-        $db = carts::where('is_active', 1)->find($id);
+        $db = carts::with('customer')->with('details')->where('is_active', 1)->find($id);
         return $db;
     }
 
@@ -96,7 +126,7 @@ class cartsController extends Controller
         $db->save();
 
         $info = cart_details::where('cart_id', $db->id)->first();
-        if($info) {
+        if ($info) {
             $info->is_active = 0;
             $info->save();
         }

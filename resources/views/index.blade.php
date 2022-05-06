@@ -1,23 +1,22 @@
 @extends('_layout_client')
 @section('content')
-<main class="main__content_wrapper" ng-app="app" ng-controller="ProductController">
+<main class="main__content_wrapper" ng-app="app" ng-controller="homeController" ng-init="loadClientHome()">
   <!-- Start slider section -->
   <section class="hero__slider--section">
     <div class="hero__slider--inner hero__slider--activation swiper">
       <div class="hero__slider--wrapper swiper-wrapper">
-        <div class="swiper-slide ">
-          <div class="hero__slider--items home1__slider--bg">
+        <div class="swiper-slide" ng-repeat="row in sliders">
+          <div class="hero__slider--items" ng-style="{'background': 'url(/assets/slider/@{{row.image}})', 'background-repeat': 'no-repeat', 'background-attachment': 'scroll', 'background-position': 'center center', 'background-size': 'cover'}">
             <div class="container-fluid">
               <div class="hero__slider--items__inner">
                 <div class="row row-cols-1">
                   <div class="col">
                     <div class="slider__content">
                       <p class="slider__content--desc desc1 mb-15"><img class="slider__text--shape__icon" src="/assets/img/icon/text-shape-icon.png" alt="text-shape-icon"> New Collection</p>
-                      <h2 class="slider__content--maintitle h1">The Great Fashion <br>
-                        Collection 2022</h2>
-                      <p class="slider__content--desc desc2 d-sm-2-none mb-40">Up To 40% Off Final Sale Items. <br>
-                        Caught in the Moment!</p>
-                      <a class="slider__btn primary__btn" href="shop.html">Show Collection
+                      <h2 class="slider__content--maintitle h1">@{{row.title}}<br>
+                        @{{row.collection}}</h2>
+                      <p class="slider__content--desc desc2 d-sm-2-none mb-40">@{{row.content}}</p>
+                      <a class="slider__btn primary__btn" href="@{{row.link}}">Show Collection
                         <svg class="primary__btn--arrow__icon" xmlns="http://www.w3.org/2000/svg" width="20.2" height="12.2" viewBox="0 0 6.2 6.2">
                           <path d="M7.1,4l-.546.546L8.716,6.713H4v.775H8.716L6.554,9.654,7.1,10.2,9.233,8.067,10.2,7.1Z" transform="translate(-4 -4)" fill="currentColor"></path>
                         </svg>
@@ -26,55 +25,6 @@
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-        <div class="swiper-slide ">
-          <div class="hero__slider--items home1__slider--bg two">
-            <div class="container-fluid">
-              <div class="row">
-                <div class="col">
-                  <div class="hero__slider--items__inner">
-                    <div class="slider__content">
-                      <p class="slider__content--desc desc1 mb-15"><img class="slider__text--shape__icon" src="/assets/img/icon/text-shape-icon.png" alt="text-shape-icon"> New Collection</p>
-                      <h2 class="slider__content--maintitle h1">The Great Fashion <br>
-                        Collection 2022</h2>
-                      <p class="slider__content--desc desc2 d-sm-2-none mb-40 ">Up To 40% Off Final Sale Items. <br>
-                        Caught in the Moment!</p>
-                      <a class="primary__btn slider__btn" href="shop.html">Show Collection
-                        <svg class="slider__btn--arrow__icon" xmlns="http://www.w3.org/2000/svg" width="20.2" height="12.2" viewBox="0 0 6.2 6.2">
-                          <path d="M7.1,4l-.546.546L8.716,6.713H4v.775H8.716L6.554,9.654,7.1,10.2,9.233,8.067,10.2,7.1Z" transform="translate(-4 -4)" fill="currentColor"></path>
-                        </svg>
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="swiper-slide ">
-          <div class="hero__slider--items home1__slider--bg three">
-            <div class="container-fluid">
-              <div class="row">
-                <div class="col-lg-6 offset-lg-6">
-                  <div class="hero__slider--items__inner">
-                    <div class="slider__content text-center">
-                      <p class="slider__content--desc desc1 mb-15"><img class="slider__text--shape__icon" src="/assets/img/icon/text-shape-icon.png" alt="text-shape-icon"> New Collection</p>
-                      <h2 class="slider__content--maintitle h1">The Great Fashion <br>
-                        Collection 2022</h2>
-                      <p class="slider__content--desc desc2 d-sm-2-none mb-40">Up To 40% Off Final Sale Items. <br>
-                        Caught in the Moment!</p>
-                      <a class="primary__btn slider__btn" href="shop.html">Show Collection
-                        <svg class="slider__btn--arrow__icon" xmlns="http://www.w3.org/2000/svg" width="20.2" height="12.2" viewBox="0 0 6.2 6.2">
-                          <path d="M7.1,4l-.546.546L8.716,6.713H4v.775H8.716L6.554,9.654,7.1,10.2,9.233,8.067,10.2,7.1Z" transform="translate(-4 -4)" fill="currentColor"></path>
-                        </svg>
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
             </div>
           </div>
         </div>
@@ -91,7 +41,7 @@
       <div class="row mb--n28">
         <div class="col-lg-5 col-md-order mb-28">
           <div class="banner__items">
-            <a class="banner__items--thumbnail position__relative" href="shop.html"><img class="banner__items--thumbnail__img" src="/assets/img/banner/banner1.png" alt="banner-img">
+            <a class="banner__items--thumbnail position__relative" href="/shop"><img class="banner__items--thumbnail__img" src="/assets/img/banner/banner1.png" alt="banner-img">
               <div class="banner__items--content">
                 <span class="banner__items--content__subtitle">17% Discount</span>
                 <h2 class="banner__items--content__title h3">Spring Collection <br>
@@ -109,7 +59,7 @@
           <div class="row row-cols-lg-2 row-cols-sm-2 row-cols-1">
             <div class="col mb-28">
               <div class="banner__items">
-                <a class="banner__items--thumbnail position__relative" href="shop.html"><img class="banner__items--thumbnail__img" src="/assets/img/banner/banner2.png" alt="banner-img">
+                <a class="banner__items--thumbnail position__relative" href="/shop"><img class="banner__items--thumbnail__img" src="/assets/img/banner/banner2.png" alt="banner-img">
                   <div class="banner__items--content">
                     <span class="banner__items--content__subtitle text__secondary">Shop Women</span>
                     <h2 class="banner__items--content__title h3">Up to 70% Off & <br>
@@ -125,7 +75,7 @@
             </div>
             <div class="col mb-28">
               <div class="banner__items">
-                <a class="banner__items--thumbnail position__relative" href="shop.html"><img class="banner__items--thumbnail__img" src="/assets/img/banner/banner3.png" alt="banner-img">
+                <a class="banner__items--thumbnail position__relative" href="/shop"><img class="banner__items--thumbnail__img" src="/assets/img/banner/banner3.png" alt="banner-img">
                   <div class="banner__items--content">
                     <span class="banner__items--content__subtitle">Shop Women</span>
                     <h2 class="banner__items--content__title h3">Free Shipping Over <br>
@@ -141,7 +91,7 @@
             </div>
           </div>
           <div class="banner__items">
-            <a class="banner__items--thumbnail position__relative" href="shop.html"><img class="banner__items--thumbnail__img banner__img--max__height" src="/assets/img/banner/banner4.png" alt="banner-img">
+            <a class="banner__items--thumbnail position__relative" href="/shop"><img class="banner__items--thumbnail__img banner__img--max__height" src="/assets/img/banner/banner4.png" alt="banner-img">
               <div class="banner__items--content">
                 <span class="banner__items--content__subtitle">25% Discount</span>
                 <h2 class="banner__items--content__title h3">Leather Saddle <br>
@@ -178,17 +128,17 @@
               <div class="col mb-30" ng-repeat="row in dataNew">
                 <div class="product__items ">
                   <div class="product__items--thumbnail">
-                    <a class="product__items--link" href="product-details.html">
-                      <img class="product__items--img product__primary--img" src="@{{row.image_first}}" alt="product-img">
-                      <img class="product__items--img product__secondary--img" src="@{{row.image_second}}" alt="product-img">
+                    <a class="product__items--link" href="/shop/@{{row.id}}">
+                      <img class="product__items--img product__primary--img" ng-src="/assets/img/products/@{{row.images[0].image}}" alt="product-img">
+                      <img class="product__items--img product__secondary--img" ng-src="/assets/img/products/@{{row.images[1].image}}" alt="product-img">
                     </a>
                     <div class="product__badge">
                       <span class="product__badge--items sale">Sale</span>
                     </div>
                   </div>
                   <div class="product__items--content">
-                    <span class="product__items--content__subtitle">Jacket, Women</span>
-                    <h3 class="product__items--content__title h4"><a href="product-details.html" style="height: 52px;">@{{row.name}}</a></h3>
+                    <span class="product__items--content__subtitle">@{{row.categories.name}}</span>
+                    <h3 class="product__items--content__title h4"><a href="/shop/@{{row.id}}" style="height: 52px;">@{{row.name}}</a></h3>
                     <div class="product__items--price">
                       <span class="current__price">$@{{row.price.price_current == 0 ? row.price.price_origin : row.price.price_current}}</span>
                       <span class="@{{row.price.price_current == 0 ? '' : 'price__divided'}} "></span>
@@ -234,7 +184,7 @@
                     </ul>
                     <ul class="product__items--action d-flex">
                       <li class="product__items--action__list">
-                        <a class="product__items--action__btn add__to--cart" href="cart.html">
+                        <a class="product__items--action__btn add__to--cart" href="/shop/@{{row.id}}">
                           <svg class="product__items--action__btn--svg" xmlns="http://www.w3.org/2000/svg" width="22.51" height="20.443" viewBox="0 0 14.706 13.534">
                             <g transform="translate(0 0)">
                               <g>
@@ -248,7 +198,7 @@
                         </a>
                       </li>
                       <li class="product__items--action__list">
-                        <a class="product__items--action__btn" href="wishlist.html">
+                        <a class="product__items--action__btn" href="/wishlist">
                           <svg class="product__items--action__btn--svg" xmlns="http://www.w3.org/2000/svg" width="25.51" height="23.443" viewBox="0 0 512 512">
                             <path d="M352.92 80C288 80 256 144 256 144s-32-64-96.92-64c-52.76 0-94.54 44.14-95.08 96.81-1.1 109.33 86.73 187.08 183 252.42a16 16 0 0018 0c96.26-65.34 184.09-143.09 183-252.42-.54-52.67-42.32-96.81-95.08-96.81z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"></path>
                           </svg>
@@ -278,17 +228,17 @@
               <div class="col mb-30" ng-repeat="row in dataNew">
                 <div class="product__items ">
                   <div class="product__items--thumbnail">
-                    <a class="product__items--link" href="product-details.html">
-                      <img class="product__items--img product__primary--img" src="@{{row.image_first}}" alt="product-img">
-                      <img class="product__items--img product__secondary--img" src="@{{row.image_second}}" alt="product-img">
+                    <a class="product__items--link" href="/shop/@{{row.id}}">
+                      <img class="product__items--img product__primary--img" ng-src="/assets/img/products/@{{row.images[0].image}}" alt="product-img">
+                      <img class="product__items--img product__secondary--img" ng-src="/assets/img/products/@{{row.images[1].image}}" alt="product-img">
                     </a>
                     <div class="product__badge">
                       <span class="product__badge--items sale">Sale</span>
                     </div>
                   </div>
                   <div class="product__items--content">
-                    <span class="product__items--content__subtitle">Jacket, Women</span>
-                    <h3 class="product__items--content__title h4"><a href="product-details.html" style="height: 52px;">@{{row.name}}</a></h3>
+                    <span class="product__items--content__subtitle">@{{row.categories.name}}</span>
+                    <h3 class="product__items--content__title h4"><a href="/shop/@{{row.id}}" style="height: 52px;">@{{row.name}}</a></h3>
                     <div class="product__items--price">
                       <span class="current__price">$@{{row.price.price_current == 0 ? row.price.price_origin : row.price.price_current}}</span>
                       <span class="@{{row.price.price_current == 0 ? '' : 'price__divided'}} "></span>
@@ -334,7 +284,7 @@
                     </ul>
                     <ul class="product__items--action d-flex">
                       <li class="product__items--action__list">
-                        <a class="product__items--action__btn add__to--cart" href="cart.html">
+                        <a class="product__items--action__btn add__to--cart" href="/shop/@{{row.id}}">
                           <svg class="product__items--action__btn--svg" xmlns="http://www.w3.org/2000/svg" width="22.51" height="20.443" viewBox="0 0 14.706 13.534">
                             <g transform="translate(0 0)">
                               <g>
@@ -348,7 +298,7 @@
                         </a>
                       </li>
                       <li class="product__items--action__list">
-                        <a class="product__items--action__btn" href="wishlist.html">
+                        <a class="product__items--action__btn" href="/wishlist">
                           <svg class="product__items--action__btn--svg" xmlns="http://www.w3.org/2000/svg" width="25.51" height="23.443" viewBox="0 0 512 512">
                             <path d="M352.92 80C288 80 256 144 256 144s-32-64-96.92-64c-52.76 0-94.54 44.14-95.08 96.81-1.1 109.33 86.73 187.08 183 252.42a16 16 0 0018 0c96.26-65.34 184.09-143.09 183-252.42-.54-52.67-42.32-96.81-95.08-96.81z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"></path>
                           </svg>
@@ -378,17 +328,17 @@
               <div class="col mb-30" ng-repeat="row in dataNew">
                 <div class="product__items ">
                   <div class="product__items--thumbnail">
-                    <a class="product__items--link" href="product-details.html">
-                      <img class="product__items--img product__primary--img" src="@{{row.image_first}}" alt="product-img">
-                      <img class="product__items--img product__secondary--img" src="@{{row.image_second}}" alt="product-img">
+                    <a class="product__items--link" href="/shop/@{{row.id}}">
+                      <img class="product__items--img product__primary--img" ng-src="/assets/img/products/@{{row.images[0].image}}" alt="product-img">
+                      <img class="product__items--img product__secondary--img" ng-src="/assets/img/products/@{{row.images[1].image}}" alt="product-img">
                     </a>
                     <div class="product__badge">
                       <span class="product__badge--items sale">Sale</span>
                     </div>
                   </div>
                   <div class="product__items--content">
-                    <span class="product__items--content__subtitle">Jacket, Women</span>
-                    <h3 class="product__items--content__title h4"><a href="product-details.html" style="height: 52px;">@{{row.name}}</a></h3>
+                    <span class="product__items--content__subtitle">@{{row.categories.name}}</span>
+                    <h3 class="product__items--content__title h4"><a href="/shop/@{{row.id}}" style="height: 52px;">@{{row.name}}</a></h3>
                     <div class="product__items--price">
                       <span class="current__price">$@{{row.price.price_current == 0 ? row.price.price_origin : row.price.price_current}}</span>
                       <span class="@{{row.price.price_current == 0 ? '' : 'price__divided'}} "></span>
@@ -434,7 +384,7 @@
                     </ul>
                     <ul class="product__items--action d-flex">
                       <li class="product__items--action__list">
-                        <a class="product__items--action__btn add__to--cart" href="cart.html">
+                        <a class="product__items--action__btn add__to--cart" href="/shop/@{{row.id}}">
                           <svg class="product__items--action__btn--svg" xmlns="http://www.w3.org/2000/svg" width="22.51" height="20.443" viewBox="0 0 14.706 13.534">
                             <g transform="translate(0 0)">
                               <g>
@@ -448,7 +398,7 @@
                         </a>
                       </li>
                       <li class="product__items--action__list">
-                        <a class="product__items--action__btn" href="wishlist.html">
+                        <a class="product__items--action__btn" href="/wishlist">
                           <svg class="product__items--action__btn--svg" xmlns="http://www.w3.org/2000/svg" width="25.51" height="23.443" viewBox="0 0 512 512">
                             <path d="M352.92 80C288 80 256 144 256 144s-32-64-96.92-64c-52.76 0-94.54 44.14-95.08 96.81-1.1 109.33 86.73 187.08 183 252.42a16 16 0 0018 0c96.26-65.34 184.09-143.09 183-252.42-.54-52.67-42.32-96.81-95.08-96.81z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"></path>
                           </svg>
@@ -488,7 +438,7 @@
               <h2 class="deals__banner--content__maintitle">Deals Of The Day</h2>
               <p class="deals__banner--content__desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit, <br> sed do eiusmod tempor incididunt ut labore </p>
               <div class="deals__banner--countdown d-flex" data-countdown="Sep 30, 2022 00:00:00"></div>
-              <a class="primary__btn" href="shop.html">Show Collection
+              <a class="primary__btn" href="/shop">Show Collection
                 <svg class="primary__btn--arrow__icon" xmlns="http://www.w3.org/2000/svg" width="20.2" height="12.2" viewBox="0 0 6.2 6.2">
                   <path d="M7.1,4l-.546.546L8.716,6.713H4v.775H8.716L6.554,9.654,7.1,10.2,9.233,8.067,10.2,7.1Z" transform="translate(-4 -4)" fill="currentColor"></path>
                 </svg>
@@ -528,7 +478,7 @@
   <!-- End deals banner section -->
 
   <!-- Start product section -->
-  <section class="product__section section--padding pt-0">
+  <section class="product__section section--padding pt-0" ng-if="dataSeller">
     <div class="container-fluid">
       <div class="section__heading text-center mb-50">
         <h2 class="section__heading--maintitle">Our Best Seller</h2>
@@ -538,9 +488,9 @@
           <div class="swiper-slide" ng-repeat="row in dataSeller">
             <div class="product__items ">
               <div class="product__items--thumbnail">
-                <a class="product__items--link" href="product-details.html">
-                  <img class="product__items--img product__primary--img" src="@{{row.image_first}}" alt="product-img">
-                  <img class="product__items--img product__secondary--img" src="@{{row.image_second}}" alt="product-img">
+                <a class="product__items--link" href="/shop/@{{row.id}}">
+                  <img class="product__items--img product__primary--img" ng-src="@{{row.image_first}}" alt="product-img">
+                  <img class="product__items--img product__secondary--img" ng-src="@{{row.image_second}}" alt="product-img">
                 </a>
                 <div class="product__badge">
                   <span class="product__badge--items sale">Sale</span>
@@ -548,7 +498,7 @@
               </div>
               <div class="product__items--content">
                 <span class="product__items--content__subtitle">Jacket, Women</span>
-                <h3 class="product__items--content__title h4"><a style="height: 52px;" href="product-details.html">@{{row.name}}</a></h3>
+                <h3 class="product__items--content__title h4"><a style="height: 52px;" href="/shop/@{{row.id}}">@{{row.name}}</a></h3>
                 <div class="product__items--price">
                   <span class="current__price">$@{{row.price.price_current == 0 ? row.price.price_origin : row.price.price_current}}</span>
                   <span class="@{{row.price.price_current == 0 ? '' : 'price__divided'}} "></span>
@@ -593,7 +543,7 @@
                 </ul>
                 <ul class="product__items--action d-flex">
                   <li class="product__items--action__list">
-                    <a class="product__items--action__btn add__to--cart" href="cart.html">
+                    <a class="product__items--action__btn add__to--cart" href="/cart">
                       <svg class="product__items--action__btn--svg" xmlns="http://www.w3.org/2000/svg" width="22.51" height="20.443" viewBox="0 0 14.706 13.534">
                         <g transform="translate(0 0)">
                           <g>
@@ -642,7 +592,7 @@
       <div class="row row-cols-md-2 row-cols-1 mb--n28">
         <div class="col mb-28">
           <div class="banner__items position__relative">
-            <a class="banner__items--thumbnail " href="shop.html"><img class="banner__items--thumbnail__img banner__img--max__height" src="/assets/img/banner/banner5.png" alt="banner-img">
+            <a class="banner__items--thumbnail " href="/shop"><img class="banner__items--thumbnail__img banner__img--max__height" src="/assets/img/banner/banner5.png" alt="banner-img">
               <div class="banner__items--content">
                 <span class="banner__items--content__subtitle d-none d-lg-block">Pick Your Items</span>
                 <h2 class="banner__items--content__title h3">Up to 25% Off Order Now</h2>
@@ -653,7 +603,7 @@
         </div>
         <div class="col mb-28">
           <div class="banner__items position__relative">
-            <a class="banner__items--thumbnail " href="shop.html"><img class="banner__items--thumbnail__img banner__img--max__height" src="/assets/img/banner/banner6.png" alt="banner-img">
+            <a class="banner__items--thumbnail " href="/shop"><img class="banner__items--thumbnail__img banner__img--max__height" src="/assets/img/banner/banner6.png" alt="banner-img">
               <div class="banner__items--content">
                 <span class="banner__items--content__subtitle d-none d-lg-block">Special offer</span>
                 <h2 class="banner__items--content__title h3">Up to 35% Off Order Now</h2>
@@ -888,7 +838,7 @@
       <div class="row row-cols-1">
         <div class="col">
           <div class="banner__section--inner position__relative">
-            <a class="banner__items--thumbnail display-block" href="shop.html"><img class="banner__items--thumbnail__img banner__img--height__md display-block" src="/assets/img/banner/banner-bg2.png" alt="banner-img">
+            <a class="banner__items--thumbnail display-block" href="/shop"><img class="banner__items--thumbnail__img banner__img--height__md display-block" src="/assets/img/banner/banner-bg2.png" alt="banner-img">
               <div class="banner__content--style2">
                 <h2 class="banner__content--style2__title text-white">Need Winter Boots? </h2>
                 <p class="banner__content--style2__desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua enim ad minim veniam, quis nostrud exercitation </p>
@@ -998,11 +948,11 @@
             <div class="quickview__product--media product__details--media">
               <div class="product__media--preview  swiper">
                 <div class="swiper-wrapper">
-                  <div class="swiper-slide" ng-repeat="row in images">
+                  <div class="swiper-slide" ng-repeat="row in item.colors[colorIndex].images">
                     <div class="product__media--preview__items">
-                      <a class="product__media--preview__items--link glightbox" data-gallery="product-media-preview" href="@{{row.image}}"><img class="product__media--preview__items--img" src="@{{row.image}}" alt="product-media-img"></a>
+                      <a class="product__media--preview__items--link glightbox" data-gallery="product-media-preview" href="#"><img class="product__media--preview__items--img" ng-src="/assets/img/products/@{{row.image}}" alt="product-media-img"></a>
                       <div class="product__media--view__icon">
-                        <a class="product__media--view__icon--link glightbox" href="@{{row.image}}" data-gallery="product-media-preview" target="_blank">
+                        <a class="product__media--view__icon--link glightbox" href="#" data-gallery="product-media-preview" target="_blank">
                           <svg class="product__media--view__icon--svg" xmlns="http://www.w3.org/2000/svg" width="22.51" height="22.443" viewBox="0 0 512 512">
                             <path d="M221.09 64a157.09 157.09 0 10157.09 157.09A157.1 157.1 0 00221.09 64z" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32"></path>
                             <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="32" d="M338.29 338.29L448 448"></path>
@@ -1015,9 +965,9 @@
               </div>
               <div class="product__media--nav swiper">
                 <div class="swiper-wrapper">
-                  <div class="swiper-slide" ng-repeat="row in images">
+                  <div class="swiper-slide" ng-repeat="row in item.colors[colorIndex].images">
                     <div class="product__media--nav__items">
-                      <img class="product__media--nav__items--img" src="@{{row.image}}" alt="product-nav-img">
+                      <img class="product__media--nav__items--img" ng-src="/assets/img/products/@{{row.image}}" alt="product-nav-img">
                     </div>
                   </div>
                 </div>
@@ -1081,23 +1031,21 @@
                     <fieldset class="variant__input--fieldset">
                       <legend class="product__variant--title mb-8">Color :</legend>
                       <div class="d-flex">
-                        <div style="margin-right: .8rem;" ng-repeat="row in item.color">
-                          <input id="color-red@{{$index}}" name="colorGroup" type="radio" ng-click="pickColor($index)">
-                          <label class="variant__color--value red" for="color-red@{{$index}}" title="Red"><img class="variant__color--value__img" src="@{{color.image[0]}}" alt="variant-color-img"></label>
+                        <div style="margin-right: .8rem;" ng-repeat="row in item.colors">
+                          <input id="color-@{{$index}}" name="colorGroup" type="radio" ng-click="pickColor($index)">
+                          <label class="variant__color--value red" for="color-@{{$index}}" title="@{{row.color}}"><img class="variant__color--value__img" ng-src="/assets/img/products/@{{row.images[0].image}}" alt="variant-color-img"></label>
                         </div>
 
                       </div>
                     </fieldset>
                   </div>
                   <div class="product__variant--list mb-15">
-                    <fieldset class="variant__input--fieldset weight">
-                      <legend class="product__variant--title mb-8">Weight :</legend>
-                      <input id="weight1" name="weight" type="radio" checked>
-                      <label class="variant__size--value red" for="weight1">5 kg</label>
-                      <input id="weight2" name="weight" type="radio">
-                      <label class="variant__size--value red" for="weight2">3 kg</label>
-                      <input id="weight3" name="weight" type="radio">
-                      <label class="variant__size--value red" for="weight3">2 kg</label>
+                    <legend class="product__variant--title mb-8">Sizes :</legend>
+                    <fieldset class="variant__input--fieldset weight d-flex">
+                      <div style="margin-right: .25rem;" ng-repeat="row in item.colors[colorIndex].sizes">
+                        <input id="@{{row.size}}" name="weight" type="radio">
+                        <label class="variant__size--value red" for="@{{row.size}}">@{{row.size}}</label>
+                      </div>
                     </fieldset>
                   </div>
                   <div class="quickview__variant--list quantity d-flex align-items-center mb-15">
@@ -1167,5 +1115,5 @@
 @stop
 
 @section('js')
-<script src="/assets/js/controllers/ProductController.js"></script>
+<script src="/assets/js/controllers/homeController.js"></script>
 @stop

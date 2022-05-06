@@ -1,6 +1,6 @@
 @extends('_layout_admin')
 @section('content')
-<div ng-controller="ProductController">
+<div ng-controller="productsController">
   <div class="main-panel">
     <div class="main-content">
       <div class="content-wrapper">
@@ -97,9 +97,9 @@
       </div>
     </div>
 
-    
+
     @include('includes.admin.footer')
-    
+
   </div>
   <div class="modal fade text-left" id="large" tabindex="-1" role="dialog" aria-labelledby="myModalLabel17" style="display:none; z-index:99999" aria-hidden="true">
     <div class="modal-dialog modal-xl" role="document">
@@ -111,7 +111,7 @@
           </button>
         </div>
         <div class="modal-body">
-          <div class="form-body step js-steps-content" id="step1">
+          <div class="form-body">
             <div class="row">
               <div class="col-xl-4 col-lg-6 col-md-12 mb-1">
                 <fieldset class="form-group">
@@ -165,46 +165,137 @@
                   <input type="text" class="form-control" id="made_in" ng-model="item.made_in" require>
                 </fieldset>
               </div>
-              <div class="col-xl-8 col-lg-6 col-md-12 mb-1" ng-if="id == 0">
+              <div class="col-xl-8 col-lg-6 col-md-12 mb-1">
                 <fieldset class="form-group">
-                  <label for="colors">Colors</label>
-                  <div class="case-sensitive form-control tagging" id="colors-box" data-tags-input-name="case-sensitive"></div>
-                </fieldset>
-                <fieldset class="form-group">
-                  <div for="">Choose color</div>
-                  <div class="btn-group">
-                    <button class="btn btn-primary dropdown-toggle mb-0" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      Colors list
-                    </button>
-                    <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 38px, 0px);">
-                      <a class="dropdown-item" ng-repeat="row in colors" ng-click="chooseColor(row.color)">@{{row.color}}</a>
-                    </div>
-                  </div>
+                  <label for="description">Description</label>
+                  <textarea name="des" class="form-control" id="description" ng-model="item.description" rows="5"></textarea>
                 </fieldset>
               </div>
-              <div class="col-xl-4 col-lg-6 col-md-12 mb-1">
-                <fieldset class="form-group">
-                  <label for="img_file1_upid">First image </label>
-                  <input type="file" accept="image/*" name="file_img" id="img_file1_upid">
-                  <div class="row">
-                    <img ng-if="item.image_first != '' || item.image_first!=null" ng-src="/assets/img/products/@{{item.image_first}}" id="img_prv1" style="max-width: 150px;max-height: 150px" class="img-thumbnail" alt="">
-                  </div>
-                </fieldset>
+            </div>
+          </div>
+          <div class="form-body border-top d-flex justify-content-between flex-wrap pt-3 align-items-start">
+            <div class="col-md-6 border-right pr-1">
+              <div class="row">
+                <div class="col-xl-4 col-lg-4 col-6">
+                  <h4>Variants</h4>
+                </div>
+                <div class="col-xl-4 col-lg-4 col-6 mb-1">
+                  <fieldset class="form-group">
+                    <input type="text" class="form-control" id="color" ng-model="color.color" placeholder="Color">
+                  </fieldset>
+                </div>
+                <div class="col-xl-4 col-lg-4 col-6 mb-1">
+                  <button class="btn btn-primary" ng-click="addColor()">Add</button>
+                  <button class="btn btn-info" ng-click="updateColor()">Update</button>
+                </div>
               </div>
-              <div class="col-xl-4 col-lg-6 col-md-12 mb-1">
-                <fieldset class="form-group">
-                  <label for="img_file2_upid">Second image </label>
-                  <input type="file" accept="image/*" name="file_img" id="img_file2_upid">
-                  <div class="row">
-                    <img ng-if="item.image_second != '' || item.image_second!=null" ng-src="/assets/img/products/@{{item.image_second}}" id="img_prv2" style="max-width: 150px;max-height: 150px" class="img-thumbnail" alt="">
-                  </div>
-                </fieldset>
+              <!-- Colors -->
+              <table class="table table-hover text-center mb-3" ng-if="colors.length > 0">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Color</th>
+                    <th style="width: 150px">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="row in colors">
+                    <td>@{{$index + serial}}</td>
+                    <td>@{{row.color}}</td>
+                    <td style="width: 150px !important">
+                      <a class="info p-0 mr-2" data-original-title="" title="Details" data-toggle="tooltip" ng-click="showDetails(row, $index, $event)">
+                        <i class="ft-eye font-medium-3"></i>
+                      </a>
+                      <a class="success p-0 mr-2" data-original-title="" title="Edit" data-toggle="tooltip" ng-click="openEditColor(row, $index)">
+                        <i class="fa fa-pencil font-medium-3"></i>
+                      </a>
+                      <a class="danger p-0 mr-2" data-original-title="" title="Remove" data-toggle="tooltip" ng-click="removeColor(row, $index)">
+                        <i class="fa fa-trash-o font-medium-3"></i>
+                      </a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="py-3 border-top d-flex align-items-start justify-content-between" ng-if="images">
+                <h5>Images of variant</h5>
+                <div>
+                  <input type="file" id="file" name='file' accept="image/*" onchange="angular.element(this).scope().chooseImages(event)" multiple />
+                  <!-- <input type="file" accept="image/*" name="file_img" id="img_files" class="w-100" multiple ng-class="images ? 'd-block' : 'd-none'" ng-change="chooseImages($event)" ng-model="ddddd"> -->
+                </div>
               </div>
-              <div class="col-xl-12 col-lg-12 col-md-12 mb-1">
-                <fieldset class="form-group">
-                  <label for="description">Mô tả</label>
-                  <textarea name="des" class="form-control" id="description" ng-model="item.description" rows="8"></textarea>
-                </fieldset>
+              <!-- Images -->
+              <table class="table text-center " ng-if="images.length > 0">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Image</th>
+                    <th style="width: 100px !important">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="row in images">
+                    <td>@{{$index + serial}}</td>
+                    <td>
+                      <img ng-src="/assets/img/products/@{{row.image}}" alt="" style="width:50px;height:60px">
+                    </td>
+                    <td style="width: 100px !important">
+                      <label for="file_single" class="success p-0 mr-2" data-original-title="" title="Edit" data-toggle="tooltip" ng-click="updateImage(row, $index)">
+                        <i class="fa fa-pencil font-medium-3"></i>
+                      </label>
+                      <input type="file" id="file_single" name='file' accept="image/*" onchange="angular.element(this).scope().chooseImage(event)" style="display: none"/>
+                      <a class="danger p-0 mr-2" data-original-title="" title="Remove" data-toggle="tooltip" ng-click="removeImage(row, $index)">
+                        <i class="fa fa-trash-o font-medium-3"></i>
+                      </a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+            </div>
+            <div class="pl-1 col-md-6" ng-if="sizes">
+              <div class="row">
+                <div class="col-xl-2 col-lg-3 col-6">
+                  <h5>Size</h5>
+                </div>
+                <div class="col-xl-3 col-lg-3 col-6 mb-1">
+                  <fieldset class="form-group">
+                    <input type="text" class="form-control" id="size" ng-model="size.size" placeholder="Size">
+                  </fieldset>
+                </div>
+                <div class="col-xl-3 col-lg-3 col-6 mb-1">
+                  <fieldset class="form-group">
+                    <input type="number" class="form-control" id="quantity" ng-model="size.quantity" placeholder="Quantity">
+                  </fieldset>
+                </div>
+                <div class="col-xl-4 col-lg-3 col-6 mb-1">
+                  <button class="btn btn-danger" ng-click="addSize()">Add</button>
+                  <button class="btn btn-info" ng-click="updateSize()">Update</button>
+                </div>
+                <table class="table table-hover text-center mb-3" ng-if="sizes.length > 0">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Size</th>
+                      <th>Quantity</th>
+                      <th style="width: 100px">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-repeat="row in sizes">
+                      <td>@{{$index + serial}}</td>
+                      <td>@{{row.size}}</td>
+                      <td>@{{row.quantity}}</td>
+                      <td style="width: 100px !important">
+                        <a class="success p-0 mr-2" data-original-title="" title="Edit" data-toggle="tooltip" ng-click="openEditSize(row, $index)">
+                          <i class="fa fa-pencil font-medium-3"></i>
+                        </a>
+                        <a class="danger p-0 mr-2" data-original-title="" title="Remove" data-toggle="tooltip" ng-click="removeSize(row, $index)">
+                          <i class="fa fa-trash-o font-medium-3"></i>
+                        </a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
             </div>
           </div>
@@ -221,5 +312,5 @@
 
 @section('js')
 <!-- <script src="/assets/admin/js/wizard-step.js"></script> -->
-<script src="/assets/js/controllers/ProductController.js"></script>
+<script src="/assets/js/controllers/productsController.js"></script>
 @stop

@@ -33,8 +33,8 @@ class product_colors extends Model
 
     public function updateColor($request, $id) {
         $color = product_colors::find($id);
-        $color->color = $request->color;
-        $color->hex = $request->hex;
+        $color->color = $request['color'];
+        $color->hex = $request['hex'] ?? null;
         $color->save();
         return $color;
     }

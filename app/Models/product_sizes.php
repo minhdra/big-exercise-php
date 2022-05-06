@@ -21,8 +21,8 @@ class product_sizes extends Model
 
     public function updateSize($request, $id) {
         $db = product_sizes::find($id);
-        $db->size = $request->size;
-        $db->quantity = $request->quantity;
+        $db->size = $request['size'];
+        $db->quantity = $request['quantity'];
         $db->save();
         return $db;
     }

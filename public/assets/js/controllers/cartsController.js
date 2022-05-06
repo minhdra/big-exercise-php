@@ -1,5 +1,5 @@
-const nameController = 'carts/';
-const nameSelf = 'cart/';
+const nameCart = 'carts/';
+const nameCartDetail = 'cart_details/';
 
 app.controller('cartsController', cartsController);
 function cartsController($scope, $http) {
@@ -49,7 +49,7 @@ function cartsController($scope, $http) {
   };
   // Get all carts
   const loadData = () => {
-    connect_api('GET', apiBase + nameController, null, function (res) {
+    connect_api('GET', apiBase + nameCart, null, function (res) {
       $scope.data = res.data;
     });
   };
@@ -66,7 +66,7 @@ function cartsController($scope, $http) {
       $scope.modalTitle = 'Edit a cart';
       $http({
         method: 'GET',
-        url: apiBase + nameController + id,
+        url: apiBase + nameCart + id,
       }).then(
         (res) => {
           $scope.item = res.data; // item is already
@@ -84,13 +84,13 @@ function cartsController($scope, $http) {
     // is create
     if ($scope.id == 0)
     {
-      connect_api('POST', apiBase + nameController, $scope.item, function (res) {
+      connect_api('POST', apiBase + nameCart, $scope.item, function (res) {
         $scope.data = [res.data, ...$scope.data];
         $('#large').modal('hide');
       })
     } else
     { // is update
-      connect_api('PUT', apiBase + nameController + $scope.id, $scope.item, function (res) {
+      connect_api('PUT', apiBase + nameCart + $scope.id, $scope.item, function (res) {
         const index = $scope.data.findIndex(item => item.id == $scope.id);
         $scope.data.splice(index, 1);
         $scope.data = [res.data, ...$scope.data];
@@ -105,7 +105,7 @@ function cartsController($scope, $http) {
     const confirm = 'Are you sure you want to?';
     if (window.confirm(confirm))
     {
-      connect_api('DELETE', apiBase + nameController + id, null, function (res) {
+      connect_api('DELETE', apiBase + nameCart + id, null, function (res) {
         const index = $scope.data.findIndex(item => item.id == id);
         $scope.data.splice(index, 1);
         showAlert('success');

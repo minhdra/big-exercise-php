@@ -1,6 +1,6 @@
 @extends('_layout_admin')
 @section('content')
-<div ng-controller="productsController as p">
+<div ng-controller="ProductController">
   <div class="main-panel">
     <div class="main-content">
       <div class="content-wrapper">
@@ -97,9 +97,9 @@
       </div>
     </div>
 
-
+    
     @include('includes.admin.footer')
-
+    
   </div>
   <div class="modal fade text-left" id="large" tabindex="-1" role="dialog" aria-labelledby="myModalLabel17" style="display:none; z-index:99999" aria-hidden="true">
     <div class="modal-dialog modal-xl" role="document">
@@ -111,146 +111,8 @@
           </button>
         </div>
         <div class="modal-body">
-          <div class="form-body">
+          <div class="form-body step js-steps-content" id="step1">
             <div class="row">
-              <div class="col-xl-4 col-lg-6 col-md-12 mb-1">
-                <fieldset class="form-group">
-                  <label for="item-name">Name</label>
-                  <input type="text" class="form-control" id="item-name" ng-model="item.name" require>
-                </fieldset>
-              </div>
-              <div class="col-xl-4 col-lg-6 col-md-12 mb-1">
-                <fieldset class="form-group">
-                  <label for="category">Category</label>
-                  <select class="form-control" name="category" id="category" ng-model="item.category_id">
-                    <option ng-repeat="option in categories" value="@{{option.id}}">@{{option.name}}</option>
-                  </select>
-                </fieldset>
-              </div>
-              <div class="col-xl-4 col-lg-6 col-md-12 mb-1">
-                <fieldset class="form-group">
-                  <label for="gender">Gender</label>
-                  <select class="form-control" name="gender" id="gender" ng-model="item.gender">
-                    <option value="1">Male</option>
-                    <option value="0">Female</option>
-                    <option value="2">Others</option>
-                  </select>
-                </fieldset>
-              </div>
-              <div class="col-xl-4 col-lg-6 col-md-12 mb-1">
-                <fieldset class="form-group">
-                  <label for="brand">Brand</label>
-                  <select class="form-control" name="brand" id="brand" ng-model="item.brand_id">
-                    <option ng-repeat="option in brands" value="@{{option.id}}">@{{option.name}}</option>
-                  </select>
-                </fieldset>
-              </div>
-              <div class="col-xl-4 col-lg-6 col-md-12 mb-1">
-                <fieldset class="form-group">
-                  <label for="supplier">Supplier</label>
-                  <select class="form-control" name="supplier" id="supplier" ng-model="item.supplier_id">
-                    <option ng-repeat="option in suppliers" value="@{{option.id}}">@{{option.name}}</option>
-                  </select>
-                </fieldset>
-              </div>
-              <div class="col-xl-4 col-lg-6 col-md-12 mb-1">
-                <fieldset class="form-group">
-                  <label for="price_origin">Price ($)</label>
-                  <input type="number" class="form-control" id="price_origin" ng-model="item.price.price_origin" min="0" require>
-                </fieldset>
-              </div>
-              <div class="col-xl-4 col-lg-6 col-md-12 mb-1">
-                <fieldset class="form-group">
-                  <label for="made_in">Made in</label>
-                  <input type="text" class="form-control" id="made_in" ng-model="item.made_in" require>
-                </fieldset>
-              </div>
-              <div class="col-xl-8 col-lg-6 col-md-12 mb-1">
-                <fieldset class="form-group">
-                  <label for="description">Description</label>
-                  <textarea name="des" class="form-control" id="description" ng-model="item.description" rows="5"></textarea>
-                </fieldset>
-              </div>
-            </div>
-          </div>
-          <div class="form-body border-top d-flex justify-content-between flex-wrap pt-3 align-items-start">
-            <div class="col-md-6 border-right pr-1">
-              <div class="row">
-                <div class="col-xl-4 col-lg-4 col-6">
-                  <h4>Variants</h4>
-                </div>
-                <div class="col-xl-4 col-lg-4 col-6 mb-1">
-                  <fieldset class="form-group">
-                    <input type="text" class="form-control" id="color" ng-model="color.color" placeholder="Color" required>
-                  </fieldset>
-                </div>
-                <div class="col-xl-4 col-lg-4 col-6 mb-1">
-                  <button class="btn btn-primary" ng-click="addColor()">Add</button>
-                  <button class="btn btn-info" ng-click="updateColor()">Update</button>
-                </div>
-              </div>
-              <!-- Colors -->
-              <table class="table table-hover text-center mb-3" ng-if="colors.length > 0">
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>Color</th>
-                    <th style="width: 150px">Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr ng-repeat="row in colors">
-                    <td>@{{$index + serial}}</td>
-                    <td>@{{row.color}}</td>
-                    <td style="width: 150px !important">
-                      <a class="info p-0 mr-2" data-original-title="" title="Details" data-toggle="tooltip" ng-click="showDetails(row, $index)">
-                        <i class="ft-eye font-medium-3"></i>
-                      </a>
-                      <a class="success p-0 mr-2" data-original-title="" title="Edit" data-toggle="tooltip" ng-click="openEditColor(row, $index)">
-                        <i class="fa fa-pencil font-medium-3"></i>
-                      </a>
-                      <a class="danger p-0 mr-2" data-original-title="" title="Remove" data-toggle="tooltip" ng-click="removeColor($index)">
-                        <i class="fa fa-trash-o font-medium-3"></i>
-                      </a>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-              <div class="py-3 border-top d-flex align-items-start justify-content-between">
-                <h5>Images of variant</h5>
-                <div>
-                  <input type="file" accept="image/*" name="file_img" id="img_files" class="w-100" multiple ng-class="images ? 'd-block' : 'd-none'">
-                </div>
-              </div>
-              <!-- Images -->
-              <table class="table text-center ">
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>Image</th>
-                    <th style="width: 100px !important">Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr ng-repeat="row in $scope.images">
-                    <td>@{{$index + serial}}</td>
-                    <td>
-                      <img ng-src="/assets/img/products/@{{row}}" alt="" style="width:50px;height:60px">
-                    </td>
-                    <td style="width: 100px !important">
-                      <a class="success p-0 mr-2" data-original-title="" title="Edit" data-toggle="tooltip" ng-click="openModal('image', row.id)">
-                        <i class="fa fa-pencil font-medium-3"></i>
-                      </a>
-                      <a class="danger p-0 mr-2" data-original-title="" title="Remove" data-toggle="tooltip" ng-click="remove('image', row.id)">
-                        <i class="fa fa-trash-o font-medium-3"></i>
-                      </a>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-
-            </div>
-            <div class="row pl-1  col-md-6">
               <div class="col-xl-4 col-lg-6 col-md-12 mb-1">
                 <fieldset class="form-group">
                   <label for="item-name">Name</label>
@@ -320,6 +182,24 @@
                   </div>
                 </fieldset>
               </div>
+              <div class="col-xl-4 col-lg-6 col-md-12 mb-1">
+                <fieldset class="form-group">
+                  <label for="img_file1_upid">First image </label>
+                  <input type="file" accept="image/*" name="file_img" id="img_file1_upid">
+                  <div class="row">
+                    <img ng-if="item.image_first != '' || item.image_first!=null" ng-src="/assets/img/products/@{{item.image_first}}" id="img_prv1" style="max-width: 150px;max-height: 150px" class="img-thumbnail" alt="">
+                  </div>
+                </fieldset>
+              </div>
+              <div class="col-xl-4 col-lg-6 col-md-12 mb-1">
+                <fieldset class="form-group">
+                  <label for="img_file2_upid">Second image </label>
+                  <input type="file" accept="image/*" name="file_img" id="img_file2_upid">
+                  <div class="row">
+                    <img ng-if="item.image_second != '' || item.image_second!=null" ng-src="/assets/img/products/@{{item.image_second}}" id="img_prv2" style="max-width: 150px;max-height: 150px" class="img-thumbnail" alt="">
+                  </div>
+                </fieldset>
+              </div>
               <div class="col-xl-12 col-lg-12 col-md-12 mb-1">
                 <fieldset class="form-group">
                   <label for="description">Mô tả</label>
@@ -341,5 +221,5 @@
 
 @section('js')
 <!-- <script src="/assets/admin/js/wizard-step.js"></script> -->
-<script src="/assets/js/controllers/productsController.js"></script>
+<script src="/assets/js/controllers/ProductController.js"></script>
 @stop

@@ -21,6 +21,7 @@ use App\Http\Controllers\api\product_imagesController;
 use App\Http\Controllers\api\product_sizesController;
 use App\Http\Controllers\api\slidesController;
 use App\Http\Controllers\api\suppliersController;
+use App\Http\Middleware\CheckLogin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -66,5 +67,8 @@ Route::prefix('v1')->group(function () {
     Route::resource('import_bill_details', import_bill_detailsController::class);
     Route::resource('magazines', magazinesController::class);
     Route::resource('slides', slidesController::class);
+    Route::post('slide/upload', [slidesController::class, 'uploadFile']);
     Route::resource('suppliers', suppliersController::class);
+
+    Route::post('customers/login', [customersController::class, 'login']);
 });

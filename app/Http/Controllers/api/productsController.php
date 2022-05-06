@@ -24,9 +24,9 @@ class productsController extends Controller
     public function index()
     {
         $products = products::with('Colors')->with('Images')->with('Price')->with('Categories')->with('Brands')->with('supplier')->where('is_active', 1)->get();
-        $categories = categories::all();
-        $brands = brands::all();
-        $suppliers = suppliers::all();
+        $categories = categories::where('is_active', 1)->get();
+        $brands = brands::where('is_active', 1)->get();
+        $suppliers = suppliers::where('is_active', 1)->get();
         $colors = DB::table('product_colors')->select('product_colors.color')->distinct()->get();
         return ['products' => $products, 'categories' => $categories, 'brands' => $brands, 'colors' => $colors, 'suppliers' => $suppliers];
     }
@@ -166,28 +166,51 @@ class productsController extends Controller
         $product->description = $request->description;
         $product->category_id = $request->category_id;
         $product->supplier_id = $request->supplier_id;
+        $product->brand_id = $request->brand_id;
         $product->made_in = $request->made_in;
         $product->gender = $request->gender;
-        $product->brand_id = $request->brand_id;
         $product->save();
 
-        $price = product_prices::find($request->price['id']);
-        // $price->product_id = $product->id;
-        $price->price_origin = $request->price['price_origin'];
-        // $price->price_current = $request->price->price_current ? $request->price->price_current : 0;
-        $price->save();
+        $price = new product_prices();
+        $price_id = $request->price['id'] ?? null;
+        if($price_id) $price->updatePrice($request->price, $price_id);
+        else $price->insertPrice($request->price['price_origin'] ?? 0, $id);
+
+        $color = new product_colors();
+        $size = new product_sizes();
+        $image = new product_images();
+
+        $colors = $request->colors;
+        foreach ($colors as $c) {
+            $color_id = $c['id'] ?? null;
+            if($color_id) {
+                $color->updateColor($c, $color_id);
+            }
+            else {
+                $color_id = $color->insertColor($c, $id)->id;
+            }
+
+            $sizes = $c['sizes'] ?? [];
+            $images = $c['images'] ?? [];
+
+            foreach ($sizes as $s) {
+                $size_id = $s['id'] ?? null;
+                if($size_id) 
+                    $size->updateSize($s, $size_id);
+                else
+                    $size->insertSize($s, $color_id);
+            }
+
+            foreach ($images as $i) {
+                $image_id = $i['id'] ?? null;
+                if($image_id) 
+                    $image->updateImage($i, $image_id);
+                else
+                    $image->insertImage($i, $color_id);
+            }
+        }
 
         return $this->show($id);
-
-        // $colors = $request->colors;
-        // foreach ($colors as $item) {
-        //     $color = product_colors::find($item->id);
-        //     // $color = new product_colors();
-        //     // $color->product_id = $product->id;
-        //     $color->color = $item->color;
-        //     $color->hex = $item->hex;
-        //     $color->save();
-        // }
     }
 
     /**

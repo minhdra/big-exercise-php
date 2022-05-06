@@ -70,6 +70,7 @@ function slidesController($scope, $http) {
       }).then(
         (res) => {
           $scope.item = res.data; // item is already
+          $scope.image = $scope.item.image;
           // console.log($scope.item);
         },
         (error) => console.log(error)
@@ -137,7 +138,7 @@ function slidesController($scope, $http) {
       type: 'post',
       contentType: false,
       processData: false,
-      url: apiBase + 'brand/' + 'upload',
+      url: apiBase + nameSelf + 'upload',
       data: postData,
       success: function (res) {
         console.log('success');

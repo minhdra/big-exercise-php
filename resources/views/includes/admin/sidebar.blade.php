@@ -13,7 +13,6 @@
                 <li><a href="/admin/categories" class="menu-item">Categories manager</a>
                 <li><a href="/admin/products" class="menu-item">Products manager</a>
                 </li>
-                <li><a href="/admin/product_colors" class="menu-item">Product variant manager</a>
                 <li><a href="/admin/discounts" class="menu-item">Discounts manager</a>
                 </li>
               </ul>

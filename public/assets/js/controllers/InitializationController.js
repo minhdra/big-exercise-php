@@ -36,3 +36,9 @@ function convertDate(date) {
     date.getMinutes();
   return result;
 }
+
+function checkCustomerLogin() {
+  const request = JSON.parse(sessionStorage.getItem('customer')) || {};
+
+  return request;
+}
