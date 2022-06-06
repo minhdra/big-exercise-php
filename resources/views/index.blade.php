@@ -41,7 +41,7 @@
       <div class="row mb--n28">
         <div class="col-lg-5 col-md-order mb-28">
           <div class="banner__items">
-            <a class="banner__items--thumbnail position__relative" href="/shop"><img class="banner__items--thumbnail__img" src="/assets/img/banner/banner1.png" alt="banner-img">
+            <a class="banner__items--thumbnail position__relative" href="{{route('shop')}}"><img class="banner__items--thumbnail__img" src="/assets/img/banner/banner1.png" alt="banner-img">
               <div class="banner__items--content">
                 <span class="banner__items--content__subtitle">17% Discount</span>
                 <h2 class="banner__items--content__title h3">Spring Collection <br>
@@ -59,7 +59,7 @@
           <div class="row row-cols-lg-2 row-cols-sm-2 row-cols-1">
             <div class="col mb-28">
               <div class="banner__items">
-                <a class="banner__items--thumbnail position__relative" href="/shop"><img class="banner__items--thumbnail__img" src="/assets/img/banner/banner2.png" alt="banner-img">
+                <a class="banner__items--thumbnail position__relative" href="{{route('shop')}}"><img class="banner__items--thumbnail__img" src="/assets/img/banner/banner2.png" alt="banner-img">
                   <div class="banner__items--content">
                     <span class="banner__items--content__subtitle text__secondary">Shop Women</span>
                     <h2 class="banner__items--content__title h3">Up to 70% Off & <br>
@@ -75,7 +75,7 @@
             </div>
             <div class="col mb-28">
               <div class="banner__items">
-                <a class="banner__items--thumbnail position__relative" href="/shop"><img class="banner__items--thumbnail__img" src="/assets/img/banner/banner3.png" alt="banner-img">
+                <a class="banner__items--thumbnail position__relative" href="{{route('shop')}}"><img class="banner__items--thumbnail__img" src="/assets/img/banner/banner3.png" alt="banner-img">
                   <div class="banner__items--content">
                     <span class="banner__items--content__subtitle">Shop Women</span>
                     <h2 class="banner__items--content__title h3">Free Shipping Over <br>
@@ -91,7 +91,7 @@
             </div>
           </div>
           <div class="banner__items">
-            <a class="banner__items--thumbnail position__relative" href="/shop"><img class="banner__items--thumbnail__img banner__img--max__height" src="/assets/img/banner/banner4.png" alt="banner-img">
+            <a class="banner__items--thumbnail position__relative" href="{{route('shop')}}"><img class="banner__items--thumbnail__img banner__img--max__height" src="/assets/img/banner/banner4.png" alt="banner-img">
               <div class="banner__items--content">
                 <span class="banner__items--content__subtitle">25% Discount</span>
                 <h2 class="banner__items--content__title h3">Leather Saddle <br>
@@ -110,17 +110,13 @@
   </section>
   <!-- End banner section -->
 
+  <!-- Newest products -->
   <!-- Start product section -->
   <section class="product__section section--padding pt-0">
     <div class="container-fluid">
       <div class="section__heading text-center mb-35">
-        <h2 class="section__heading--maintitle">New Products</h2>
+        <h2 class="section__heading--maintitle">Newest Products</h2>
       </div>
-      <ul class="product__tab--one product__tab--primary__btn d-flex justify-content-center mb-50">
-        <li class="product__tab--primary__btn__list active" data-toggle="tab" data-target="#featured">Featured </li>
-        <li class="product__tab--primary__btn__list" data-toggle="tab" data-target="#trending">Trending </li>
-        <li class="product__tab--primary__btn__list" data-toggle="tab" data-target="#newarrival">New Arrival </li>
-      </ul>
       <div class="tab_content">
         <div id="featured" class="tab_pane active show">
           <div class="product__section--inner">
@@ -129,215 +125,15 @@
                 <div class="product__items ">
                   <div class="product__items--thumbnail">
                     <a class="product__items--link" href="/shop/@{{row.id}}">
-                      <img class="product__items--img product__primary--img" ng-src="/assets/img/products/@{{row.images[0].image}}" alt="product-img">
-                      <img class="product__items--img product__secondary--img" ng-src="/assets/img/products/@{{row.images[1].image}}" alt="product-img">
+                      <img class="product__items--img product__primary--img" ng-src="/assets/img/products/@{{row.colors[0].images[0].image}}" alt="product-img">
+                      <img class="product__items--img product__secondary--img" ng-src="/assets/img/products/@{{row.colors[0].images[1].image}}" alt="product-img">
                     </a>
                     <div class="product__badge">
                       <span class="product__badge--items sale">Sale</span>
                     </div>
                   </div>
                   <div class="product__items--content">
-                    <span class="product__items--content__subtitle">@{{row.categories.name}}</span>
-                    <h3 class="product__items--content__title h4"><a href="/shop/@{{row.id}}" style="height: 52px;">@{{row.name}}</a></h3>
-                    <div class="product__items--price">
-                      <span class="current__price">$@{{row.price.price_current == 0 ? row.price.price_origin : row.price.price_current}}</span>
-                      <span class="@{{row.price.price_current == 0 ? '' : 'price__divided'}} "></span>
-                      <span class="old__price">@{{row.price.price_current == 0 ? '' : '$' + row.price.price_origin}}</span>
-                    </div>
-                    <ul class="rating product__rating d-flex">
-                      <li class="rating__list">
-                        <span class="rating__list--icon">
-                          <svg class="rating__list--icon__svg" xmlns="http://www.w3.org/2000/svg" width="14.105" height="14.732" viewBox="0 0 10.105 9.732">
-                            <path data-name="star - Copy" d="M9.837,3.5,6.73,3.039,5.338.179a.335.335,0,0,0-.571,0L3.375,3.039.268,3.5a.3.3,0,0,0-.178.514L2.347,6.242,1.813,9.4a.314.314,0,0,0,.464.316L5.052,8.232,7.827,9.712A.314.314,0,0,0,8.292,9.4L7.758,6.242l2.257-2.231A.3.3,0,0,0,9.837,3.5Z" transform="translate(0 -0.018)" fill="currentColor"></path>
-                          </svg>
-                        </span>
-                      </li>
-                      <li class="rating__list">
-                        <span class="rating__list--icon">
-                          <svg class="rating__list--icon__svg" xmlns="http://www.w3.org/2000/svg" width="14.105" height="14.732" viewBox="0 0 10.105 9.732">
-                            <path data-name="star - Copy" d="M9.837,3.5,6.73,3.039,5.338.179a.335.335,0,0,0-.571,0L3.375,3.039.268,3.5a.3.3,0,0,0-.178.514L2.347,6.242,1.813,9.4a.314.314,0,0,0,.464.316L5.052,8.232,7.827,9.712A.314.314,0,0,0,8.292,9.4L7.758,6.242l2.257-2.231A.3.3,0,0,0,9.837,3.5Z" transform="translate(0 -0.018)" fill="currentColor"></path>
-                          </svg>
-                        </span>
-                      </li>
-                      <li class="rating__list">
-                        <span class="rating__list--icon">
-                          <svg class="rating__list--icon__svg" xmlns="http://www.w3.org/2000/svg" width="14.105" height="14.732" viewBox="0 0 10.105 9.732">
-                            <path data-name="star - Copy" d="M9.837,3.5,6.73,3.039,5.338.179a.335.335,0,0,0-.571,0L3.375,3.039.268,3.5a.3.3,0,0,0-.178.514L2.347,6.242,1.813,9.4a.314.314,0,0,0,.464.316L5.052,8.232,7.827,9.712A.314.314,0,0,0,8.292,9.4L7.758,6.242l2.257-2.231A.3.3,0,0,0,9.837,3.5Z" transform="translate(0 -0.018)" fill="currentColor"></path>
-                          </svg>
-                        </span>
-                      </li>
-                      <li class="rating__list">
-                        <span class="rating__list--icon">
-                          <svg class="rating__list--icon__svg" xmlns="http://www.w3.org/2000/svg" width="14.105" height="14.732" viewBox="0 0 10.105 9.732">
-                            <path data-name="star - Copy" d="M9.837,3.5,6.73,3.039,5.338.179a.335.335,0,0,0-.571,0L3.375,3.039.268,3.5a.3.3,0,0,0-.178.514L2.347,6.242,1.813,9.4a.314.314,0,0,0,.464.316L5.052,8.232,7.827,9.712A.314.314,0,0,0,8.292,9.4L7.758,6.242l2.257-2.231A.3.3,0,0,0,9.837,3.5Z" transform="translate(0 -0.018)" fill="currentColor"></path>
-                          </svg>
-                        </span>
-                      </li>
-                      <li class="rating__list">
-                        <span class="rating__list--icon">
-                          <svg class="rating__list--icon__svg" xmlns="http://www.w3.org/2000/svg" width="14.105" height="14.732" viewBox="0 0 10.105 9.732">
-                            <path data-name="star - Copy" d="M9.837,3.5,6.73,3.039,5.338.179a.335.335,0,0,0-.571,0L3.375,3.039.268,3.5a.3.3,0,0,0-.178.514L2.347,6.242,1.813,9.4a.314.314,0,0,0,.464.316L5.052,8.232,7.827,9.712A.314.314,0,0,0,8.292,9.4L7.758,6.242l2.257-2.231A.3.3,0,0,0,9.837,3.5Z" transform="translate(0 -0.018)" fill="currentColor"></path>
-                          </svg>
-                        </span>
-                      </li>
-
-                    </ul>
-                    <ul class="product__items--action d-flex">
-                      <li class="product__items--action__list">
-                        <a class="product__items--action__btn add__to--cart" href="/shop/@{{row.id}}">
-                          <svg class="product__items--action__btn--svg" xmlns="http://www.w3.org/2000/svg" width="22.51" height="20.443" viewBox="0 0 14.706 13.534">
-                            <g transform="translate(0 0)">
-                              <g>
-                                <path data-name="Path 16787" d="M4.738,472.271h7.814a.434.434,0,0,0,.414-.328l1.723-6.316a.466.466,0,0,0-.071-.4.424.424,0,0,0-.344-.179H3.745L3.437,463.6a.435.435,0,0,0-.421-.353H.431a.451.451,0,0,0,0,.9h2.24c.054.257,1.474,6.946,1.555,7.33a1.36,1.36,0,0,0-.779,1.242,1.326,1.326,0,0,0,1.293,1.354h7.812a.452.452,0,0,0,0-.9H4.74a.451.451,0,0,1,0-.9Zm8.966-6.317-1.477,5.414H5.085l-1.149-5.414Z" transform="translate(0 -463.248)" fill="currentColor"></path>
-                                <path data-name="Path 16788" d="M5.5,478.8a1.294,1.294,0,1,0,1.293-1.353A1.325,1.325,0,0,0,5.5,478.8Zm1.293-.451a.452.452,0,1,1-.431.451A.442.442,0,0,1,6.793,478.352Z" transform="translate(-1.191 -466.622)" fill="currentColor"></path>
-                                <path data-name="Path 16789" d="M13.273,478.8a1.294,1.294,0,1,0,1.293-1.353A1.325,1.325,0,0,0,13.273,478.8Zm1.293-.451a.452.452,0,1,1-.431.451A.442.442,0,0,1,14.566,478.352Z" transform="translate(-2.875 -466.622)" fill="currentColor"></path>
-                              </g>
-                            </g>
-                          </svg>
-                          <span class="add__to--cart__text"> + Add to cart</span>
-                        </a>
-                      </li>
-                      <li class="product__items--action__list">
-                        <a class="product__items--action__btn" href="/wishlist">
-                          <svg class="product__items--action__btn--svg" xmlns="http://www.w3.org/2000/svg" width="25.51" height="23.443" viewBox="0 0 512 512">
-                            <path d="M352.92 80C288 80 256 144 256 144s-32-64-96.92-64c-52.76 0-94.54 44.14-95.08 96.81-1.1 109.33 86.73 187.08 183 252.42a16 16 0 0018 0c96.26-65.34 184.09-143.09 183-252.42-.54-52.67-42.32-96.81-95.08-96.81z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"></path>
-                          </svg>
-                          <span class="visually-hidden">Wishlist</span>
-                        </a>
-                      </li>
-                      <li class="product__items--action__list" ng-click="showQuickView(row.id)">
-                        <a class="product__items--action__btn" data-open="modal1" href="javascript:void(0)">
-                          <svg class="product__items--action__btn--svg" xmlns="http://www.w3.org/2000/svg" width="25.51" height="23.443" viewBox="0 0 512 512">
-                            <path d="M255.66 112c-77.94 0-157.89 45.11-220.83 135.33a16 16 0 00-.27 17.77C82.92 340.8 161.8 400 255.66 400c92.84 0 173.34-59.38 221.79-135.25a16.14 16.14 0 000-17.47C428.89 172.28 347.8 112 255.66 112z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" />
-                            <circle cx="256" cy="256" r="80" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32" />
-                          </svg>
-                          <span class="visually-hidden">Quick View</span>
-                        </a>
-                      </li>
-
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div id="trending" class="tab_pane">
-          <div class="product__section--inner">
-            <div class="row row-cols-xl-5 row-cols-lg-4 row-cols-md-3 row-cols-2 mb--n30">
-              <div class="col mb-30" ng-repeat="row in dataNew">
-                <div class="product__items ">
-                  <div class="product__items--thumbnail">
-                    <a class="product__items--link" href="/shop/@{{row.id}}">
-                      <img class="product__items--img product__primary--img" ng-src="/assets/img/products/@{{row.images[0].image}}" alt="product-img">
-                      <img class="product__items--img product__secondary--img" ng-src="/assets/img/products/@{{row.images[1].image}}" alt="product-img">
-                    </a>
-                    <div class="product__badge">
-                      <span class="product__badge--items sale">Sale</span>
-                    </div>
-                  </div>
-                  <div class="product__items--content">
-                    <span class="product__items--content__subtitle">@{{row.categories.name}}</span>
-                    <h3 class="product__items--content__title h4"><a href="/shop/@{{row.id}}" style="height: 52px;">@{{row.name}}</a></h3>
-                    <div class="product__items--price">
-                      <span class="current__price">$@{{row.price.price_current == 0 ? row.price.price_origin : row.price.price_current}}</span>
-                      <span class="@{{row.price.price_current == 0 ? '' : 'price__divided'}} "></span>
-                      <span class="old__price">@{{row.price.price_current == 0 ? '' : '$' + row.price.price_origin}}</span>
-                    </div>
-                    <ul class="rating product__rating d-flex">
-                      <li class="rating__list">
-                        <span class="rating__list--icon">
-                          <svg class="rating__list--icon__svg" xmlns="http://www.w3.org/2000/svg" width="14.105" height="14.732" viewBox="0 0 10.105 9.732">
-                            <path data-name="star - Copy" d="M9.837,3.5,6.73,3.039,5.338.179a.335.335,0,0,0-.571,0L3.375,3.039.268,3.5a.3.3,0,0,0-.178.514L2.347,6.242,1.813,9.4a.314.314,0,0,0,.464.316L5.052,8.232,7.827,9.712A.314.314,0,0,0,8.292,9.4L7.758,6.242l2.257-2.231A.3.3,0,0,0,9.837,3.5Z" transform="translate(0 -0.018)" fill="currentColor"></path>
-                          </svg>
-                        </span>
-                      </li>
-                      <li class="rating__list">
-                        <span class="rating__list--icon">
-                          <svg class="rating__list--icon__svg" xmlns="http://www.w3.org/2000/svg" width="14.105" height="14.732" viewBox="0 0 10.105 9.732">
-                            <path data-name="star - Copy" d="M9.837,3.5,6.73,3.039,5.338.179a.335.335,0,0,0-.571,0L3.375,3.039.268,3.5a.3.3,0,0,0-.178.514L2.347,6.242,1.813,9.4a.314.314,0,0,0,.464.316L5.052,8.232,7.827,9.712A.314.314,0,0,0,8.292,9.4L7.758,6.242l2.257-2.231A.3.3,0,0,0,9.837,3.5Z" transform="translate(0 -0.018)" fill="currentColor"></path>
-                          </svg>
-                        </span>
-                      </li>
-                      <li class="rating__list">
-                        <span class="rating__list--icon">
-                          <svg class="rating__list--icon__svg" xmlns="http://www.w3.org/2000/svg" width="14.105" height="14.732" viewBox="0 0 10.105 9.732">
-                            <path data-name="star - Copy" d="M9.837,3.5,6.73,3.039,5.338.179a.335.335,0,0,0-.571,0L3.375,3.039.268,3.5a.3.3,0,0,0-.178.514L2.347,6.242,1.813,9.4a.314.314,0,0,0,.464.316L5.052,8.232,7.827,9.712A.314.314,0,0,0,8.292,9.4L7.758,6.242l2.257-2.231A.3.3,0,0,0,9.837,3.5Z" transform="translate(0 -0.018)" fill="currentColor"></path>
-                          </svg>
-                        </span>
-                      </li>
-                      <li class="rating__list">
-                        <span class="rating__list--icon">
-                          <svg class="rating__list--icon__svg" xmlns="http://www.w3.org/2000/svg" width="14.105" height="14.732" viewBox="0 0 10.105 9.732">
-                            <path data-name="star - Copy" d="M9.837,3.5,6.73,3.039,5.338.179a.335.335,0,0,0-.571,0L3.375,3.039.268,3.5a.3.3,0,0,0-.178.514L2.347,6.242,1.813,9.4a.314.314,0,0,0,.464.316L5.052,8.232,7.827,9.712A.314.314,0,0,0,8.292,9.4L7.758,6.242l2.257-2.231A.3.3,0,0,0,9.837,3.5Z" transform="translate(0 -0.018)" fill="currentColor"></path>
-                          </svg>
-                        </span>
-                      </li>
-                      <li class="rating__list">
-                        <span class="rating__list--icon">
-                          <svg class="rating__list--icon__svg" xmlns="http://www.w3.org/2000/svg" width="14.105" height="14.732" viewBox="0 0 10.105 9.732">
-                            <path data-name="star - Copy" d="M9.837,3.5,6.73,3.039,5.338.179a.335.335,0,0,0-.571,0L3.375,3.039.268,3.5a.3.3,0,0,0-.178.514L2.347,6.242,1.813,9.4a.314.314,0,0,0,.464.316L5.052,8.232,7.827,9.712A.314.314,0,0,0,8.292,9.4L7.758,6.242l2.257-2.231A.3.3,0,0,0,9.837,3.5Z" transform="translate(0 -0.018)" fill="currentColor"></path>
-                          </svg>
-                        </span>
-                      </li>
-
-                    </ul>
-                    <ul class="product__items--action d-flex">
-                      <li class="product__items--action__list">
-                        <a class="product__items--action__btn add__to--cart" href="/shop/@{{row.id}}">
-                          <svg class="product__items--action__btn--svg" xmlns="http://www.w3.org/2000/svg" width="22.51" height="20.443" viewBox="0 0 14.706 13.534">
-                            <g transform="translate(0 0)">
-                              <g>
-                                <path data-name="Path 16787" d="M4.738,472.271h7.814a.434.434,0,0,0,.414-.328l1.723-6.316a.466.466,0,0,0-.071-.4.424.424,0,0,0-.344-.179H3.745L3.437,463.6a.435.435,0,0,0-.421-.353H.431a.451.451,0,0,0,0,.9h2.24c.054.257,1.474,6.946,1.555,7.33a1.36,1.36,0,0,0-.779,1.242,1.326,1.326,0,0,0,1.293,1.354h7.812a.452.452,0,0,0,0-.9H4.74a.451.451,0,0,1,0-.9Zm8.966-6.317-1.477,5.414H5.085l-1.149-5.414Z" transform="translate(0 -463.248)" fill="currentColor"></path>
-                                <path data-name="Path 16788" d="M5.5,478.8a1.294,1.294,0,1,0,1.293-1.353A1.325,1.325,0,0,0,5.5,478.8Zm1.293-.451a.452.452,0,1,1-.431.451A.442.442,0,0,1,6.793,478.352Z" transform="translate(-1.191 -466.622)" fill="currentColor"></path>
-                                <path data-name="Path 16789" d="M13.273,478.8a1.294,1.294,0,1,0,1.293-1.353A1.325,1.325,0,0,0,13.273,478.8Zm1.293-.451a.452.452,0,1,1-.431.451A.442.442,0,0,1,14.566,478.352Z" transform="translate(-2.875 -466.622)" fill="currentColor"></path>
-                              </g>
-                            </g>
-                          </svg>
-                          <span class="add__to--cart__text"> + Add to cart</span>
-                        </a>
-                      </li>
-                      <li class="product__items--action__list">
-                        <a class="product__items--action__btn" href="/wishlist">
-                          <svg class="product__items--action__btn--svg" xmlns="http://www.w3.org/2000/svg" width="25.51" height="23.443" viewBox="0 0 512 512">
-                            <path d="M352.92 80C288 80 256 144 256 144s-32-64-96.92-64c-52.76 0-94.54 44.14-95.08 96.81-1.1 109.33 86.73 187.08 183 252.42a16 16 0 0018 0c96.26-65.34 184.09-143.09 183-252.42-.54-52.67-42.32-96.81-95.08-96.81z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"></path>
-                          </svg>
-                          <span class="visually-hidden">Wishlist</span>
-                        </a>
-                      </li>
-                      <li class="product__items--action__list" ng-click="showQuickView(row.id)">
-                        <a class="product__items--action__btn" data-open="modal1" href="javascript:void(0)">
-                          <svg class="product__items--action__btn--svg" xmlns="http://www.w3.org/2000/svg" width="25.51" height="23.443" viewBox="0 0 512 512">
-                            <path d="M255.66 112c-77.94 0-157.89 45.11-220.83 135.33a16 16 0 00-.27 17.77C82.92 340.8 161.8 400 255.66 400c92.84 0 173.34-59.38 221.79-135.25a16.14 16.14 0 000-17.47C428.89 172.28 347.8 112 255.66 112z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" />
-                            <circle cx="256" cy="256" r="80" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="32" />
-                          </svg>
-                          <span class="visually-hidden">Quick View</span>
-                        </a>
-                      </li>
-
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div id="newarrival" class="tab_pane">
-          <div class="product__section--inner">
-            <div class="row row-cols-xl-5 row-cols-lg-4 row-cols-md-3 row-cols-2 mb--n30">
-              <div class="col mb-30" ng-repeat="row in dataNew">
-                <div class="product__items ">
-                  <div class="product__items--thumbnail">
-                    <a class="product__items--link" href="/shop/@{{row.id}}">
-                      <img class="product__items--img product__primary--img" ng-src="/assets/img/products/@{{row.images[0].image}}" alt="product-img">
-                      <img class="product__items--img product__secondary--img" ng-src="/assets/img/products/@{{row.images[1].image}}" alt="product-img">
-                    </a>
-                    <div class="product__badge">
-                      <span class="product__badge--items sale">Sale</span>
-                    </div>
-                  </div>
-                  <div class="product__items--content">
-                    <span class="product__items--content__subtitle">@{{row.categories.name}}</span>
+                    <span class="product__items--content__subtitle">@{{row.category.name}}</span>
                     <h3 class="product__items--content__title h4"><a href="/shop/@{{row.id}}" style="height: 52px;">@{{row.name}}</a></h3>
                     <div class="product__items--price">
                       <span class="current__price">$@{{row.price.price_current == 0 ? row.price.price_origin : row.price.price_current}}</span>
@@ -438,7 +234,7 @@
               <h2 class="deals__banner--content__maintitle">Deals Of The Day</h2>
               <p class="deals__banner--content__desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit, <br> sed do eiusmod tempor incididunt ut labore </p>
               <div class="deals__banner--countdown d-flex" data-countdown="Sep 30, 2022 00:00:00"></div>
-              <a class="primary__btn" href="/shop">Show Collection
+              <a class="primary__btn" href="{{route('shop')}}">Show Collection
                 <svg class="primary__btn--arrow__icon" xmlns="http://www.w3.org/2000/svg" width="20.2" height="12.2" viewBox="0 0 6.2 6.2">
                   <path d="M7.1,4l-.546.546L8.716,6.713H4v.775H8.716L6.554,9.654,7.1,10.2,9.233,8.067,10.2,7.1Z" transform="translate(-4 -4)" fill="currentColor"></path>
                 </svg>
@@ -477,8 +273,9 @@
   </section>
   <!-- End deals banner section -->
 
+  <!-- Best seller products -->
   <!-- Start product section -->
-  <section class="product__section section--padding pt-0" ng-if="dataSeller">
+  <section class="product__section section--padding pt-0" ng-if="dataSeller.length > 0">
     <div class="container-fluid">
       <div class="section__heading text-center mb-50">
         <h2 class="section__heading--maintitle">Our Best Seller</h2>
@@ -489,16 +286,16 @@
             <div class="product__items ">
               <div class="product__items--thumbnail">
                 <a class="product__items--link" href="/shop/@{{row.id}}">
-                  <img class="product__items--img product__primary--img" ng-src="@{{row.image_first}}" alt="product-img">
-                  <img class="product__items--img product__secondary--img" ng-src="@{{row.image_second}}" alt="product-img">
+                  <img class="product__items--img product__primary--img" ng-src="/assets/img/products/@{{row.colors[0].images[0].image}}" alt="product-img">
+                  <img class="product__items--img product__secondary--img" ng-src="/assets/img/products/@{{row.colors[0].images[1].image}}" alt="product-img">
                 </a>
                 <div class="product__badge">
                   <span class="product__badge--items sale">Sale</span>
                 </div>
               </div>
               <div class="product__items--content">
-                <span class="product__items--content__subtitle">Jacket, Women</span>
-                <h3 class="product__items--content__title h4"><a style="height: 52px;" href="/shop/@{{row.id}}">@{{row.name}}</a></h3>
+                <span class="product__items--content__subtitle">@{{row.category.name}}</span>
+                <h3 class="product__items--content__title h4"><a href="/shop/@{{row.id}}" style="height: 52px;">@{{row.name}}</a></h3>
                 <div class="product__items--price">
                   <span class="current__price">$@{{row.price.price_current == 0 ? row.price.price_origin : row.price.price_current}}</span>
                   <span class="@{{row.price.price_current == 0 ? '' : 'price__divided'}} "></span>
@@ -540,10 +337,11 @@
                       </svg>
                     </span>
                   </li>
+
                 </ul>
                 <ul class="product__items--action d-flex">
                   <li class="product__items--action__list">
-                    <a class="product__items--action__btn add__to--cart" href="/cart">
+                    <a class="product__items--action__btn add__to--cart" href="/shop/@{{row.id}}">
                       <svg class="product__items--action__btn--svg" xmlns="http://www.w3.org/2000/svg" width="22.51" height="20.443" viewBox="0 0 14.706 13.534">
                         <g transform="translate(0 0)">
                           <g>
@@ -557,7 +355,7 @@
                     </a>
                   </li>
                   <li class="product__items--action__list">
-                    <a class="product__items--action__btn" href="wishlist.html">
+                    <a class="product__items--action__btn" href="/wishlist">
                       <svg class="product__items--action__btn--svg" xmlns="http://www.w3.org/2000/svg" width="25.51" height="23.443" viewBox="0 0 512 512">
                         <path d="M352.92 80C288 80 256 144 256 144s-32-64-96.92-64c-52.76 0-94.54 44.14-95.08 96.81-1.1 109.33 86.73 187.08 183 252.42a16 16 0 0018 0c96.26-65.34 184.09-143.09 183-252.42-.54-52.67-42.32-96.81-95.08-96.81z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"></path>
                       </svg>
@@ -592,7 +390,7 @@
       <div class="row row-cols-md-2 row-cols-1 mb--n28">
         <div class="col mb-28">
           <div class="banner__items position__relative">
-            <a class="banner__items--thumbnail " href="/shop"><img class="banner__items--thumbnail__img banner__img--max__height" src="/assets/img/banner/banner5.png" alt="banner-img">
+            <a class="banner__items--thumbnail " href="{{route('shop')}}"><img class="banner__items--thumbnail__img banner__img--max__height" src="/assets/img/banner/banner5.png" alt="banner-img">
               <div class="banner__items--content">
                 <span class="banner__items--content__subtitle d-none d-lg-block">Pick Your Items</span>
                 <h2 class="banner__items--content__title h3">Up to 25% Off Order Now</h2>
@@ -603,7 +401,7 @@
         </div>
         <div class="col mb-28">
           <div class="banner__items position__relative">
-            <a class="banner__items--thumbnail " href="/shop"><img class="banner__items--thumbnail__img banner__img--max__height" src="/assets/img/banner/banner6.png" alt="banner-img">
+            <a class="banner__items--thumbnail " href="{{route('shop')}}"><img class="banner__items--thumbnail__img banner__img--max__height" src="/assets/img/banner/banner6.png" alt="banner-img">
               <div class="banner__items--content">
                 <span class="banner__items--content__subtitle d-none d-lg-block">Special offer</span>
                 <h2 class="banner__items--content__title h3">Up to 35% Off Order Now</h2>
@@ -838,7 +636,7 @@
       <div class="row row-cols-1">
         <div class="col">
           <div class="banner__section--inner position__relative">
-            <a class="banner__items--thumbnail display-block" href="/shop"><img class="banner__items--thumbnail__img banner__img--height__md display-block" src="/assets/img/banner/banner-bg2.png" alt="banner-img">
+            <a class="banner__items--thumbnail display-block" href="{{route('shop')}}"><img class="banner__items--thumbnail__img banner__img--height__md display-block" src="/assets/img/banner/banner-bg2.png" alt="banner-img">
               <div class="banner__content--style2">
                 <h2 class="banner__content--style2__title text-white">Need Winter Boots? </h2>
                 <p class="banner__content--style2__desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua enim ad minim veniam, quis nostrud exercitation </p>
@@ -978,7 +776,7 @@
           </div>
           <div class="col">
             <div class="quickview__info">
-              <form action="#">
+              <div>
                 <h2 class="product__details--info__title mb-15">@{{item.name}}</h2>
                 <div class="product__details--info__price mb-10">
                   <span class="current__price">$@{{item.price.price_current == 0 ? item.price.price_origin : item.price.price_current}}</span>
@@ -1032,7 +830,7 @@
                       <legend class="product__variant--title mb-8">Color :</legend>
                       <div class="d-flex">
                         <div style="margin-right: .8rem;" ng-repeat="row in item.colors">
-                          <input id="color-@{{$index}}" name="colorGroup" type="radio" ng-click="pickColor($index)">
+                          <input id="color-@{{$index}}" name="colorGroup" type="radio" ng-click="pickColor($index)" ng-checked="colorIndex===$index">
                           <label class="variant__color--value red" for="color-@{{$index}}" title="@{{row.color}}"><img class="variant__color--value__img" ng-src="/assets/img/products/@{{row.images[0].image}}" alt="variant-color-img"></label>
                         </div>
 
@@ -1043,20 +841,20 @@
                     <legend class="product__variant--title mb-8">Sizes :</legend>
                     <fieldset class="variant__input--fieldset weight d-flex">
                       <div style="margin-right: .25rem;" ng-repeat="row in item.colors[colorIndex].sizes">
-                        <input id="@{{row.size}}" name="weight" type="radio">
+                        <input id="@{{row.size}}" name="weight" type="radio" ng-checked="@{{sizeIndex==$index}}" ng-click="pickSize($index)">
                         <label class="variant__size--value red" for="@{{row.size}}">@{{row.size}}</label>
                       </div>
                     </fieldset>
                   </div>
                   <div class="quickview__variant--list quantity d-flex align-items-center mb-15">
                     <div class="quantity__box">
-                      <button type="button" class="quantity__value quickview__value--quantity decrease" aria-label="quantity value" value="Decrease Value">-</button>
+                      <button type="button" class="quantity__value quickview__value--quantity decrease" aria-label="quantity value" value="Decrease Value" ng-click="changedCount(1)">-</button>
                       <label>
-                        <input type="number" class="quantity__number quickview__value--number" value="1" data-counter />
+                        <input type="number" class="quantity__number quickview__value--number" ng-model="quantity" data-counter />
                       </label>
-                      <button type="button" class="quantity__value quickview__value--quantity increase" aria-label="quantity value" value="Increase Value">+</button>
+                      <button type="button" class="quantity__value quickview__value--quantity increase" aria-label="quantity value" value="Increase Value" ng-click="changedCount(0)">+</button>
                     </div>
-                    <button class="primary__btn quickview__cart--btn" type="submit">Add To Cart</button>
+                    <button class="primary__btn quickview__cart--btn" ng-click="addCart()">Add To Cart</button>
                   </div>
                   <div class="quickview__variant--list variant__wishlist mb-15">
                     <a class="variant__wishlist--icon" href="wishlist.html" title="Add to wishlist">
@@ -1104,7 +902,7 @@
                     </li>
                   </ul>
                 </div>
-              </form>
+              </div>
             </div>
           </div>
         </div>
@@ -1115,5 +913,5 @@
 @stop
 
 @section('js')
-<script src="/assets/js/controllers/homeController.js"></script>
+<script src="/assets/js/controllers/client/homeController.js"></script>
 @stop

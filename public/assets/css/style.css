@@ -25,6 +25,7 @@
   --headings-weight: 600;
   --transition: all 0.3s ease 0s;
   --container-fluid-offset: 19rem;
+  --danger-color: #f51c1c;
 }
 .color-scheme-1 {
   --secondary-color: #f51c1c;
@@ -307,6 +308,9 @@ li {
 }
 hr {
   border-top-width: 2px;
+}
+.text-danger{
+  color: var(--danger-color);
 }
 .container,
 .container-fluid {
@@ -1228,6 +1232,11 @@ hr {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+}
+.flex-column {
+  /* display: -webkit-box;
+  display: -ms-flexbox; */
+  flex-direction: column;
 }
 .flex-wrap {
   -ms-flex-wrap: wrap;

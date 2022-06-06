@@ -1,6 +1,6 @@
 @extends('_layout_admin')
 @section('content')
-<div ng-controller="categoriesController">
+<div ng-controller="cartsController">
   <div class="main-panel">
     <div class="main-content">
       <div class="content-wrapper">
@@ -35,8 +35,12 @@
                         <thead>
                           <tr>
                             <th>#</th>
-                            <th>Name</th>
-                            <th>Thumbnail</th>
+                            <th>Customer</th>
+                            <th>Image</th>
+                            <th>Product</th>
+                            <th>Color</th>
+                            <th>S</th>
+                            <th>S</th>
                             <th style="width: 150px !important">Actions</th>
                           </tr>
                         </thead>
@@ -58,8 +62,17 @@
                           </tr>
                         </tbody>
                       </table>
-                      <dir-pagination-controls style="float: right; padding-right: 100px;" direction-links="true" boundary-links="true" on-page-change='indexCount(newPageNumber)'>
-                      </dir-pagination-controls>
+                      <div class="row">
+                        <div class="col-sm-12 col-md-5">
+                          <div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite">Showing @{{data.length > 10 ? 10 : data.length}} of @{{data.length}} entries</div>
+                        </div>
+                        <div class="col-sm-12 col-md-7">
+                          <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate">
+                            <dir-pagination-controls style="float: right; padding-right: 100px;" direction-links="true" boundary-links="true" on-page-change='indexCount(newPageNumber)'>
+                            </dir-pagination-controls>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -118,5 +131,5 @@
 
 @section('js')
 <!-- <script src="/assets/admin/js/wizard-step.js"></script> -->
-<script src="/assets/js/controllers/categoriesController.js"></script>
+<script src="/assets/js/controllers/cartsController.js"></script>
 @stop

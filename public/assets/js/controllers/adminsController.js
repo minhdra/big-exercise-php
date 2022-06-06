@@ -1,9 +1,9 @@
-const nameController = 'admins/';
-const nameSelf = 'admin/';
+const nameAdmin = 'admins/';
+const nameS = 'admin/';
 
 app.controller('adminsController', adminsController);
 function adminsController($scope, $http) {
-  $scope.title = 'Admins';
+  $scope.title = 'Customers';
   $scope.currentPage = 1;
   $scope.pageSize = 10;
   $scope.keyword = '';
@@ -11,10 +11,8 @@ function adminsController($scope, $http) {
   $scope.indexCount = function (newPageNumber) {
     $scope.serial = newPageNumber * 10 - 9;
   };
-  $scope.item = {
-    status: '1',
-    role: 'admin',
-  };
+  $scope.item = {};
+  $scope.item.status = '1';
 
   var connect_api = function (method, url, data, callback) {
     if (data) {
@@ -52,11 +50,27 @@ function adminsController($scope, $http) {
   };
   // Get all admins
   const loadData = () => {
-    connect_api('GET', apiBase + nameController, null, function (res) {
+    connect_api('GET', apiBase + nameAdmin, null, function (res) {
       $scope.data = res.data;
+      console.log($scope.data);
     });
   };
   loadData();
+
+  // ----------------------------------------------------------------
+  $scope.checkLogin = () => {
+    if(checkCustomerLogin().username) history.back();
+  }
+  
+  $scope.login = () => {
+    connect_api('POST', apiBase + nameAdmin + 'login', $scope.requestLogin, function (res) {
+      sessionStorage.setItem('admin', JSON.stringify(res.data));
+      history.back();
+    })
+  }
+
+
+  // Admin ----------------------------------------------------------------
 
   // open the modal in admin
   $scope.openModal = (id) => {
@@ -64,15 +78,13 @@ function adminsController($scope, $http) {
     // Insert
     if (id == 0) {
       $scope.modalTitle = 'Insert a admin';
-      $scope.item = {
-        status: '1',
-        role: 'admin',
-      };
+      $scope.item = {};
+      $scope.item.status = '1';
     } else { // Edit
       $scope.modalTitle = 'Edit a admin';
       $http({
         method: 'GET',
-        url: apiBase + nameController + id,
+        url: apiBase + nameAdmin + id,
       }).then(
         (res) => {
           $scope.item = res.data; // item is already
@@ -90,13 +102,14 @@ function adminsController($scope, $http) {
     // is create
     if ($scope.id == 0)
     {
-      connect_api('POST', apiBase + nameController, $scope.item, function (res) {
+      console.log($scope.item);
+      connect_api('POST', apiBase + nameAdmin, $scope.item, function (res) {
         $scope.data = [res.data, ...$scope.data];
         $('#large').modal('hide');
       })
     } else
     { // is update
-      connect_api('PUT', apiBase + nameController + $scope.id, $scope.item, function (res) {
+      connect_api('PUT', apiBase + nameAdmin + $scope.id, $scope.item, function (res) {
         const index = $scope.data.findIndex(item => item.id == $scope.id);
         $scope.data.splice(index, 1);
         $scope.data = [res.data, ...$scope.data];
@@ -111,7 +124,7 @@ function adminsController($scope, $http) {
     const confirm = 'Are you sure you want to?';
     if (window.confirm(confirm))
     {
-      connect_api('DELETE', apiBase + nameController + id, null, function (res) {
+      connect_api('DELETE', apiBase + nameAdmin + id, null, function (res) {
         const index = $scope.data.findIndex(item => item.id == id);
         $scope.data.splice(index, 1);
         showAlert('success');

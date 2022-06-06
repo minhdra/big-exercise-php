@@ -19,7 +19,7 @@ class product_prices extends Model
     }
 
     public function updatePrice($request, $id) {
-        $db = product_prices::find($id);
+        $db = product_prices::where('is_active', 1)->find($id);
         $db->price_origin = $request['price_origin'];
         $db->save();
         return $db;

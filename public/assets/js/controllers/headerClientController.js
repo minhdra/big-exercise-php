@@ -1,4 +1,4 @@
-const nameCustomers = 'customers/';
+const nameCustomer = 'customers/';
 app.controller('headerClientController', headerClientController);
 function headerClientController($rootScope, $http) {
   var connect_api = function (method, url, data, callback) {
@@ -39,7 +39,7 @@ function headerClientController($rootScope, $http) {
     if ($rootScope.check.id) {
       connect_api(
         'GET',
-        apiBase + nameCustomers + $rootScope.check.id,
+        apiBase + nameCustomer + $rootScope.check.id,
         null,
         function (res) {
           $rootScope.customer = res.data;
@@ -49,6 +49,23 @@ function headerClientController($rootScope, $http) {
     }
   };
   $rootScope.loadCart();
+
+  $rootScope.loadDropdownCategories = () => {
+    $rootScope.selectedCategory = 0;
+    connect_api('GET', apiBase + 'categories', null, function (res) {
+      const all = {
+        id: 0,
+        name: 'All'
+      }
+      $rootScope.categories = [all, ...res.data];
+    });
+  }
+  $rootScope.loadDropdownCategories();
+
+  // Search
+  $rootScope.search = () => {
+    location.href = `/shop?category=${$rootScope.selectedCategory}&keyword=${$rootScope.keyword}`;
+  }
 
   // Count total
   $rootScope.countTotal = () => {

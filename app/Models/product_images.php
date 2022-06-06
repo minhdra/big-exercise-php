@@ -9,6 +9,10 @@ class product_images extends Model
 {
     use HasFactory;
 
+    public function color() {
+        return $this->hasOne(product_colors::class, 'id', 'product_color_id')->where('is_active', 1);
+    }
+
     public function insertImage($request, $product_color_id) {
         $db = new product_images();
         $db->image = $request['image'];

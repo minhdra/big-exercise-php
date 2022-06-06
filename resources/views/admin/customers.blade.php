@@ -35,6 +35,10 @@
                         <thead>
                           <tr>
                             <th>#</th>
+                            <th>Name</th>
+                            <th>Phone number</th>
+                            <th>Email</th>
+                            <th>Address</th>
                             <th>Username</th>
                             <th>Password</th>
                             <th>Status</th>
@@ -42,8 +46,12 @@
                           </tr>
                         </thead>
                         <tbody>
-                          <tr dir-paginate="row in data|filter: {username: keyword}|itemsPerPage:10" current-page="currentPage">
+                          <tr dir-paginate="row in data|filter:{username: keyword}|itemsPerPage:10" current-page="currentPage">
                             <td>@{{$index + serial}}</td>
+                            <td>@{{row.info.full_name}}</td>
+                            <td>@{{row.info.phone_number}}</td>
+                            <td>@{{row.info.email}}</td>
+                            <td>@{{row.info.address}}</td>
                             <td>@{{row.username}}</td>
                             <td>@{{row.password}}</td>
                             <td>
@@ -65,8 +73,17 @@
                           </tr>
                         </tbody>
                       </table>
-                      <dir-pagination-controls style="float: right; padding-right: 100px;" direction-links="true" boundary-links="true" on-page-change='indexCount(newPageNumber)'>
-                      </dir-pagination-controls>
+                      <div class="row">
+                        <div class="col-sm-12 col-md-5">
+                          <div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite">Showing @{{data.length > 10 ? 10 : data.length}} of @{{data.length}} entries</div>
+                        </div>
+                        <div class="col-sm-12 col-md-7">
+                          <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate">
+                            <dir-pagination-controls style="float: right; padding-right: 100px;" direction-links="true" boundary-links="true" on-page-change='indexCount(newPageNumber)'>
+                            </dir-pagination-controls>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -95,6 +112,30 @@
         <div class="modal-body">
           <div class="form-body step js-steps-content" id="step1">
             <div class="row">
+              <div class="col-xl-4 col-lg-6 col-md-12 mb-1">
+                <fieldset class="form-group">
+                  <label for="full_name">Full name</label>
+                  <input type="text" class="form-control" id="full_name" ng-model="item.info.full_name" require>
+                </fieldset>
+              </div>
+              <div class="col-xl-4 col-lg-6 col-md-12 mb-1">
+                <fieldset class="form-group">
+                  <label for="phone_number">Phone Number</label>
+                  <input type="text" class="form-control" id="phone_number" ng-model="item.info.phone_number" require>
+                </fieldset>
+              </div>
+              <div class="col-xl-4 col-lg-6 col-md-12 mb-1">
+                <fieldset class="form-group">
+                  <label for="email">Email</label>
+                  <input type="text" class="form-control" id="email" ng-model="item.info.email" require>
+                </fieldset>
+              </div>
+              <div class="col-xl-4 col-lg-6 col-md-12 mb-1">
+                <fieldset class="form-group">
+                  <label for="address">Address</label>
+                  <input type="text" class="form-control" id="address" ng-model="item.info.address" require>
+                </fieldset>
+              </div>
               <div class="col-xl-4 col-lg-6 col-md-12 mb-1">
                 <fieldset class="form-group">
                   <label for="username">Username</label>

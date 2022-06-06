@@ -1,5 +1,5 @@
-const nameController = 'slides/';
-const nameSelf = 'slide/';
+const nameSlider = 'slides/';
+const nameS = 'slide/';
 
 app.controller('slidesController', slidesController);
 function slidesController($scope, $http) {
@@ -49,7 +49,7 @@ function slidesController($scope, $http) {
   };
   // Get all slides
   const loadData = () => {
-    connect_api('GET', apiBase + nameController, null, function (res) {
+    connect_api('GET', apiBase + nameSlider, null, function (res) {
       $scope.data = res.data;
     });
   };
@@ -66,7 +66,7 @@ function slidesController($scope, $http) {
       $scope.modalTitle = 'Edit a slide';
       $http({
         method: 'GET',
-        url: apiBase + nameController + id,
+        url: apiBase + nameSlider + id,
       }).then(
         (res) => {
           $scope.item = res.data; // item is already
@@ -85,13 +85,13 @@ function slidesController($scope, $http) {
     // is create
     if ($scope.id == 0)
     {
-      connect_api('POST', apiBase + nameController, $scope.item, function (res) {
+      connect_api('POST', apiBase + nameSlider, $scope.item, function (res) {
         $scope.data = [res.data, ...$scope.data];
         $('#large').modal('hide');
       })
     } else
     { // is update
-      connect_api('PUT', apiBase + nameController + $scope.id, $scope.item, function (res) {
+      connect_api('PUT', apiBase + nameSlider + $scope.id, $scope.item, function (res) {
         const index = $scope.data.findIndex(item => item.id == $scope.id);
         $scope.data.splice(index, 1);
         $scope.data = [res.data, ...$scope.data];
@@ -106,7 +106,7 @@ function slidesController($scope, $http) {
     const confirm = 'Are you sure you want to?';
     if (window.confirm(confirm))
     {
-      connect_api('DELETE', apiBase + nameController + id, null, function (res) {
+      connect_api('DELETE', apiBase + nameSlider + id, null, function (res) {
         const index = $scope.data.findIndex(item => item.id == id);
         $scope.data.splice(index, 1);
         showAlert('success');
@@ -138,7 +138,7 @@ function slidesController($scope, $http) {
       type: 'post',
       contentType: false,
       processData: false,
-      url: apiBase + nameSelf + 'upload',
+      url: apiBase + nameS + 'upload',
       data: postData,
       success: function (res) {
         console.log('success');

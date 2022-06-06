@@ -7,6 +7,7 @@ function cartsController($scope, $http) {
   $scope.currentPage = 1;
   $scope.pageSize = 10;
   $scope.keyword = '';
+  $scope.customer_id = '';
   $scope.serial = 1;
   $scope.indexCount = function (newPageNumber) {
     $scope.serial = newPageNumber * 10 - 9;
@@ -50,13 +51,16 @@ function cartsController($scope, $http) {
   // Get all carts
   const loadData = () => {
     connect_api('GET', apiBase + nameCart, null, function (res) {
-      $scope.data = res.data;
+      $scope.data = res.data.carts;
+      $scope.customers = res.data.customers;
+      console.log(res.data);
     });
   };
   loadData();
 
   // open the modal in cart
-  $scope.openModal = (id) => {
+  $scope.openModal = (id, index) => {
+    $scope.index = index;
     $scope.id = id;
     // Insert
     if (id == 0) {
@@ -69,9 +73,7 @@ function cartsController($scope, $http) {
         url: apiBase + nameCart + id,
       }).then(
         (res) => {
-          $scope.item = res.data; // item is already
-          // $scope.item.status = $scope.item.status + '';
-          // console.log($scope.item);
+          $scope.item = res.data; 
         },
         (error) => console.log(error)
       );

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use App\Models\cart_details;
 use App\Models\carts;
+use App\Models\customers;
 use Illuminate\Http\Request;
 
 class cartsController extends Controller
@@ -16,7 +17,17 @@ class cartsController extends Controller
      */
     public function index()
     {
-        return carts::with('customer')->with('details')->where('is_active', 1)->get();
+        $customers = customers::with('info')->where('is_active', 1)->get();
+        $carts = carts::where('is_active', 1)->get();
+        foreach ($carts as $cart) {
+            $customer = $cart->customer;
+            $customer->info;
+            $details = $cart->details;
+            foreach ($details as $detail) {
+                $detail->product;
+            }
+        }
+        return ['carts'=>$carts, 'customers'=>$customers];
     }
 
     /**
@@ -46,17 +57,16 @@ class cartsController extends Controller
                 $c = false;
                 $thisDetail = '';
                 foreach ($details as $d) {
-                    if($d['product_id'] == $item['product_id'] && $d['color'] == $item['color']['color']) {
+                    if ($d['product_id'] == $item['product_id'] && $d['color'] == $item['color']['color']) {
                         $thisDetail = $d;
                         $c = true;
                         break;
                     }
                 }
-                if($c) {
+                if ($c) {
                     $item['quantity'] = $thisDetail['quantity'] + $item['quantity'];
                     $detail->updateCartDetails($item, $thisDetail['id']);
-                }
-                else {
+                } else {
                     $detail->insertCartDetails($item, $check->id);
                 }
             }
@@ -82,8 +92,15 @@ class cartsController extends Controller
      */
     public function show($id)
     {
-        $db = carts::with('customer')->with('details')->where('is_active', 1)->find($id);
-        return $db;
+        $cart = carts::where('is_active', 1)->find($id);
+        $customer = $cart->customer;
+        $customer->info;
+        $details = $cart->details;
+        foreach ($details as $detail) {
+            $detail->product;
+        }
+        // $db = carts::with('customer')->with('details')->where('is_active', 1)->find($id);
+        return $cart;
     }
 
     /**
@@ -125,10 +142,10 @@ class cartsController extends Controller
         $db->is_active = 0;
         $db->save();
 
-        $info = cart_details::where('cart_id', $db->id)->first();
-        if ($info) {
-            $info->is_active = 0;
-            $info->save();
+        $details = cart_details::where('cart_id', $db->id)->get();
+        foreach ($details as $detail) {
+            $detail->is_active = 0;
+            $detail->save();
         }
 
         return "Deleted";

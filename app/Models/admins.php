@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class admins extends Model
 {
     use HasFactory;
+
+    public function info() {
+        return $this->hasOne(admin_infos::class, 'admin_id');
+    }
 }

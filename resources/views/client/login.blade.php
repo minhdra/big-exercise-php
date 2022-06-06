@@ -10,7 +10,7 @@
           <div class="breadcrumb__content text-center">
             <h1 class="breadcrumb__content--title text-white mb-25">Account Page</h1>
             <ul class="breadcrumb__content--menu d-flex justify-content-center">
-              <li class="breadcrumb__content--menu__items"><a class="text-white" href="/">Home</a></li>
+              <li class="breadcrumb__content--menu__items"><a class="text-white" href="{{route('index')}}">Home</a></li>
               <li class="breadcrumb__content--menu__items"><span class="text-white">Account Page</span></li>
             </ul>
           </div>
@@ -37,9 +37,9 @@
                   <input class="account__login--input" placeholder="Password" type="password" ng-model="requestLogin.password">
                   <div class="account__login--remember__forgot mb-15 d-flex justify-content-between align-items-center">
                     <div class="account__login--remember position__relative">
-                      <input class="checkout__checkbox--input" id="check1" type="checkbox">
+                      <input class="checkout__checkbox--input" id="check1" type="checkbox" ng-model="checkRemember" ng-change="changedRemember(checkRemember)" ng-checked="checkRemember">
                       <span class="checkout__checkbox--checkmark"></span>
-                      <label class="checkout__checkbox--label login__remember--label" for="check1">
+                      <label class="checkout__checkbox--label login__remember--label" for="check1" >
                         Remember me</label>
                     </div>
                     <button class="account__login--forgot" type="submit">Forgot Your Password?</button>
@@ -53,7 +53,6 @@
                     <a class="account__social--link google" target="_blank" href="https://www.google.com">Google</a>
                     <a class="account__social--link twitter" target="_blank" href="https://twitter.com">Twitter</a>
                   </div>
-                  <p class="account__login--signup__text">Don,t Have an Account? <button type="submit">Sign up now</button></p>
                 </div>
               </div>
             </div>
@@ -64,11 +63,12 @@
                   <p class="account__login--header__desc">Register here if you are a new customer</p>
                 </div>
                 <div class="account__login--inner">
-                  <input class="account__login--input" placeholder="Username" type="text" spellcheck="false" data-ms-editor="true">
-                  <input class="account__login--input" placeholder="Email Addres" type="text" spellcheck="false" data-ms-editor="true">
-                  <input class="account__login--input" placeholder="Password" type="password">
-                  <input class="account__login--input" placeholder="Confirm Password" type="password">
-                  <button class="account__login--btn primary__btn mb-10" type="submit">Submit &amp; Register</button>
+                  <input class="account__login--input" placeholder="Username" type="text" spellcheck="false" data-ms-editor="true" ng-model="registerModel.username">
+                  <!-- <input class="account__login--input" placeholder="Email Addres" type="text" spellcheck="false" data-ms-editor="true" ng-model="registerModel.username"> -->
+                  <input class="account__login--input" placeholder="Password" type="password"  ng-model="registerModel.password">
+                  <input class="account__login--input" placeholder="Confirm Password" type="password" ng-model="registerModel.confirmPassword">
+                  <span class="text-danger mb-10">@{{registerModel.password===registerModel.confirmPassword?'':'Must be same password'}}</span>
+                  <button class="account__login--btn primary__btn mb-10" type="submit" ng-click="register()" ng-disabled="registerModel.password!==registerModel.confirmPassword">Submit &amp; Register</button>
                   <div class="account__login--remember position__relative">
                     <input class="checkout__checkbox--input" id="check2" type="checkbox">
                     <span class="checkout__checkbox--checkmark"></span>

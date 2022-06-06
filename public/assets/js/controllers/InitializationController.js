@@ -1,5 +1,6 @@
-const app = angular.module('app', ['angularUtils.directives.dirPagination']);
-const apiBase = 'http://127.0.0.1:8000/api/v1/';
+const app = angular.module('app', ['angularUtils.directives.dirPagination', 'ckeditor']);
+const port = '8000';
+const apiBase = `http://127.0.0.1:${port}/api/v1/`;
 
 setTimeout(() => {
   $(function () {
@@ -38,7 +39,40 @@ function convertDate(date) {
 }
 
 function checkCustomerLogin() {
-  const request = JSON.parse(sessionStorage.getItem('customer')) || {};
+  const request = JSON.parse(sessionStorage.getItem('customer')) || JSON.parse(localStorage.getItem('customer')) || {};
 
   return request;
+}
+
+async function getCities() {
+  let data = [];
+  await $.ajax({
+    url: '/assets/hanhchinhvn/tinh_tp.json',
+    context: document.body
+  }).done(function (res) {
+    data = res;
+  });
+  return data;
+}
+
+async function getDistricts() {
+  let data = [];
+  await $.ajax({
+    url: '/assets/hanhchinhvn/quan_huyen.json',
+    context: document.body
+  }).done(function (res) {
+    data = res;
+  });
+  return data;
+}
+
+async function getCommunes() {
+  let data = [];
+  await $.ajax({
+    url: '/assets/hanhchinhvn/xa_huyen.json',
+    context: document.body
+  }).done(function (res) {
+    data = res;
+  });
+  return data;
 }

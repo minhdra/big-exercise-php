@@ -10,15 +10,15 @@ class product_colors extends Model
     use HasFactory;
     public function product()
     {
-        return $this->belongsTo(products::class, 'product_id', 'id');
+        return $this->hasOne(products::class, 'id', 'product_id')->where('is_active', 1);
     }
     public function images()
     {
-        return $this->hasMany(product_images::class, 'product_color_id', 'id');
+        return $this->hasMany(product_images::class, 'product_color_id', 'id')->where('is_active', 1);
     }
     public function sizes()
     {
-        return $this->hasMany(product_sizes::class, 'product_color_id', 'id');
+        return $this->hasMany(product_sizes::class, 'product_color_id', 'id')->where('is_active', 1);
     }
 
     public function insertColor($request, $product_id) {
@@ -32,7 +32,7 @@ class product_colors extends Model
     }
 
     public function updateColor($request, $id) {
-        $color = product_colors::find($id);
+        $color = product_colors::where('is_active', 1)->find($id);
         $color->color = $request['color'];
         $color->hex = $request['hex'] ?? null;
         $color->save();

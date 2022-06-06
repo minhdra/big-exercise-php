@@ -17,7 +17,20 @@ class product_imagesController extends Controller
      */
     public function index()
     {
-        //
+        $colors = product_colors::where('is_active', 1)->with('product')->get();
+        $images = product_images::where('is_active', 1)->with('color')->orderBy('product_color_id')->get();
+        return ['images' => $images, 'colors' => $colors];
+    }
+
+    public function uploadFile(Request $request) {
+        $type = $request->type;
+        $data = $request->file('file');
+        $filename = $request->file('file')->getClientOriginalName();
+        $path = public_path('/assets/img/products/');
+        $data->move($path, $filename);
+        return response()->json([
+            'success' => 'done',
+            'valueimg'=>$data ]);
     }
 
     /**
@@ -38,13 +51,12 @@ class product_imagesController extends Controller
      */
     public function store(Request $request)
     {
-        $images = $request->images;
-        foreach ($images as $item) {
-            $image = new product_images();
-            $image->product_color_id = $request->product_color_id;
-            $image->image = $item;
-            $image->save();
-        }
+        $image = new product_images();
+        $image->product_color_id = $request->product_color_id;
+        $image->image = $request->image;
+        $image->save();
+
+        return $this->show($image->id);
     }
 
     /**
@@ -55,7 +67,7 @@ class product_imagesController extends Controller
      */
     public function show($id)
     {
-        $db = product_images::find($id);
+        $db = product_images::where('is_active', 1)->with('color')->find($id);
         return $db;
         
     }
@@ -80,10 +92,11 @@ class product_imagesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $db = product_images::find($id);
+        $db = product_images::where('is_active', 1)->find($id);
+        $db->product_color_id = $request->product_color_id;
         $db->image = $request->image;
         $db->save();
-        return $db;
+        return $this->show($id);
     }
 
     /**

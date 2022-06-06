@@ -1,5 +1,5 @@
-const nameController = 'suppliers/';
-const nameSelf = 'supplier/';
+const nameSupplier = 'suppliers/';
+const nameS = 'supplier/';
 
 app.controller('suppliersController', suppliersController);
 function suppliersController($scope, $http) {
@@ -49,7 +49,7 @@ function suppliersController($scope, $http) {
   };
   // Get all suppliers
   const loadData = () => {
-    connect_api('GET', apiBase + nameController, null, function (res) {
+    connect_api('GET', apiBase + nameSupplier, null, function (res) {
       $scope.data = res.data;
     });
   };
@@ -66,7 +66,7 @@ function suppliersController($scope, $http) {
       $scope.modalTitle = 'Edit a supplier';
       $http({
         method: 'GET',
-        url: apiBase + nameController + id,
+        url: apiBase + nameSupplier + id,
       }).then(
         (res) => {
           $scope.item = res.data; // item is already
@@ -83,13 +83,13 @@ function suppliersController($scope, $http) {
     // is create
     if ($scope.id == 0)
     {
-      connect_api('POST', apiBase + nameController, $scope.item, function (res) {
+      connect_api('POST', apiBase + nameSupplier, $scope.item, function (res) {
         $scope.data = [res.data, ...$scope.data];
         $('#large').modal('hide');
       })
     } else
     { // is update
-      connect_api('PUT', apiBase + nameController + $scope.id, $scope.item, function (res) {
+      connect_api('PUT', apiBase + nameSupplier + $scope.id, $scope.item, function (res) {
         const index = $scope.data.findIndex(item => item.id == $scope.id);
         $scope.data.splice(index, 1);
         $scope.data = [res.data, ...$scope.data];
@@ -104,7 +104,7 @@ function suppliersController($scope, $http) {
     const confirm = 'Are you sure you want to?';
     if (window.confirm(confirm))
     {
-      connect_api('DELETE', apiBase + nameController + id, null, function (res) {
+      connect_api('DELETE', apiBase + nameSupplier + id, null, function (res) {
         const index = $scope.data.findIndex(item => item.id == id);
         $scope.data.splice(index, 1);
         showAlert('success');

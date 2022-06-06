@@ -43,4 +43,8 @@ class cart_details extends Model
         $db->save();
         return "Success deleted";
     }
+
+    public function product() {
+        return $this->hasOne(products::class, 'id','product_id');
+    }
 }

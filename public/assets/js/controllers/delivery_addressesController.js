@@ -1,5 +1,5 @@
-const nameController = 'delivery_addresses/';
-const nameSelf = 'delivery_address/';
+const nameDelivery = 'delivery_addresses/';
+const nameS = 'delivery_address/';
 
 app.controller('delivery_addressesController', delivery_addressesController);
 function delivery_addressesController($scope, $http) {
@@ -50,7 +50,7 @@ function delivery_addressesController($scope, $http) {
   };
   // Get all delivery_addresses
   const loadData = () => {
-    connect_api('GET', apiBase + nameController, null, function (res) {
+    connect_api('GET', apiBase + nameDelivery, null, function (res) {
       $scope.data = res.data;
     });
   };
@@ -68,7 +68,7 @@ function delivery_addressesController($scope, $http) {
       $scope.modalTitle = 'Edit a delivery_address';
       $http({
         method: 'GET',
-        url: apiBase + nameController + id,
+        url: apiBase + nameDelivery + id,
       }).then(
         (res) => {
           $scope.item = res.data; // item is already
@@ -86,13 +86,13 @@ function delivery_addressesController($scope, $http) {
     // is create
     if ($scope.id == 0)
     {
-      connect_api('POST', apiBase + nameController, $scope.item, function (res) {
+      connect_api('POST', apiBase + nameDelivery, $scope.item, function (res) {
         $scope.data = [res.data, ...$scope.data];
         $('#large').modal('hide');
       })
     } else
     { // is update
-      connect_api('PUT', apiBase + nameController + $scope.id, $scope.item, function (res) {
+      connect_api('PUT', apiBase + nameDelivery + $scope.id, $scope.item, function (res) {
         const index = $scope.data.findIndex(item => item.id == $scope.id);
         $scope.data.splice(index, 1);
         $scope.data = [res.data, ...$scope.data];
@@ -107,7 +107,7 @@ function delivery_addressesController($scope, $http) {
     const confirm = 'Are you sure you want to?';
     if (window.confirm(confirm))
     {
-      connect_api('DELETE', apiBase + nameController + id, null, function (res) {
+      connect_api('DELETE', apiBase + nameDelivery + id, null, function (res) {
         const index = $scope.data.findIndex(item => item.id == id);
         $scope.data.splice(index, 1);
         showAlert('success');

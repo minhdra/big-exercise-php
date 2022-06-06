@@ -18,7 +18,9 @@ class product_colorsController extends Controller
      */
     public function index()
     {
-        return product_colors::with('product')->with('images')->with('sizes')->where('is_active', 1)->get();
+        $colors = product_colors::where('is_active', 1)->with('product')->orderBy('product_id')->get();
+        $products = products::where('is_active', 1)->get();
+        return ['colors'=>$colors, 'products'=>$products];
     }
 
     public function getProducts()
@@ -49,7 +51,7 @@ class product_colorsController extends Controller
         $color->hex = $request->hex;
         $color->save();
 
-        return $color;
+        return $this->show($color->id);
     }
 
     /**
@@ -60,7 +62,7 @@ class product_colorsController extends Controller
      */
     public function show($id)
     {
-        $color = product_colors::with('product')->with('images')->with('sizes')->find($id);
+        $color = product_colors::where('is_active', 1)->with('product')->find($id);
         return $color;
     }
 
@@ -85,10 +87,11 @@ class product_colorsController extends Controller
     public function update(Request $request, $id)
     {
         $color = product_colors::find($id);
+        $color->product_id = $request->product_id;
         $color->color = $request->color;
         $color->hex = $request->hex;
         $color->save();
-        return $color;
+        return $this->show($id);
     }
 
     /**

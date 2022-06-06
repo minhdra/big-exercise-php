@@ -1,5 +1,5 @@
-const nameController = 'magazines/';
-const nameSelf = 'magazine/';
+const nameMagazine = 'magazines/';
+const nameS = 'magazine/';
 
 app.controller('magazinesController', magazinesController);
 function magazinesController($scope, $http) {
@@ -49,14 +49,28 @@ function magazinesController($scope, $http) {
   };
   // Get all magazines
   const loadData = () => {
-    connect_api('GET', apiBase + nameController, null, function (res) {
+    connect_api('GET', apiBase + nameMagazine, null, function (res) {
       $scope.data = res.data;
     });
   };
   loadData();
 
+  $scope.options = {
+    language: 'en',
+    allowedContent: true,
+    entities: false
+  };
+
   // open the modal in admin
   $scope.openModal = (id) => {
+    $scope.text = {
+      textInput : '',
+      options: {
+        language: 'en',
+        allowedContent: true,
+        entities: false
+      }
+    };
     $scope.id = id;
     // Insert
     if (id == 0) {
@@ -66,11 +80,11 @@ function magazinesController($scope, $http) {
       $scope.modalTitle = 'Edit a magazine';
       $http({
         method: 'GET',
-        url: apiBase + nameController + id,
+        url: apiBase + nameMagazine + id,
       }).then(
         (res) => {
           $scope.item = res.data; // item is already
-          $scope.item.status = $scope.item.status + '';
+          $scope.text.textInput = $scope.item.content;
           // console.log($scope.item);
         },
         (error) => console.log(error)
@@ -81,16 +95,18 @@ function magazinesController($scope, $http) {
 
   // Save data
   $scope.saveData = () => {
+    $scope.item.content = $scope.text.textInput;
+
     // is create
     if ($scope.id == 0)
     {
-      connect_api('POST', apiBase + nameController, $scope.item, function (res) {
+      connect_api('POST', apiBase + nameMagazine, $scope.item, function (res) {
         $scope.data = [res.data, ...$scope.data];
         $('#large').modal('hide');
       })
     } else
     { // is update
-      connect_api('PUT', apiBase + nameController + $scope.id, $scope.item, function (res) {
+      connect_api('PUT', apiBase + nameMagazine + $scope.id, $scope.item, function (res) {
         const index = $scope.data.findIndex(item => item.id == $scope.id);
         $scope.data.splice(index, 1);
         $scope.data = [res.data, ...$scope.data];
@@ -105,7 +121,7 @@ function magazinesController($scope, $http) {
     const confirm = 'Are you sure you want to?';
     if (window.confirm(confirm))
     {
-      connect_api('DELETE', apiBase + nameController + id, null, function (res) {
+      connect_api('DELETE', apiBase + nameMagazine + id, null, function (res) {
         const index = $scope.data.findIndex(item => item.id == id);
         $scope.data.splice(index, 1);
         showAlert('success');

@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('index');
-});
+})->name('index');
 
 Route::get('/shop', function () {
     return view('client.shop');
@@ -24,6 +24,10 @@ Route::get('/shop', function () {
 Route::get('/shop/{id}', function ($id) {
     return view('client.single-shop', ['id' => $id]);
 })->name('single-shop');
+
+Route::post('/shop?category={category}&keyword={keyword}', function ($category, $keyword) {
+    return view('client.shop', ['category' => $category, 'keyword' => $keyword]);
+})->name('search');
 
 Route::get('/login', function () {
     return view('client.login');
@@ -37,7 +41,18 @@ Route::get('/cart', function () {
     return view('client.cart');
 })->name('cart');
 
+Route::get('/checkout', function () {
+    return view('client.checkout');
+})->name('checkout');
+
+Route::get('/payment', function () {
+    return view('client.payment');
+})->name('payment');
 // ---------------------------- Admin ------------------------------------
+Route::get('/admin/login', function () {
+    return view('admin.login');
+});
+
 Route::get('/admin', function () {
     return view('admin.index');
 });
@@ -46,8 +61,16 @@ Route::get('/admin/products', function () {
     return view('admin.products');
 });
 
-Route::get('/admin/product_colors', function () {
-    return view('admin.product_colors');
+Route::get('/admin/colors', function () {
+    return view('admin.colors');
+});
+
+Route::get('/admin/sizes', function () {
+    return view('admin.sizes');
+});
+
+Route::get('/admin/images', function () {
+    return view('admin.images');
 });
 
 Route::get('/admin/categories', function () {
@@ -104,6 +127,10 @@ Route::get('/admin/magazines', function () {
 
 Route::get('/admin/orders', function () {
     return view('admin.orders');
+});
+
+Route::get('/admin/order_statuses', function () {
+    return view('admin.order_statuses');
 });
 
 Route::get('/admin/order_details', function () {

@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Models\customer_infos;
+use App\Models\customers;
 use App\Models\order_details;
+use App\Models\order_statuses;
 use App\Models\orders;
 use Illuminate\Http\Request;
 
@@ -16,7 +19,17 @@ class ordersController extends Controller
      */
     public function index()
     {
-        return orders::with('details')->where('is_active', 1)->get();
+
+        $customers = customer_infos::where('is_active', 1)->get();
+        $orders = orders::where('is_active', 1)->get();
+        $statuses = order_statuses::where('is_active', 1)->get();
+        foreach ($orders as $order) {
+            $c = $order->customer;
+            $c->info;
+            $order->details;
+            $order->status;
+        }
+        return ['orders'=>$orders, 'customers'=>$customers, 'statuses'=>$statuses];
     }
 
     /**
@@ -40,10 +53,9 @@ class ordersController extends Controller
         $db = new orders();
         $db->customer_id = $request->customer_id;
         $db->delivery_address = $request->delivery_address;
-        $db->status = $request->status;
-        $db->flag = $request->flag;
+        $db->total = $request->total;
+        $db->status_id = 1;
         $db->save();
-
         $details = $request->details;
         if($details) {
             $detail = new order_details();
@@ -63,8 +75,12 @@ class ordersController extends Controller
      */
     public function show($id)
     {
-        $db = orders::with('details')->where('is_active', 1)->find($id);
-        return $db;
+        $order = orders::where('is_active', 1)->find($id);
+        $c = $order->customer;
+        $c->info;
+        $order->details;
+        $order->status;
+        return $order;
     }
 
     /**
@@ -89,12 +105,12 @@ class ordersController extends Controller
     {
         $db = orders::where('is_active', 1)->find($id);
         $db->delivery_address = $request->delivery_address;
-        $db->status = $request->status;
+        
         $db->total = $request->total;
-        $db->flag = $request->flag;
+        $db->status_id = $request->status_id;
         $db->save();
 
-        return $db;
+        return $this->show($id);
     }
 
     /**

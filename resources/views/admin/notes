@@ -30,8 +30,8 @@ php artisan make:model suppliers
 php artisan make:controller api/adminsController --model=admins --resource
 php artisan make:controller api/admin_infosController --model=admin_infos --resource
 php artisan make:controller api/brandsController --model=brands --resource
-php artisan make:controller api/cartsController --model=carts --resource
-php artisan make:controller api/cart_detailsController --model=cart_details --resource
+php artisan make:controller api{{route('cart')}}sController --model=carts --resource
+php artisan make:controller api{{route('cart')}}_detailsController --model=cart_details --resource
 php artisan make:controller api/customersController --model=customers --resource
 php artisan make:controller api/customer_infosController --model=customer_infos --resource
 php artisan make:controller api/delivery_addressesController --model=delivery_addresses --resource

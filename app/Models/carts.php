@@ -10,10 +10,10 @@ class carts extends Model
     use HasFactory;
 
     public function customer() {
-        return $this->belongsTo(customers::class, 'customer_id');
+        return $this->belongsTo(customers::class, 'customer_id')->where('is_active', 1);
     }
 
     public function details() {
-        return $this->hasMany(cart_details::class, 'cart_id');
+        return $this->hasMany(cart_details::class, 'cart_id')->where('is_active', 1);
     }
 }

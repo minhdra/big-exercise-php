@@ -9,7 +9,7 @@
   <meta name="keywords" content="admin template, Convex admin template, dashboard template, flat admin template, responsive admin template, web app">
   <meta name="author" content="PIXINVENT">
   <meta name="csrf_token" content="{{csrf_token()}}">
-  <title>eCommerce Dashboard - Convex bootstrap 4 admin dashboard template</title>
+  <title>Admin - Dra</title>
   <link rel="apple-touch-icon" sizes="60x60" href="/assets/admin/img/ico/apple-icon-60.png">
   <link rel="apple-touch-icon" sizes="76x76" href="/assets/admin/img/ico/apple-icon-76.png">
   <link rel="apple-touch-icon" sizes="120x120" href="/assets/admin/img/ico/apple-icon-120.png">
@@ -31,7 +31,46 @@
   <link rel="stylesheet" type="text/css" href="/assets/admin/css/app.css">
 </head>
 
-<body data-col="2-columns" class=" 2-columns " ng-app="app">
+<body data-col="2-columns" class=" 2-columns " ng-app="app" ng-controller="globalController">
+  <!-- Start preloader -->
+  <div id="preloader">
+    <div id="ctn-preloader" class="ctn-preloader">
+      <div class="animation-preloader">
+        <div class="pre-spinner"></div>
+        <div class="txt-loading">
+          <span data-text-preloader="L" class="letters-loading">
+            L
+          </span>
+
+          <span data-text-preloader="O" class="letters-loading">
+            O
+          </span>
+
+          <span data-text-preloader="A" class="letters-loading">
+            A
+          </span>
+
+          <span data-text-preloader="D" class="letters-loading">
+            D
+          </span>
+
+          <span data-text-preloader="I" class="letters-loading">
+            I
+          </span>
+
+          <span data-text-preloader="N" class="letters-loading">
+            N
+          </span>
+
+          <span data-text-preloader="G" class="letters-loading">
+            G
+          </span>
+        </div>
+      </div>
+      <div class="loader-section section-left"></div>
+      <div class="loader-section section-right"></div>
+    </div>
+  </div>
   <!-- ////////////////////////////////////////////////////////////////////////////-->
   <div class="wrapper">
 
@@ -220,7 +259,6 @@
   <script src="/assets/admin/vendors/js/toastr.min.js"></script>
   <!-- END PAGE VENDOR JS-->
   <!-- BEGIN CONVEX JS-->
-  <script src="/assets/admin/js/app-sidebar.js"></script>
   <script src="/assets/admin/js/notification-sidebar.js"></script>
   <!-- <script src="/assets/admin/js/form-validation.js"></script> -->
   <script src="/assets/admin/js/customizer.js"></script>
@@ -230,9 +268,25 @@
   <!-- END PAGE LEVEL JS-->
   
   <script src="/assets/js/plugins/angular.min.js"></script>
-  <script src="/assets/js/plugins/dirPagination.js"></script>
+  <script src="/assets/admin/vendors/js/dirPagination.js"></script>
+  
+  <script>
+    const preLoader = function() {
+      let preloaderWrapper = document.getElementById('preloader');
+      window.onload = () => {
+        preloaderWrapper.classList.add('loaded');
+      };
+    };
+    preLoader();
+  </script>
+
   <!-- Controller -->
   <script src="/assets/js/controllers/InitializationController.js"></script>
+  <script src="/assets/js/controllers/globalController.js"></script>
+  <script src="/assets/js/controllers/admin/headerController.js"></script>
+  <script src="/assets/admin/js/app-sidebar.js"></script>
+  <script src="/assets/vendor/ckeditor/ckeditor.js"></script>
+  <script src="/assets/js/angular-ckeditor.js"></script>
   @yield('js')
 </body>
 

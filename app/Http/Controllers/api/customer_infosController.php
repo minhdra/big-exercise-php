@@ -39,7 +39,7 @@ class customer_infosController extends Controller
         $db = new customer_infos();
         $db->customer_id = $request->customer_id;
         $db->full_name = $request->full_name;
-        $db->avatar = $request->avatar;
+        $db->avatar = $request->avatar ?? null;
         $db->phone_number = $request->phone_number;
         $db->address = $request->address;
         $db->email = $request->email;
@@ -82,7 +82,7 @@ class customer_infosController extends Controller
     {
         $db = customer_infos::where('is_active', 1)->find($id);
         $db->full_name = $request->full_name;
-        $db->avatar = $request->avatar;
+        $db->avatar = $request->avatar ?? null;
         $db->phone_number = $request->phone_number;
         $db->address = $request->address;
         $db->email = $request->email;

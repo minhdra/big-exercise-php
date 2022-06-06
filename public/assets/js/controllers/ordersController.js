@@ -1,5 +1,5 @@
-const nameController = 'orders/';
-const nameSelf = 'order/';
+const nameOrder = 'orders/';
+const nameS = 'order/';
 
 app.controller('ordersController', ordersController);
 function ordersController($scope, $http) {
@@ -49,8 +49,10 @@ function ordersController($scope, $http) {
   };
   // Get all orders
   const loadData = () => {
-    connect_api('GET', apiBase + nameController, null, function (res) {
-      $scope.data = res.data;
+    connect_api('GET', apiBase + nameOrder, null, function (res) {
+      $scope.data = res.data.orders;
+      $scope.customers = res.data.customers;
+      $scope.statuses = res.data.statuses;
     });
   };
   loadData();
@@ -67,11 +69,10 @@ function ordersController($scope, $http) {
       $scope.modalTitle = 'Edit a order';
       $http({
         method: 'GET',
-        url: apiBase + nameController + id,
+        url: apiBase + nameOrder + id,
       }).then(
         (res) => {
           $scope.item = res.data; // item is already
-          $scope.item.status = $scope.item.status + '';
           // console.log($scope.item);
         },
         (error) => console.log(error)
@@ -85,13 +86,13 @@ function ordersController($scope, $http) {
     // is create
     if ($scope.id == 0)
     {
-      connect_api('POST', apiBase + nameController, $scope.item, function (res) {
+      connect_api('POST', apiBase + nameOrder, $scope.item, function (res) {
         $scope.data = [res.data, ...$scope.data];
         $('#large').modal('hide');
       })
     } else
     { // is update
-      connect_api('PUT', apiBase + nameController + $scope.id, $scope.item, function (res) {
+      connect_api('PUT', apiBase + nameOrder + $scope.id, $scope.item, function (res) {
         const index = $scope.data.findIndex(item => item.id == $scope.id);
         $scope.data.splice(index, 1);
         $scope.data = [res.data, ...$scope.data];
@@ -106,7 +107,7 @@ function ordersController($scope, $http) {
     const confirm = 'Are you sure you want to?';
     if (window.confirm(confirm))
     {
-      connect_api('DELETE', apiBase + nameController + id, null, function (res) {
+      connect_api('DELETE', apiBase + nameOrder + id, null, function (res) {
         const index = $scope.data.findIndex(item => item.id == id);
         $scope.data.splice(index, 1);
         showAlert('success');

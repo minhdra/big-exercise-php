@@ -58,8 +58,17 @@
                           </tr>
                         </tbody>
                       </table>
-                      <dir-pagination-controls style="float: right; padding-right: 100px;" direction-links="true" boundary-links="true" on-page-change='indexCount(newPageNumber)'>
-                      </dir-pagination-controls>
+                      <div class="row">
+                        <div class="col-sm-12 col-md-5">
+                          <div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite">Showing @{{data.length > 10 ? 10 : data.length}} of @{{data.length}} entries</div>
+                        </div>
+                        <div class="col-sm-12 col-md-7">
+                          <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate">
+                            <dir-pagination-controls style="float: right; padding-right: 100px;" direction-links="true" boundary-links="true" on-page-change='indexCount(newPageNumber)'>
+                            </dir-pagination-controls>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -99,7 +108,7 @@
                   <label for="img_file_upid">Thumbnail</label>
                   <input type="file" accept="image/*" name="file_img" id="img_file_upid">
                   <div class="row">
-                    <img ng-if="item.thumbnail != '' || item.thumbnail != null" ng-src="/assets/img/products/@{{item.thumbnail}}" id="img_prv" style="max-width: 150px;max-height: 150px" class="img-thumbnail" alt="">
+                    <img ng-if="item.thumbnail" ng-src="/assets/img/products/@{{item.thumbnail}}" id="img_prv" style="max-width: 150px;max-height: 150px" class="img-thumbnail" alt="">
                   </div>
                 </fieldset>
               </div>

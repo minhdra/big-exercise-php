@@ -1,5 +1,5 @@
-const nameController = 'brands/';
-const nameSelf = 'brand/';
+const nameBrand = 'brands/';
+const nameS = 'brand/';
 
 app.controller('brandsController', brandsController);
 function brandsController($scope, $http) {
@@ -49,7 +49,7 @@ function brandsController($scope, $http) {
   };
   // Get all brands
   const loadData = () => {
-    connect_api('GET', apiBase + nameController, null, function (res) {
+    connect_api('GET', apiBase + nameBrand, null, function (res) {
       $scope.data = res.data;
     });
   };
@@ -66,7 +66,7 @@ function brandsController($scope, $http) {
       $scope.modalTitle = 'Edit a brand';
       $http({
         method: 'GET',
-        url: apiBase + nameController + id,
+        url: apiBase + nameBrand + id,
       }).then(
         (res) => {
           $scope.item = res.data; // item is already
@@ -84,13 +84,13 @@ function brandsController($scope, $http) {
     // is create
     if ($scope.id == 0)
     {
-      connect_api('POST', apiBase + nameController, $scope.item, function (res) {
+      connect_api('POST', apiBase + nameBrand, $scope.item, function (res) {
         $scope.data = [res.data, ...$scope.data];
         $('#large').modal('hide');
       })
     } else
     { // is update
-      connect_api('PUT', apiBase + nameController + $scope.id, $scope.item, function (res) {
+      connect_api('PUT', apiBase + nameBrand + $scope.id, $scope.item, function (res) {
         const index = $scope.data.findIndex(item => item.id == $scope.id);
         $scope.data.splice(index, 1);
         $scope.data = [res.data, ...$scope.data];
@@ -105,7 +105,7 @@ function brandsController($scope, $http) {
     const confirm = 'Are you sure you want to?';
     if (window.confirm(confirm))
     {
-      connect_api('DELETE', apiBase + nameController + id, null, function (res) {
+      connect_api('DELETE', apiBase + nameBrand + id, null, function (res) {
         const index = $scope.data.findIndex(item => item.id == id);
         $scope.data.splice(index, 1);
         showAlert('success');
@@ -137,7 +137,7 @@ function brandsController($scope, $http) {
       type: 'post',
       contentType: false,
       processData: false,
-      url: apiBase + nameSelf + 'upload',
+      url: apiBase + nameS + 'upload',
       data: postData,
       success: function (res) {
         console.log('success');

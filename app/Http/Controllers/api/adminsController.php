@@ -16,7 +16,14 @@ class adminsController extends Controller
      */
     public function index()
     {
-        return admins::where('is_active', 1)->get();
+        return admins::with('info')->where('is_active', 1)->get();
+    }
+
+    public function login(Request $request)
+    {
+        $db = admins::where('username', $request->username)->where('password', $request->password)->where('is_active', 1)->selectRaw('id')->first();
+        // session('customer', $db);
+        return $db;
     }
 
     /**
@@ -44,7 +51,11 @@ class adminsController extends Controller
         $db->status = $request->status;
         $db->save();
 
-        return $db;
+        $info = $request->info;
+        if ($info) {
+            (new admin_infos())->insertInfo($info, $db->id);
+        }
+        return $this->show($db->id);
     }
 
     /**
@@ -55,7 +66,7 @@ class adminsController extends Controller
      */
     public function show($id)
     {
-        $db = admins::where('is_active', 1)->find($id);
+        $db = admins::with('info')->where('is_active', 1)->find($id);
         return $db;
     }
 
@@ -85,8 +96,17 @@ class adminsController extends Controller
         $db->role = $request->role;
         $db->status = $request->status;
         $db->save();
+        $i = $request->info;
+        $info = new admin_infos();
+        if ($i) {
+            $idInfo = $i['id'] ?? null;
+            if ($idInfo)
+                $info->updateInfo($i, $idInfo);
+            else
+                $info->insertInfo($i, $db->id);
+        }
 
-        return $db;
+        return $this->show($id);
     }
 
     /**
@@ -101,8 +121,8 @@ class adminsController extends Controller
         $db->is_active = 0;
         $db->save();
 
-        $info = admin_infos::where('admin_id', $db->id)->first();
-        if($info) {
+        $info = admin_infos::where('is_active', 1)->where('admin_id', $db->id)->first();
+        if ($info) {
             $info->is_active = 0;
             $info->save();
         }

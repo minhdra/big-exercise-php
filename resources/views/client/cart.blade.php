@@ -10,7 +10,7 @@
           <div class="breadcrumb__content text-center">
             <h1 class="breadcrumb__content--title text-white mb-25">Shopping Cart</h1>
             <ul class="breadcrumb__content--menu d-flex justify-content-center">
-              <li class="breadcrumb__content--menu__items"><a class="text-white" href="/">Home</a></li>
+              <li class="breadcrumb__content--menu__items"><a class="text-white" href="{{route('index')}}">Home</a></li>
               <li class="breadcrumb__content--menu__items"><span class="text-white">Shopping Cart</span></li>
             </ul>
           </div>
@@ -48,10 +48,10 @@
                             </svg>
                           </button>
                           <div class="cart__thumbnail">
-                            <a href="/shop/@{{row.id}}"><img class="border-radius-5" ng-src="/assets/img/products/@{{row.image}}" alt="cart-product"></a>
+                            <a href="/shop/@{{row.product_id}}"><img class="border-radius-5" ng-src="/assets/img/products/@{{row.image}}" alt="cart-product"></a>
                           </div>
                           <div class="cart__content">
-                            <h4 class="cart__content--title"><a href="/shop/@{{row.id}}">@{{row.name}}</a></h4>
+                            <h4 class="cart__content--title"><a href="/shop/@{{row.product_id}}">@{{row.product.name}}</a></h4>
                             <span class="cart__content--variant">COLOR: @{{row.color}}</span>
                             <span class="cart__content--variant">SIZE: @{{row.size}}</span>
                           </div>
@@ -76,7 +76,7 @@
                   </tbody>
                 </table>
                 <div class="continue__shopping d-flex justify-content-between">
-                  <a class="continue__shopping--link" href="/shop">Continue shopping</a>
+                  <a class="continue__shopping--link" href="{{route('shop')}}">Continue shopping</a>
                   <button class="continue__shopping--clear" type="submit">Clear Cart</button>
                 </div>
               </div>
@@ -92,11 +92,6 @@
                     </label>
                     <button class="coupon__code--field__btn primary__btn" type="submit">Apply Coupon</button>
                   </div>
-                </div>
-                <div class="cart__note mb-20">
-                  <h3 class="cart__note--title">Note</h3>
-                  <p class="cart__note--desc">Add special instructions for your seller...</p>
-                  <textarea class="cart__note--textarea border-radius-5" spellcheck="false" data-ms-editor="true"></textarea>
                 </div>
                 <div class="cart__summary--total mb-20">
                   <table class="cart__summary--total__table">
@@ -115,8 +110,8 @@
                 <div class="cart__summary--footer">
                   <p class="cart__summary--footer__desc">Shipping &amp; taxes calculated at checkout</p>
                   <ul class="d-flex justify-content-between">
-                    <li><button class="cart__summary--footer__btn primary__btn cart">Update Cart</button></li>
-                    <li><a class="cart__summary--footer__btn primary__btn checkout" href="checkout.html">Check Out</a></li>
+                    <li></li>
+                    <li><a class="cart__summary--footer__btn primary__btn checkout" href="{{route('checkout')}}">Check Out</a></li>
                   </ul>
                 </div>
               </div>
@@ -125,7 +120,7 @@
         </div>
         <div ng-if="customer.cart_details.length === 0">
           <h2>You haven't any cart!</h2>
-          <a class="primary__btn minicart__button--link" href="/shop">Shopping Now</a>
+          <a class="primary__btn minicart__button--link" href="{{route('shop')}}">Shopping Now</a>
         </div>
       </div>
     </div>
@@ -134,7 +129,7 @@
     <div class="container-fluid">
       <div class="cart__section--inner">
         <h2>You need login to use this function</h2>
-        <a class="primary__btn minicart__button--link" href="/login">Login</a>
+        <a class="primary__btn minicart__button--link" href="{{route('login')}}">Login</a>
       </div>
     </div>
   </section>
@@ -206,7 +201,7 @@
                 </ul>
                 <ul class="product__items--action d-flex">
                   <li class="product__items--action__list">
-                    <a class="product__items--action__btn add__to--cart" href="/cart">
+                    <a class="product__items--action__btn add__to--cart" href="{{route('cart')}}">
                       <svg class="product__items--action__btn--svg" xmlns="http://www.w3.org/2000/svg" width="22.51" height="20.443" viewBox="0 0 14.706 13.534">
                         <g transform="translate(0 0)">
                           <g>
@@ -299,7 +294,7 @@
                 </ul>
                 <ul class="product__items--action d-flex">
                   <li class="product__items--action__list">
-                    <a class="product__items--action__btn add__to--cart" href="/cart">
+                    <a class="product__items--action__btn add__to--cart" href="{{route('cart')}}">
                       <svg class="product__items--action__btn--svg" xmlns="http://www.w3.org/2000/svg" width="22.51" height="20.443" viewBox="0 0 14.706 13.534">
                         <g transform="translate(0 0)">
                           <g>
@@ -392,7 +387,7 @@
                 </ul>
                 <ul class="product__items--action d-flex">
                   <li class="product__items--action__list">
-                    <a class="product__items--action__btn add__to--cart" href="/cart">
+                    <a class="product__items--action__btn add__to--cart" href="{{route('cart')}}">
                       <svg class="product__items--action__btn--svg" xmlns="http://www.w3.org/2000/svg" width="22.51" height="20.443" viewBox="0 0 14.706 13.534">
                         <g transform="translate(0 0)">
                           <g>
@@ -486,7 +481,7 @@
                 </ul>
                 <ul class="product__items--action d-flex">
                   <li class="product__items--action__list">
-                    <a class="product__items--action__btn add__to--cart" href="/cart">
+                    <a class="product__items--action__btn add__to--cart" href="{{route('cart')}}">
                       <svg class="product__items--action__btn--svg" xmlns="http://www.w3.org/2000/svg" width="22.51" height="20.443" viewBox="0 0 14.706 13.534">
                         <g transform="translate(0 0)">
                           <g>
@@ -579,7 +574,7 @@
                 </ul>
                 <ul class="product__items--action d-flex">
                   <li class="product__items--action__list">
-                    <a class="product__items--action__btn add__to--cart" href="/cart">
+                    <a class="product__items--action__btn add__to--cart" href="{{route('cart')}}">
                       <svg class="product__items--action__btn--svg" xmlns="http://www.w3.org/2000/svg" width="22.51" height="20.443" viewBox="0 0 14.706 13.534">
                         <g transform="translate(0 0)">
                           <g>
@@ -672,7 +667,7 @@
                 </ul>
                 <ul class="product__items--action d-flex">
                   <li class="product__items--action__list">
-                    <a class="product__items--action__btn add__to--cart" href="/cart">
+                    <a class="product__items--action__btn add__to--cart" href="{{route('cart')}}">
                       <svg class="product__items--action__btn--svg" xmlns="http://www.w3.org/2000/svg" width="22.51" height="20.443" viewBox="0 0 14.706 13.534">
                         <g transform="translate(0 0)">
                           <g>
@@ -765,7 +760,7 @@
                 </ul>
                 <ul class="product__items--action d-flex">
                   <li class="product__items--action__list">
-                    <a class="product__items--action__btn add__to--cart" href="/cart">
+                    <a class="product__items--action__btn add__to--cart" href="{{route('cart')}}">
                       <svg class="product__items--action__btn--svg" xmlns="http://www.w3.org/2000/svg" width="22.51" height="20.443" viewBox="0 0 14.706 13.534">
                         <g transform="translate(0 0)">
                           <g>
@@ -858,7 +853,7 @@
                 </ul>
                 <ul class="product__items--action d-flex">
                   <li class="product__items--action__list">
-                    <a class="product__items--action__btn add__to--cart" href="/cart">
+                    <a class="product__items--action__btn add__to--cart" href="{{route('cart')}}">
                       <svg class="product__items--action__btn--svg" xmlns="http://www.w3.org/2000/svg" width="22.51" height="20.443" viewBox="0 0 14.706 13.534">
                         <g transform="translate(0 0)">
                           <g>
@@ -951,7 +946,7 @@
                 </ul>
                 <ul class="product__items--action d-flex">
                   <li class="product__items--action__list">
-                    <a class="product__items--action__btn add__to--cart" href="/cart">
+                    <a class="product__items--action__btn add__to--cart" href="{{route('cart')}}">
                       <svg class="product__items--action__btn--svg" xmlns="http://www.w3.org/2000/svg" width="22.51" height="20.443" viewBox="0 0 14.706 13.534">
                         <g transform="translate(0 0)">
                           <g>
@@ -1044,7 +1039,7 @@
                 </ul>
                 <ul class="product__items--action d-flex">
                   <li class="product__items--action__list">
-                    <a class="product__items--action__btn add__to--cart" href="/cart">
+                    <a class="product__items--action__btn add__to--cart" href="{{route('cart')}}">
                       <svg class="product__items--action__btn--svg" xmlns="http://www.w3.org/2000/svg" width="22.51" height="20.443" viewBox="0 0 14.706 13.534">
                         <g transform="translate(0 0)">
                           <g>
@@ -1138,7 +1133,7 @@
                 </ul>
                 <ul class="product__items--action d-flex">
                   <li class="product__items--action__list">
-                    <a class="product__items--action__btn add__to--cart" href="/cart">
+                    <a class="product__items--action__btn add__to--cart" href="{{route('cart')}}">
                       <svg class="product__items--action__btn--svg" xmlns="http://www.w3.org/2000/svg" width="22.51" height="20.443" viewBox="0 0 14.706 13.534">
                         <g transform="translate(0 0)">
                           <g>
@@ -1231,7 +1226,7 @@
                 </ul>
                 <ul class="product__items--action d-flex">
                   <li class="product__items--action__list">
-                    <a class="product__items--action__btn add__to--cart" href="/cart">
+                    <a class="product__items--action__btn add__to--cart" href="{{route('cart')}}">
                       <svg class="product__items--action__btn--svg" xmlns="http://www.w3.org/2000/svg" width="22.51" height="20.443" viewBox="0 0 14.706 13.534">
                         <g transform="translate(0 0)">
                           <g>
@@ -1324,7 +1319,7 @@
                 </ul>
                 <ul class="product__items--action d-flex">
                   <li class="product__items--action__list">
-                    <a class="product__items--action__btn add__to--cart" href="/cart">
+                    <a class="product__items--action__btn add__to--cart" href="{{route('cart')}}">
                       <svg class="product__items--action__btn--svg" xmlns="http://www.w3.org/2000/svg" width="22.51" height="20.443" viewBox="0 0 14.706 13.534">
                         <g transform="translate(0 0)">
                           <g>
@@ -1417,7 +1412,7 @@
                 </ul>
                 <ul class="product__items--action d-flex">
                   <li class="product__items--action__list">
-                    <a class="product__items--action__btn add__to--cart" href="/cart">
+                    <a class="product__items--action__btn add__to--cart" href="{{route('cart')}}">
                       <svg class="product__items--action__btn--svg" xmlns="http://www.w3.org/2000/svg" width="22.51" height="20.443" viewBox="0 0 14.706 13.534">
                         <g transform="translate(0 0)">
                           <g>
@@ -1510,7 +1505,7 @@
                 </ul>
                 <ul class="product__items--action d-flex">
                   <li class="product__items--action__list">
-                    <a class="product__items--action__btn add__to--cart" href="/cart">
+                    <a class="product__items--action__btn add__to--cart" href="{{route('cart')}}">
                       <svg class="product__items--action__btn--svg" xmlns="http://www.w3.org/2000/svg" width="22.51" height="20.443" viewBox="0 0 14.706 13.534">
                         <g transform="translate(0 0)">
                           <g>
@@ -1603,7 +1598,7 @@
                 </ul>
                 <ul class="product__items--action d-flex">
                   <li class="product__items--action__list">
-                    <a class="product__items--action__btn add__to--cart" href="/cart">
+                    <a class="product__items--action__btn add__to--cart" href="{{route('cart')}}">
                       <svg class="product__items--action__btn--svg" xmlns="http://www.w3.org/2000/svg" width="22.51" height="20.443" viewBox="0 0 14.706 13.534">
                         <g transform="translate(0 0)">
                           <g>
@@ -1696,7 +1691,7 @@
                 </ul>
                 <ul class="product__items--action d-flex">
                   <li class="product__items--action__list">
-                    <a class="product__items--action__btn add__to--cart" href="/cart">
+                    <a class="product__items--action__btn add__to--cart" href="{{route('cart')}}">
                       <svg class="product__items--action__btn--svg" xmlns="http://www.w3.org/2000/svg" width="22.51" height="20.443" viewBox="0 0 14.706 13.534">
                         <g transform="translate(0 0)">
                           <g>

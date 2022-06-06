@@ -60,13 +60,13 @@
                           <tr dir-paginate="row in data|filter: {name: keyword, category_id: category_id, supplier_id: supplier_id}|itemsPerPage:10" current-page="currentPage">
                             <td>@{{$index + serial}}</td>
                             <td>@{{row.name}}</td>
-                            <td>@{{row.categories.name}}</td>
+                            <td>@{{row.category.name}}</td>
                             <td>@{{row.supplier.name}}</td>
                             <td>@{{row.made_in}}</td>
                             <td>@{{row.gender ? 'Male' : 'Female'}}</td>
-                            <td>@{{row.brands.name}}</td>
+                            <td>@{{row.brand.name}}</td>
                             <td>
-                              <img ng-if="row.image_first" ng-src="/assets/img/products/@{{row.image_first}}" alt="" style="width: 100px">
+                              <img ng-src="/assets/img/products/@{{row.colors[0].images[0].image}}" alt="row.name" style="width: 100px">
                             </td>
                             <td align="right">@{{row.price.price_current == 0 ? row.price.price_origin : row.price.price_current}}</td>
                             <td style="width: 150px !important">
@@ -83,8 +83,17 @@
                           </tr>
                         </tbody>
                       </table>
-                      <dir-pagination-controls style="float: right; padding-right: 100px;" direction-links="true" boundary-links="true" on-page-change='indexCount(newPageNumber)'>
-                      </dir-pagination-controls>
+                      <div class="row">
+                        <div class="col-sm-12 col-md-5">
+                          <div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite">Showing @{{data.length > 10 ? 10 : data.length}} of @{{data.length}} entries</div>
+                        </div>
+                        <div class="col-sm-12 col-md-7">
+                          <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate">
+                            <dir-pagination-controls style="float: right; padding-right: 100px;" direction-links="true" boundary-links="true" on-page-change='indexCount(newPageNumber)'>
+                            </dir-pagination-controls>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -101,8 +110,8 @@
     @include('includes.admin.footer')
 
   </div>
-  <div class="modal fade text-left" id="large" tabindex="-1" role="dialog" aria-labelledby="myModalLabel17" style="display:none; z-index:99999" aria-hidden="true">
-    <div class="modal-dialog modal-xl" role="document">
+  <div class="modal fade text-left" id="large" tabindex="-1" role="dialog" aria-labelledby="myModalLabel17" style="display:none; z-index:99999;" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <h4 class="modal-title" id="myModalLabel17">@{{modalTitle}}</h4>
@@ -165,10 +174,12 @@
                   <input type="text" class="form-control" id="made_in" ng-model="item.made_in" require>
                 </fieldset>
               </div>
-              <div class="col-xl-8 col-lg-6 col-md-12 mb-1">
+              <div class="col-xl-12 col-lg-12 col-md-12 mb-1">
                 <fieldset class="form-group">
                   <label for="description">Description</label>
-                  <textarea name="des" class="form-control" id="description" ng-model="item.description" rows="5"></textarea>
+                  <div ckeditor="text.options" ng-model="text.textInput">
+
+                  </div>
                 </fieldset>
               </div>
             </div>
@@ -190,7 +201,7 @@
                 </div>
               </div>
               <!-- Colors -->
-              <table class="table table-hover text-center mb-3" ng-if="colors.length > 0">
+              <table class="table table-hover text-center mb-3" ng-if="item.colors.length > 0">
                 <thead>
                   <tr>
                     <th>#</th>
@@ -199,8 +210,8 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr ng-repeat="row in colors">
-                    <td>@{{$index + serial}}</td>
+                  <tr ng-repeat="row in item.colors">
+                    <td>@{{$index + 1}}</td>
                     <td>@{{row.color}}</td>
                     <td style="width: 150px !important">
                       <a class="info p-0 mr-2" data-original-title="" title="Details" data-toggle="tooltip" ng-click="showDetails(row, $index, $event)">
@@ -234,7 +245,7 @@
                 </thead>
                 <tbody>
                   <tr ng-repeat="row in images">
-                    <td>@{{$index + serial}}</td>
+                    <td>@{{$index + 1}}</td>
                     <td>
                       <img ng-src="/assets/img/products/@{{row.image}}" alt="" style="width:50px;height:60px">
                     </td>
@@ -242,7 +253,7 @@
                       <label for="file_single" class="success p-0 mr-2" data-original-title="" title="Edit" data-toggle="tooltip" ng-click="updateImage(row, $index)">
                         <i class="fa fa-pencil font-medium-3"></i>
                       </label>
-                      <input type="file" id="file_single" name='file' accept="image/*" onchange="angular.element(this).scope().chooseImage(event)" style="display: none"/>
+                      <input type="file" id="file_single" name='file' accept="image/*" onchange="angular.element(this).scope().chooseImage(event)" style="display: none" />
                       <a class="danger p-0 mr-2" data-original-title="" title="Remove" data-toggle="tooltip" ng-click="removeImage(row, $index)">
                         <i class="fa fa-trash-o font-medium-3"></i>
                       </a>
@@ -282,7 +293,7 @@
                   </thead>
                   <tbody>
                     <tr ng-repeat="row in sizes">
-                      <td>@{{$index + serial}}</td>
+                      <td>@{{$index + 1}}</td>
                       <td>@{{row.size}}</td>
                       <td>@{{row.quantity}}</td>
                       <td style="width: 100px !important">
@@ -311,6 +322,5 @@
 @stop
 
 @section('js')
-<!-- <script src="/assets/admin/js/wizard-step.js"></script> -->
 <script src="/assets/js/controllers/productsController.js"></script>
 @stop

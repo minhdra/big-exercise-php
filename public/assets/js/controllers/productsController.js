@@ -1,5 +1,5 @@
-const nameController = 'products/';
-const nameSelf = 'product/';
+const nameProduct = 'products/';
+let nameOtherProduct = 'product/';
 const nameColor = 'colors/';
 const nameImage = 'images/';
 const nameSize = 'sizes/';
@@ -13,17 +13,37 @@ function productsController($scope, $http) {
   $scope.pageSize = 10;
   $scope.keyword = '';
   $scope.colorIndex = 0;
+  $scope.sizeIndex = 0;
   // $scope.images = [];
-  $scope.imageIndex = 0;
-  $scope.radioCheck = false;
   $scope.serial = 1;
   $scope.indexCount = function (newPageNumber) {
     $scope.serial = newPageNumber * 10 - 9;
   };
   $scope.item = {};
-  $scope.color = {};
-  $scope.size = {};
-  $scope.colors = [];
+  $scope.quantity = 1;
+  $scope.option = 'all';
+  $scope.sortOptions = [
+    {
+      label: 'All',
+      value: 'all',
+    },
+    {
+      label: 'Name ASC',
+      value: 'name asc',
+    },
+    {
+      label: 'Name DESC',
+      value: 'name desc',
+    },
+    {
+      label: 'Price ASC',
+      value: 'price asc',
+    },
+    {
+      label: 'Price DESC',
+      value: 'price desc',
+    },
+  ];
   var connect_api = function (method, url, data, callback) {
     if (data) {
       $http({
@@ -60,13 +80,15 @@ function productsController($scope, $http) {
   };
   // Get all products
   const loadData = () => {
-    connect_api('GET', apiBase + nameController, null, function (res) {
+    connect_api('GET', apiBase + nameProduct, null, function (res) {
       const all = {
         id: undefined,
         name: 'All',
         color: 'All',
       };
       $scope.data = res.data.products;
+      $scope.dataBeforeSort = JSON.parse(JSON.stringify($scope.data));
+      $scope.dataRoot = JSON.parse(JSON.stringify($scope.data));
       $scope.categories = res.data.categories;
       $scope.brands = res.data.brands;
       $scope.colorsD = res.data.colors;
@@ -81,71 +103,31 @@ function productsController($scope, $http) {
   };
   loadData();
 
-  // Get new products
-  $scope.loadClientHome = () => {
-    // Get new products
-    connect_api(
-      'GET',
-      apiBase + nameController + 'getNew',
-      null,
-      function (res) {
-        $scope.dataNew = res.data;
-      }
-    );
-    // Get best sellers products
-    connect_api(
-      'GET',
-      apiBase + nameController + 'getSeller',
-      null,
-      function (res) {
-        $scope.dataSeller = res.data;
-      }
-    );
-  };
-
-  // Modal in client
-  $scope.showQuickView = (id) => {
-    $('#modal1').addClass('is-visible');
-    // console.log(id);
-    //Get single product
-    $http({
-      method: 'GET',
-      url: apiBase + nameController + id,
-    }).then(
-      (res) => {
-        $scope.item = res.data;
-        $scope.pickColor($scope.colorIndex);
-        console.log($scope.item);
-      },
-      (error) => console.log(error)
-    );
-  };
-
   // open the modal in admin
   $scope.openModal = (id) => {
+    $scope.text = {
+      textInput: '',
+      options: {
+        language: 'en',
+        allowedContent: true,
+        entities: false,
+      },
+    };
     $scope.id = id;
+    $scope.images = null;
+    $scope.sizes = null;
+    $scope.color = {};
+    $scope.size = {};
     // Insert
     if (id == 0) {
       $scope.modalTitle = 'Insert a product';
       $scope.item = {};
-      $scope.colors = [];
-      $scope.color = {};
-      $scope.size = {};
-      $scope.sizes = undefined;
-      $scope.image = {};
-      $scope.images = undefined;
     } else {
       // Edit
       $scope.modalTitle = 'Edit a product';
-      $scope.colors = [];
-      $scope.color = {};
-      $scope.size = {};
-      $scope.sizes = undefined;
-      $scope.image = {};
-      $scope.images = undefined;
       $http({
         method: 'GET',
-        url: apiBase + nameController + id,
+        url: apiBase + nameProduct + id,
       }).then(
         (res) => {
           $scope.item = res.data; // item is already
@@ -153,12 +135,8 @@ function productsController($scope, $http) {
           $scope.item.brand_id = '' + $scope.item.brand_id;
           $scope.item.category_id = '' + $scope.item.category_id;
           $scope.item.supplier_id = '' + $scope.item.supplier_id;
-          $scope.colors = $scope.item.colors ? $scope.item.colors : [];
-          $scope.colors.forEach(item => {
-            item.sizes = $scope.item.sizes.filter(s => s.product_color_id === item.id);
-            item.images = $scope.item.images.filter(s => s.product_color_id === item.id);
-          })
-          console.log($scope.item);
+          $scope.text.textInput = $scope.item.description;
+          // console.log($scope.item);
         },
         (error) => console.log(error)
       );
@@ -169,49 +147,39 @@ function productsController($scope, $http) {
   // Save data
   $scope.saveData = () => {
     // is create
-    $scope.item.colors = $scope.colors;
+    // $scope.item.colors = $scope.colors;
+    $scope.item.description = $scope.text.textInput;
     if ($scope.id == 0) {
-      console.log($scope.item);
-      connect_api(
-        'POST',
-        apiBase + nameController,
-        $scope.item,
-        function (res) {
-          $scope.data = [res.data, ...$scope.data];
-        }
-      );
+      connect_api('POST', apiBase + nameProduct, $scope.item, function (res) {
+        $scope.data = [res.data, ...$scope.data];
+        $('#large').modal('hide');
+      });
     } else {
-      console.log($scope.item);
+      // console.log($scope.item);
       // is update
       connect_api(
         'PUT',
-        apiBase + nameController + $scope.id,
+        apiBase + nameProduct + $scope.id,
         $scope.item,
         function (res) {
           const index = $scope.data.findIndex((item) => item.id == $scope.id);
           $scope.data.splice(index, 1);
           $scope.data = [res.data, ...$scope.data];
+          $('#large').modal('hide');
         }
       );
     }
-
-    $('#large').modal('hide');
   };
 
   // Remove item
   $scope.remove = (id) => {
     const confirm = 'Are you sure you want to?';
     if (window.confirm(confirm)) {
-      connect_api(
-        'DELETE',
-        apiBase + nameController + id,
-        null,
-        function (res) {
-          const index = $scope.data.findIndex((item) => item.id == id);
-          $scope.data.splice(index, 1);
-          showAlert('success');
-        }
-      );
+      connect_api('DELETE', apiBase + nameProduct + id, null, function (res) {
+        const index = $scope.data.findIndex((item) => item.id == id);
+        $scope.data.splice(index, 1);
+        showAlert('success');
+      });
     }
   };
 
@@ -224,7 +192,7 @@ function productsController($scope, $http) {
     else {
       const color = convertToJson($scope.color);
       let ok = true;
-      $scope.colors.forEach((item) => {
+      $scope.item.colors.forEach((item) => {
         if (item.color === color.color) {
           ok = false;
           toastr.warning('Cannot duplicate color');
@@ -232,7 +200,7 @@ function productsController($scope, $http) {
         }
       });
       if (ok) {
-        $scope.colors = [color, ...$scope.colors];
+        $scope.item.colors = [...$scope.item.colors, color];
         $scope.color = {};
       }
     }
@@ -240,6 +208,7 @@ function productsController($scope, $http) {
 
   $scope.openEditColor = (color, index) => {
     // $scope.color_id = color.id;
+    $scope.color = {};
     $scope.index = index;
     $scope.color.color = color.color;
     $scope.color.id = color.id;
@@ -252,17 +221,16 @@ function productsController($scope, $http) {
       // $scope.color.product_id = $scope.id;
       const color = convertToJson($scope.color);
       let ok = true;
-      $scope.colors.forEach((item) => {
+      $scope.item.colors.forEach((item) => {
         if (item.color === color.color) {
           ok = false;
           toastr.warning('Cannot duplicate color');
           return;
         }
       });
-      if (ok)
-      {
-        $scope.colors[$scope.index] = color;
-        $scope.color = {};
+      if (ok) {
+        $scope.item.colors[$scope.index] = color;
+        $scope.item.color = {};
       }
     }
   };
@@ -271,12 +239,16 @@ function productsController($scope, $http) {
     const color_id = color.id;
     const confirm = 'Are you sure you want to?';
     if (window.confirm(confirm)) {
-      $scope.colors.splice(index, 1);
-      if (color_id)
-      {
-        connect_api('DELETE', apiBase + nameColor + color_id, null, function (res) {
-          showAlert('success');
-        })
+      $scope.item.colors.splice(index, 1);
+      if (color_id) {
+        connect_api(
+          'DELETE',
+          apiBase + nameColor + color_id,
+          null,
+          function (res) {
+            showAlert('success');
+          }
+        );
       }
     }
   };
@@ -284,10 +256,10 @@ function productsController($scope, $http) {
   $scope.showDetails = (row, index, ev) => {
     $scope.btnDetail = $(ev.currentTarget);
     $scope.index = index;
-    $scope.images = $scope.colors[index].images ?? [];
-    $scope.sizes = $scope.colors[index].sizes ?? [];
-    // console.log($scope.sizes);
-  }
+    $scope.images = $scope.item.colors[index].images ?? [];
+    $scope.sizes = $scope.item.colors[index].sizes ?? [];
+    console.log($scope.images);
+  };
 
   // ---------------------------------------------------------------- End colors
 
@@ -298,31 +270,41 @@ function productsController($scope, $http) {
     const confirm = 'Are you sure you want to?';
     if (window.confirm(confirm)) {
       $scope.images.splice(index, 1);
-      $scope.colors[$scope.index].images = $scope.images;
-      if (image_id)
-      {
-        connect_api('DELETE', apiBase + nameImage + image_id, null, function (res) {
-          showAlert('success');
-        })
+      $scope.item.colors[$scope.index].images = $scope.images;
+      if (image_id) {
+        connect_api(
+          'DELETE',
+          apiBase + nameImage + image_id,
+          null,
+          function (res) {
+            showAlert('success');
+          }
+        );
       }
     }
-  }
+  };
 
   $scope.updateImage = (image, index) => {
     $scope.image_id = image.id;
     $scope.indexImage = index;
     $scope.image = image;
-  }
+  };
 
   $scope.chooseImage = (ev) => {
     uploadFile(ev.target.files[0]);
-  }
+  };
 
   $scope.updateImageDB = () => {
-    connect_api('PUT', apiBase + nameImage + $scope.image_id, $scope.image, function (res) {
-      $scope.colors[$scope.index].images = $scope.images;
-    })
-  }
+    connect_api(
+      'PUT',
+      apiBase + nameImage + $scope.image_id,
+      $scope.image,
+      function (res) {
+        $scope.item.colors[$scope.index].images = $scope.images;
+        loadData();
+      }
+    );
+  };
 
   // ---------------------------------------------------------------- End images
 
@@ -345,7 +327,7 @@ function productsController($scope, $http) {
       if (ok) {
         $scope.sizes = [size, ...$scope.sizes];
         $scope.size = {};
-        $scope.colors[$scope.index].sizes = $scope.sizes;
+        $scope.item.colors[$scope.index].sizes = $scope.sizes;
       }
     }
   };
@@ -366,23 +348,27 @@ function productsController($scope, $http) {
       // $scope.color.product_id = $scope.id;
       const size = convertToJson($scope.size);
       $scope.sizes[$scope.indexSize] = size;
-      $scope.colors[$scope.index].sizes = $scope.sizes;
+      $scope.item.colors[$scope.index].sizes = $scope.sizes;
       $scope.size = {};
     }
   };
 
   $scope.removeSize = (size, index) => {
     const size_id = size.id;
-    console.log(size_id)
+    console.log(size_id);
     const confirm = 'Are you sure you want to?';
     if (window.confirm(confirm)) {
       $scope.sizes.splice(index, 1);
-      $scope.colors[$scope.index].sizes = $scope.sizes;
-      if (size_id)
-      {
-        connect_api('DELETE', apiBase + nameSize + size_id, null, function (res) {
-          showAlert('success');
-        })
+      $scope.item.colors[$scope.index].sizes = $scope.sizes;
+      if (size_id) {
+        connect_api(
+          'DELETE',
+          apiBase + nameSize + size_id,
+          null,
+          function (res) {
+            showAlert('success');
+          }
+        );
       }
     }
   };
@@ -399,15 +385,6 @@ function productsController($scope, $http) {
     sessionStorage.setItem('product_id', id);
   };
 
-  // Pick color in client detail view
-  $scope.pickColor = (index) => {
-    $scope.colorIndex = index;
-    $scope.images = $scope.item.image.filter(
-      (image) =>
-        image.product_color_id === $scope.item.color[$scope.colorIndex].id
-    );
-  };
-
   // Upload file
   var uploadFile = function (filedata, type = 'img') {
     var imgtype = filedata.type;
@@ -415,7 +392,7 @@ function productsController($scope, $http) {
     $scope.images.forEach(function (item, index) {
       if (index === $scope.indexImage) item = $scope.image;
     });
-    $scope.colors[$scope.index].images = $scope.images;
+    $scope.item.colors[$scope.index].images = $scope.images;
     $scope.updateImageDB();
     //upload
     var postData = new FormData();
@@ -428,7 +405,7 @@ function productsController($scope, $http) {
       type: 'post',
       contentType: false,
       processData: false,
-      url: apiBase + nameSelf + 'upload',
+      url: apiBase + nameS + 'upload',
       data: postData,
       success: function (res) {
         console.log('success');
@@ -444,9 +421,9 @@ function productsController($scope, $http) {
     var imgtype = filedata.type;
 
     var postData = new FormData();
-    let images = $scope.colors[$scope.index].images ?? [];
+    let images = $scope.item.colors[$scope.index].images ?? [];
     filedata.forEach((item, index) => {
-      images.push({image: item.name});
+      images.push({ image: item.name });
       (function (file) {
         var reader = new FileReader();
         reader.onload = function (ev) {
@@ -460,8 +437,8 @@ function productsController($scope, $http) {
       postData.append(`file${index}`, item);
       postData.append('type', type);
     });
-    
-    $scope.colors[$scope.index].images = images;
+
+    $scope.item.colors[$scope.index].images = images;
     // $scope.images = images;
 
     $.ajax({
@@ -470,7 +447,7 @@ function productsController($scope, $http) {
       type: 'post',
       contentType: false,
       processData: false,
-      url: apiBase + nameSelf + 'uploads',
+      url: apiBase + nameS + 'uploads',
       data: postData,
       success: function (res) {
         console.log('success');
@@ -483,133 +460,10 @@ function productsController($scope, $http) {
     return images;
   };
 
-  // $('#img_file1_upid').on('change', function (ev) {
-  //   var filedata = this.files[0];
-  //   uploadFile(filedata, 1);
-  // });
-  // $('#img_file2_upid').on('change', function (ev) {
-  //   var filedata = this.files[0];
-  //   uploadFile(filedata, 2);
-  // });
-  
   $scope.chooseImages = (ev) => {
     var filedata = Array.from(ev.target.files);
     uploadFiles(filedata);
-    console.log(filedata);
+    // console.log(filedata);
     $scope.btnDetail.click();
-  }
-  // $('#img_files').on('change', function (ev) {
-  //   var filedata = Array.from(this.files);
-  //   $scope.images = uploadFiles(filedata);
-  // });
-}
-
-app.controller('singleController', singleController);
-function singleController($scope, $http) {
-  var connect_api = function (method, url, data, callback) {
-    if (data) {
-      $http({
-        method: method,
-        url: url,
-        data: data,
-        'content-Type': 'application/json',
-      }).then(
-        function (response) {
-          callback(response);
-          showAlert('success');
-        },
-        (error) => {
-          console.log(error);
-          showAlert('error');
-        }
-      );
-    } else {
-      $http({
-        method: method,
-        url: url,
-        'content-Type': 'application/json',
-      }).then(
-        function (response) {
-          callback(response);
-          // showAlert('success');
-        },
-        (error) => {
-          console.log(error);
-          showAlert('error');
-        }
-      );
-    }
   };
-  $scope.colorIndex = 0;
-  $scope.sizeIndex = 0;
-  $scope.quantity = 1;
-  $scope.id = $('#product_id').val();
-
-  // Get detail
-  connect_api('GET', apiBase + nameController + $scope.id, null, function (res) {
-    $scope.item = res.data;
-    $scope.item.colors.forEach((item) => {
-      item.sizes = $scope.item.sizes.filter(
-        (s) => s.product_color_id === item.id
-      );
-      item.images = $scope.item.images.filter(
-        (s) => s.product_color_id === item.id
-      );
-    });
-    // $scope.pickColor($scope.colorIndex);
-    console.log($scope.item);
-  });
-
-  // Increase or decrease the count
-  $scope.changedCount = (index) => {
-    if (index === 0) $scope.quantity++;
-    else
-    {
-      if($scope.quantity > 1) $scope.quantity--;
-    }
-  }
-
-  // Add to cart
-  $scope.addCart = () => {
-    const customer_id = JSON.parse(sessionStorage.getItem('customer')).id;
-    
-    $scope.detail = {
-      product_id: $scope.item.id,
-      quantity: $scope.quantity,
-      single_price: $scope.item.price.price_current == 0 ? $scope.item.price.price_origin : $scope.item.price.price_current,
-      status: 1,
-      size: $scope.item.colors[$scope.colorIndex].sizes[$scope.sizeIndex],
-      image: $scope.item.colors[$scope.colorIndex].images[0],
-      color: $scope.item.colors[$scope.colorIndex],
-    };
-    const cart = {
-      customer_id,
-      detail: $scope.detail
-    }
-
-    if (!checkCustomerLogin().username)
-    {
-      window.location.href = '/login';
-    }
-    else
-    {
-      connect_api('POST', apiBase + nameCart, cart, function (res) {
-        location.href = "/cart";
-        toastr.success(res.data);
-      });
-    }
-  }
-
-  // Pick color in client detail view
-  $scope.pickColor = (index) => {
-    $scope.colorIndex = index;
-    $scope.images = $scope.item.images.filter(
-      (image) =>
-        image.product_color_id === $scope.item.colors[$scope.colorIndex].id
-    );
-  };
-
-  $scope.pickSize = (index) => {
-    $scope.sizeIndex = index;
-  }
 }

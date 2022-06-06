@@ -1,5 +1,5 @@
-const nameController = 'categories/';
-const nameSelf = 'category/';
+const nameCategory = 'categories/';
+const nameS = 'category/';
 
 app.controller('categoriesController', categoriesController);
 function categoriesController($scope, $http) {
@@ -49,7 +49,7 @@ function categoriesController($scope, $http) {
   };
   // Get all categories
   const loadData = () => {
-    connect_api('GET', apiBase + nameController, null, function (res) {
+    connect_api('GET', apiBase + nameCategory, null, function (res) {
       $scope.data = res.data;
     });
   };
@@ -62,11 +62,12 @@ function categoriesController($scope, $http) {
     if (id == 0) {
       $scope.modalTitle = 'Insert a category';
       $scope.item = null;
-    } else { // Edit
+    } else {
+      // Edit
       $scope.modalTitle = 'Edit a category';
       $http({
         method: 'GET',
-        url: apiBase + nameController + id,
+        url: apiBase + nameCategory + id,
       }).then(
         (res) => {
           $scope.item = res.data; // item is already
@@ -82,36 +83,48 @@ function categoriesController($scope, $http) {
   $scope.saveData = () => {
     $scope.item.thumbnail = $scope.image;
     // is create
-    if ($scope.id == 0)
-    {
-      connect_api('POST', apiBase + nameController, $scope.item, function (res) {
-        $scope.data = [res.data, ...$scope.data];
-        $('#large').modal('hide');
-      })
-    } else
-    { // is update
-      connect_api('PUT', apiBase + nameController + $scope.id, $scope.item, function (res) {
-        const index = $scope.data.findIndex(item => item.id == $scope.id);
-        $scope.data.splice(index, 1);
-        $scope.data = [res.data, ...$scope.data];
-        $('#large').modal('hide');
-      })
+    if ($scope.id == 0) {
+      connect_api(
+        'POST',
+        apiBase + nameCategory,
+        $scope.item,
+        function (res) {
+          $scope.data = [res.data, ...$scope.data];
+          $('#large').modal('hide');
+        }
+      );
+    } else {
+      // is update
+      connect_api(
+        'PUT',
+        apiBase + nameCategory + $scope.id,
+        $scope.item,
+        function (res) {
+          const index = $scope.data.findIndex((item) => item.id == $scope.id);
+          $scope.data.splice(index, 1);
+          $scope.data = [res.data, ...$scope.data];
+          $('#large').modal('hide');
+        }
+      );
     }
-
-  }
+  };
 
   // Remove item
   $scope.remove = (id) => {
     const confirm = 'Are you sure you want to?';
-    if (window.confirm(confirm))
-    {
-      connect_api('DELETE', apiBase + nameController + id, null, function (res) {
-        const index = $scope.data.findIndex(item => item.id == id);
-        $scope.data.splice(index, 1);
-        showAlert('success');
-      })
+    if (window.confirm(confirm)) {
+      connect_api(
+        'DELETE',
+        apiBase + nameCategory + id,
+        null,
+        function (res) {
+          const index = $scope.data.findIndex((item) => item.id == id);
+          $scope.data.splice(index, 1);
+          showAlert('success');
+        }
+      );
     }
-  }
+  };
 
   // Upload file
   var uploadFile = function (filedata, type = 'img') {
@@ -147,7 +160,6 @@ function categoriesController($scope, $http) {
       },
     });
   };
-
 
   $('#img_file_upid').on('change', function (ev) {
     var filedata = this.files[0];

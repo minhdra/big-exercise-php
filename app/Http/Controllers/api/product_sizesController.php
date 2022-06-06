@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Models\product_colors;
 use App\Models\product_sizes;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,9 @@ class product_sizesController extends Controller
      */
     public function index()
     {
-        //
+        $colors = product_colors::where('is_active', 1)->get();
+        $sizes = product_sizes::where('is_active', 1)->with('color')->orderBy('product_color_id')->get();
+        return ['sizes' => $sizes, 'colors' => $colors];
     }
 
     /**
@@ -42,7 +45,7 @@ class product_sizesController extends Controller
         $size->quantity = $request->quantity;
         $size->save();
 
-        return $size;
+        return $this->show($size->id);
     }
 
     /**
@@ -53,7 +56,7 @@ class product_sizesController extends Controller
      */
     public function show($id)
     {
-        $db = product_sizes::find($id);
+        $db = product_sizes::where('is_active', 1)->with('color')->find($id);
         return $db;
     }
 
@@ -83,7 +86,7 @@ class product_sizesController extends Controller
         $size->quantity = $request->quantity;
         $size->save();
 
-        return $size;
+        return $this->show($id);
     }
 
     /**
