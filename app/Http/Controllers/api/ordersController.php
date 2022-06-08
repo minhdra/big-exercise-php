@@ -26,7 +26,10 @@ class ordersController extends Controller
         foreach ($orders as $order) {
             $c = $order->customer;
             $c->info;
-            $order->details;
+            $details = $order->details;
+            foreach ($details as $detail) {
+                $detail->product;
+            }
             $order->status;
         }
         return ['orders'=>$orders, 'customers'=>$customers, 'statuses'=>$statuses];
@@ -76,10 +79,30 @@ class ordersController extends Controller
     public function show($id)
     {
         $order = orders::where('is_active', 1)->find($id);
-        $c = $order->customer;
-        $c->info;
-        $order->details;
-        $order->status;
+        if($order) {
+            $c = $order->customer;
+            $c->info;
+            $details = $order->details;
+            foreach ($details as $detail) {
+                $detail->product;
+            }
+            $order->status;
+        }
+        return $order;
+    }
+
+    public function trackingOrder(Request $request)
+    {
+        $order = orders::where('is_active', 1)->where('customer_id', $request->customer_id)->find($request->id);
+        if($order) {
+            $c = $order->customer;
+            $c->info;
+            $details = $order->details;
+            foreach ($details as $detail) {
+                $detail->product;
+            }
+            $order->status;
+        }
         return $order;
     }
 

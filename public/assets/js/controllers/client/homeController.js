@@ -100,7 +100,7 @@ function homeController($rootScope, $scope, $http) {
 
   // Add to cart
   $scope.addCart = () => {
-    const customer_id = JSON.parse(sessionStorage.getItem('customer'))?.id;
+    const customer_id = checkCustomerLogin().id;
 
     $scope.detail = {
       product_id: $scope.item.id,

@@ -49,7 +49,7 @@ class cartsController extends Controller
     public function store(Request $request)
     {
         $detail = new cart_details();
-        $check = carts::where('customer_id', $request->customer_id)->first();
+        $check = carts::where('customer_id', $request->customer_id)->where('is_active', 1)->first();
         if ($check) {
             $item = $request->detail ?? null;
             if ($item) {

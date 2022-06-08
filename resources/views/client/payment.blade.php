@@ -231,7 +231,7 @@
                           <li><span class="customer__information--text">@{{delivery_address.province}}</span></li>
                         </ul>
                       </div>
-                      
+
                     </div>
                     <div class="customer__information--list">
                       <div class="customer__information--step">
@@ -243,10 +243,10 @@
                       <div class="customer__information--step">
                         <h4 class="customer__information--subtitle h5">Shipping method</h4>
                         <ul>
-                          <li><span class="customer__information--text">Dra shop</span></li>
-                          <li><span class="customer__information--text">Tu Dan</span></li>
-                          <li><span class="customer__information--text">Khoai Chau</span></li>
-                          <li><span class="customer__information--text">Hung Yen</span></li>
+                          <li><span class="customer__information--text">@{{delivery_address.specific_address}}</span></li>
+                          <li><span class="customer__information--text">@{{delivery_address.commune}}</span></li>
+                          <li><span class="customer__information--text">@{{delivery_address.district}}</span></li>
+                          <li><span class="customer__information--text">@{{delivery_address.province}}</span></li>
                         </ul>
                       </div>
                     </div>

@@ -20,6 +20,7 @@ class orders extends Model
     public function status() {
         return $this->belongsTo(order_statuses::class, 'status_id', 'id')->where('is_active', 1);
     }
+    
 
     public function updateTotal($id, $total) {
         $db = orders::where('is_active', 1)->find($id);

@@ -405,7 +405,7 @@ function productsController($scope, $http) {
       type: 'post',
       contentType: false,
       processData: false,
-      url: apiBase + nameS + 'upload',
+      url: apiBase + nameOtherProduct + 'upload',
       data: postData,
       success: function (res) {
         console.log('success');
@@ -447,7 +447,7 @@ function productsController($scope, $http) {
       type: 'post',
       contentType: false,
       processData: false,
-      url: apiBase + nameS + 'uploads',
+      url: apiBase + nameOtherProduct + 'uploads',
       data: postData,
       success: function (res) {
         console.log('success');

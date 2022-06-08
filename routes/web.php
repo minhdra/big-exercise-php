@@ -37,6 +37,14 @@ Route::get('/my-account', function () {
     return view('client.account');
 })->name('my-account');
 
+Route::get('/contact', function () {
+    return view('client.contact');
+})->name('contact');
+
+Route::get('/about', function () {
+    return view('client.about');
+})->name('about');
+
 Route::get('/cart', function () {
     return view('client.cart');
 })->name('cart');
@@ -48,6 +56,10 @@ Route::get('/checkout', function () {
 Route::get('/payment', function () {
     return view('client.payment');
 })->name('payment');
+
+Route::get('/tracking', function () {
+    return view('client.tracking');
+})->name('tracking');
 // ---------------------------- Admin ------------------------------------
 Route::get('/admin/login', function () {
     return view('admin.login');

@@ -158,14 +158,14 @@
                 </ul>
               </li>
               <li class="header__menu--items style2">
-                <a class="header__menu--link text-white" href="about.html">About US </a>
+                <a class="header__menu--link text-white" href="{{route('about')}}">About US </a>
               </li>
               
               <li class="header__menu--items style2 d-none d-xl-block">
                 <a class="header__menu--link text-white" href="{{route('shop')}}">Categories </a>
               </li>
               <li class="header__menu--items style2">
-                <a class="header__menu--link text-white" href="contact.html">Contact </a>
+                <a class="header__menu--link text-white" href="{{route('contact')}}">Contact </a>
               </li>
             </ul>
           </nav>
@@ -261,13 +261,13 @@
                 </ul>
               </li>
               <li class="header__menu--items">
-                <a class="header__menu--link text-white" href="about.html">About US </a>
+                <a class="header__menu--link text-white" href="{{route('about')}}">About US </a>
               </li>
               <li class="header__menu--items d-none d-xl-block">
                 <a class="header__menu--link text-white" href="{{route('shop')}}">News </a>
               </li>
               <li class="header__menu--items">
-                <a class="header__menu--link text-white" href="contact.html">Contact </a>
+                <a class="header__menu--link text-white" href="{{route('contact')}}">Contact </a>
               </li>
             </ul>
           </nav>
@@ -320,8 +320,8 @@
               </li>
             </ul>
           </li>
-          <li class="offcanvas__menu_li"><a class="offcanvas__menu_item" href="about.html">About</a></li>
-          <li class="offcanvas__menu_li"><a class="offcanvas__menu_item" href="contact.html">Contact</a></li>
+          <li class="offcanvas__menu_li"><a class="offcanvas__menu_item" href="{{route('about')}}">About</a></li>
+          <li class="offcanvas__menu_li"><a class="offcanvas__menu_item" href="{{route('contact')}}">Contact</a></li>
         </ul>
         <div class="offcanvas__account--items">
           <a class="offcanvas__account--items__btn d-flex align-items-center" href="@{{customer.username ? '/my-account' : '/login'}}">

@@ -33,7 +33,10 @@
         </div>
         <div class="account__wrapper">
           <div class="account__content" ng-if="sidebarIndex===0">
-            <h2 class="account__content--title h3 mb-20">Orders History</h2>
+            <div class="d-flex justify-content-between align-items-center">
+              <h2 class="account__content--title h3 mb-20">Orders History</h2>
+              <a class="primary__btn minicart__button--link" href="{{route('tracking')}}">Tracking your order</a>
+            </div>
             <div class="account__table--area">
               <table class="account__table" ng-if="customer.orders.length > 0">
                 <thead class="account__table--header">

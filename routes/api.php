@@ -57,6 +57,7 @@ Route::prefix('v1')->group(function () {
     Route::post('brand/upload', [brandsController::class, 'uploadFile'])->name('upload.uploadfile');
     Route::resource('categories', categoriesController::class);
     Route::resource('orders', ordersController::class);
+    Route::post('orders/tracking', [ordersController::class, 'trackingOrder']);
     Route::resource('order_statuses', order_statusesController::class);
     Route::resource('order_details', order_detailsController::class);
     Route::resource('admins', adminsController::class);
