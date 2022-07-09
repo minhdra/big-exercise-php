@@ -97,9 +97,14 @@ function headerClientController($rootScope, $http) {
 
   // Remove
   $rootScope.remove = (id, index) => {
-    connect_api('DELETE', apiBase + nameCartDetail + id, null, function (res) {
-      $rootScope.customer.cart_details.splice(index, 1);
-      $rootScope.countTotal();
-    });
+    const confirm = 'Are you sure you want to?';
+    if (window.confirm(confirm))
+    {
+      connect_api('DELETE', apiBase + nameCartDetail + id, null, function (res) {
+        $rootScope.customer.cart_details.splice(index, 1);
+        $rootScope.countTotal();
+      });
+
+    }
   };
 }

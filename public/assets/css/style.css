@@ -26,6 +26,7 @@
   --transition: all 0.3s ease 0s;
   --container-fluid-offset: 19rem;
   --danger-color: #f51c1c;
+  --success-color: #489d4a;
 }
 .color-scheme-1 {
   --secondary-color: #f51c1c;
@@ -311,6 +312,9 @@ hr {
 }
 .text-danger{
   color: var(--danger-color);
+}
+.text-success {
+  color: var(--success-color);
 }
 .container,
 .container-fluid {

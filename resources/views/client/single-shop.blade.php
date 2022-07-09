@@ -126,10 +126,13 @@
                   <legend class="product__variant--title mb-8">Sizes :</legend>
                   <fieldset class="variant__input--fieldset weight d-flex">
                     <div style="margin-right: .25rem;" ng-repeat="row in item.colors[colorIndex].sizes">
-                      <input id="@{{row.size}}" name="size" type="radio" ng-checked="@{{sizeIndex==$index}}" ng-click="pickSize($index)">
-                      <label class="variant__size--value red" for="@{{row.size}}">@{{row.size}}</label>
+                      <input id="@{{row.size}}" name="size" type="radio" ng-checked="@{{sizeIndex==$index}}" ng-click="pickSize($index, row.quantity)">
+                      <label class="variant__size--value red" for="@{{row.size}}"
+                      title="@{{row.quantity > 0 ? 'Stoking' : 'Out of stoking'}}">@{{row.size}}</label>
                     </div>
                   </fieldset>
+                  <span class="text-success" ng-if="sizeQuantity>0">Stoking(@{{sizeQuantity}})</span>
+                  <span class="text-danger" ng-if="sizeQuantity<=0">Out of Stoking(0)</span>
                 </div>
                 <div class="quickview__variant--list quantity d-flex align-items-center mb-15">
                   <div class="quantity__box">

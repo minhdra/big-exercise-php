@@ -823,7 +823,7 @@
                   </ul>
                   <span class="quickview__info--review__text">(5 reviews)</span>
                 </div>
-                <p class="product__details--info__desc mb-15">@{{item.description}}</p>
+                <p class="product__details--info__desc mb-15" id="des-single"></p>
                 <div class="product__variant">
                   <div class="product__variant--list mb-10">
                     <fieldset class="variant__input--fieldset">

@@ -235,7 +235,9 @@
                 </div>
               </div>
               <div class="checkout__content--step__footer d-flex align-items-center">
-                <a class="continue__shipping--btn primary__btn border-radius-5" href="{{route('payment')}}" ng-click="updateInfo(customer.info)">Continue To Payment</a>
+                <a class="continue__shipping--btn primary__btn border-radius-5" href="{{route('payment')}}" ng-click="updateInfo(customer.info)"
+                ng-if="customer.info.full_name && customer.info.address && customer.info.email && customer.info.phone_number">Continue To Payment</a>
+                <a class="continue__shipping--btn primary__btn border-radius-5" ng-if="!customer.info.full_name || !customer.info.address || !customer.info.email || !customer.info.phone_number">Continue To Payment</a>
                 <a class="previous__link--content" href="{{route('cart')}}">Return to cart</a>
               </div>
             </div>

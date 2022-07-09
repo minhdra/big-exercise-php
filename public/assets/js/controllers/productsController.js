@@ -342,7 +342,7 @@ function productsController($scope, $http) {
   };
 
   $scope.updateSize = () => {
-    if (!$scope.size || !$scope.size.size || !$scope.size.quantity)
+    if (!$scope.size || !$scope.size.size || $scope.size.quantity===undefined)
       toastr.warning('Must require');
     else {
       // $scope.color.product_id = $scope.id;

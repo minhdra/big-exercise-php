@@ -9,7 +9,7 @@
             <li class="header__shipping--text text-white d-sm-2-none"><img class="header__shipping--text__icon" src="/assets/img/icon/email.png" alt="email-icon"> <a class="header__shipping--text__link" href="mailto:dra@hotro.com">dra@hotro.com</a></li>
           </ul>
         </div>
-        <div class="language__currency d-none d-lg-block">
+        <!-- <div class="language__currency d-none d-lg-block">
           <ul class="d-flex align-items-center">
             <li class="language__currency--list">
               <a class="language__switcher text-white" href="#">
@@ -45,7 +45,7 @@
               </div>
             </li>
           </ul>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
@@ -92,7 +92,7 @@
                 <span class="header__account--btn__text">@{{customer.username ? customer.username : "Login"}}</span>
               </a>
             </li>
-            <li class="header__account--items d-none d-lg-block">
+            <!-- <li class="header__account--items d-none d-lg-block">
               <a class="header__account--btn" href="wishlist.html">
                 <svg xmlns="http://www.w3.org/2000/svg" width="28.51" height="23.443" viewBox="0 0 512 512">
                   <path d="M352.92 80C288 80 256 144 256 144s-32-64-96.92-64c-52.76 0-94.54 44.14-95.08 96.81-1.1 109.33 86.73 187.08 183 252.42a16 16 0 0018 0c96.26-65.34 184.09-143.09 183-252.42-.54-52.67-42.32-96.81-95.08-96.81z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"></path>
@@ -100,7 +100,7 @@
                 <span class="header__account--btn__text"> Wish List</span>
                 <span class="items__count wishlist">0</span>
               </a>
-            </li>
+            </li> -->
             <li class="header__account--items">
               <a class="header__account--btn minicart__open--btn" href="javascript:void(0)" data-offcanvas>
                 <svg xmlns="http://www.w3.org/2000/svg" width="26.51" height="23.443" viewBox="0 0 14.706 13.534">
@@ -190,14 +190,14 @@
                 <span class="visually-hidden">My Account</span>
               </a>
             </li>
-            <li class="header__account--items header__account2--items d-none d-lg-block">
+            <!-- <li class="header__account--items header__account2--items d-none d-lg-block">
               <a class="header__account--btn" href="wishlist.html">
                 <svg xmlns="http://www.w3.org/2000/svg" width="28.51" height="23.443" viewBox="0 0 512 512">
                   <path d="M352.92 80C288 80 256 144 256 144s-32-64-96.92-64c-52.76 0-94.54 44.14-95.08 96.81-1.1 109.33 86.73 187.08 183 252.42a16 16 0 0018 0c96.26-65.34 184.09-143.09 183-252.42-.54-52.67-42.32-96.81-95.08-96.81z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"></path>
                 </svg>
                 <span class="items__count  wishlist style2">0</span>
               </a>
-            </li>
+            </li> -->
             <li class="header__account--items header__account2--items">
               <a class="header__account--btn minicart__open--btn" href="javascript:void(0)" data-offcanvas>
                 <svg xmlns="http://www.w3.org/2000/svg" width="26.51" height="23.443" viewBox="0 0 14.706 13.534">
@@ -263,9 +263,9 @@
               <li class="header__menu--items">
                 <a class="header__menu--link text-white" href="{{route('about')}}">About US </a>
               </li>
-              <li class="header__menu--items d-none d-xl-block">
+              <!-- <li class="header__menu--items d-none d-xl-block">
                 <a class="header__menu--link text-white" href="{{route('shop')}}">News </a>
-              </li>
+              </li> -->
               <li class="header__menu--items">
                 <a class="header__menu--link text-white" href="{{route('contact')}}">Contact </a>
               </li>

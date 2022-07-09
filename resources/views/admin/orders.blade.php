@@ -53,10 +53,10 @@
                             </td>
 
                             <td style="width: 150px !important">
-                              <a class="success p-0 mr-2" data-original-title="" title="Edit" data-toggle="tooltip" ng-click="openModal(row.id)">
+                              <a class="success p-0 mr-2" data-original-title="" title="Edit" data-toggle="tooltip" ng-click="openModal(row.id)" ng-if="row.status_id != 5">
                                 <i class="fa fa-pencil font-medium-3"></i>
                               </a>
-                              <a class="danger p-0 mr-2" data-original-title="" title="Remove" data-toggle="tooltip" ng-click="remove(row.id)">
+                              <a class="danger p-0 mr-2" data-original-title="" title="Remove" data-toggle="tooltip" ng-click="remove(row.id)" ng-if="row.status_id != 5">
                                 <i class="fa fa-trash-o font-medium-3"></i>
                               </a>
                             </td>

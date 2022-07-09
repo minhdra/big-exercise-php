@@ -133,6 +133,7 @@ function shopController($rootScope, $scope, $http) {
     //Get single product
     connect_api('GET', apiBase + nameProduct + id, null, function (res) {
       $scope.item = res.data;
+      $("#des-single").html($scope.item.description);
       // console.log($scope.item);
     });
   };

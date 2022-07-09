@@ -77,7 +77,6 @@ function profileController($scope, $http) {
         null,
         function (res) {
           $scope.customer = res.data;
-          console.log($scope.customer);
           
         }
       );

@@ -48,6 +48,7 @@ function singleProductController($rootScope, $scope, $http) {
   // Get detail
   connect_api('GET', apiBase + nameProduct + $scope.id, null, function (res) {
     $scope.item = res.data;
+    $scope.sizeQuantity = $scope.item.colors[0].sizes[0].quantity;
     $("#des-single").html($scope.item.description);
     // $scope.pickColor($scope.colorIndex);
     // console.log($scope.item);
@@ -97,8 +98,9 @@ function singleProductController($rootScope, $scope, $http) {
     $scope.colorIndex = index;
   };
 
-  $scope.pickSize = (index) => {
+  $scope.pickSize = (index, quantity) => {
     $scope.sizeIndex = index;
+    $scope.sizeQuantity = quantity;
   };
 
   // Get similar products

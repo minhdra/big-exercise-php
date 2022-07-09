@@ -63,8 +63,9 @@
           <div class="about__content">
             <span class="about__content--subtitle text__secondary mb-20"> Why Choose us</span>
             <h2 class="about__content--maintitle mb-25">We do not buy from the open market & traders.</h2>
-            <p class="about__content--desc mb-20">Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit illo, est repellendus are quia voluptate neque reiciendis ea placeat labore maiores cum, hic ducimus ad a dolorem soluta consectetur adipisci. Perspiciatis quas ab quibusdam is.</p>
-            <p class="about__content--desc mb-25">Itaque accusantium eveniet a laboriosam dolorem? Magni suscipit est corrupti explicabo non perspiciatis, excepturi ut asperiores assumenda rerum? Provident ab corrupti sequi, voluptates repudiandae eius odit aut.</p>
+            <p class="about__content--desc mb-20">Our purpose, ‘through sport, we have the power to change lives’, guides the way we run our company, how we work with our partners, how we create our products, and how we engage with our consumers. We will always strive to expand the limits of human possibilities, to include and unite people in sport, and to create a more sustainable world.  
+
+To experience how our employees and partners are driving change through purpose – and how you can find purpose, too – click here.</p>
             <div class="about__author position__relative d-flex align-items-center">
               <div class="about__author--left">
                 <h4 class="about__author--name">Bruce Sutton</h4>
